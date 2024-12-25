@@ -1,0 +1,211 @@
+<#
+.SYNOPSIS
+    This script checks if the system meets the requirements for BitLocker silent encryption, including TPM version 1.2, UEFI boot mode, Secure Boot status, Kernel DMA Protection, and PCR7 Configuration status.
+
+.DESCRIPTION
+    The script performs a series of checks to validate that the system is equipped for BitLocker silent encryption. It checks:
+    - TPM (Trusted Platform Module) availability and version (requires version 1.2 or higher).
+    - UEFI firmware mode, ensuring the system is not in Legacy BIOS mode.
+    - Secure Boot status, verifying if Secure Boot is enabled.
+    - PCR7 Configuration status to confirm readiness for encryption.
+    - Kernel DMA Protection status.
+
+.NOTES
+    Author: Omar Osman Mahat
+    Twitter: https://x.com/thekingsmakers
+
+.PARAMETER None
+    This script does not accept any parameters.
+
+.EXAMPLE
+    Run the script to check if the system is BitLocker ready:
+    
+    ```powershell
+    ".\All-Bitlocker-Requirements-Check- RemediationScript.ps1"
+    ```
+
+.OUTPUTS
+    Exit code 0: All requirements are met.
+    Exit code 1: One or more requirements are not met.
+
+.LINK
+    https://x.com/thekingsmakers
+#>
+
+
+
+# Function to check TPM version
+function Check-TPM {
+    $tpm = Get-WmiObject -Namespace "Root\CIMv2\Security\MicrosoftTpm" -Class Win32_Tpm
+    if ($tpm -eq $null) {
+        Write-Host "TPM is not available on this system." -ForegroundColor Red
+        return $false
+    } elseif ($tpm.SpecVersion -ge "1.2") {
+        Write-Host "TPM version 1.2 or higher is available." -ForegroundColor Green
+        return $true
+    } else {
+        Write-Host "TPM version is lower than 1.2."
+        return $false
+    }
+}
+
+# Function to check UEFI firmware using $env:firmware_type
+function Check-UEFI {
+    if ($env:firmware_type -eq "UEFI") {
+        Write-Host "System is booting in UEFI mode." -ForegroundColor Green
+        return $true
+    } else {
+        Write-Host "System is booting in Legacy BIOS mode." -ForegroundColor Red
+        return $false
+    }
+}
+
+# Function to check Secure Boot status
+function Check-SecureBoot {
+    $secureBoot = (Confirm-SecureBootUEFI)
+    if ($secureBoot) {
+        Write-Host "Secure Boot is enabled." -ForegroundColor Green
+        return $true
+    } else {
+        Write-Host "Secure Boot is not enabled." -ForegroundColor Red
+        return $false
+    }
+}
+
+# Function to check Kernel DMA Protection using the provided .NET code
+function Check-KernelDMAProtection {
+    $bootDMAProtectionCheck = @"
+namespace SystemInfo
+{
+    using System;
+    using System.Runtime.InteropServices;
+
+    public static class NativeMethods
+    {
+        internal enum SYSTEM_DMA_GUARD_POLICY_INFORMATION : int
+        {
+            SystemDmaGuardPolicyInformation = 202
+        }
+
+        [DllImport("ntdll.dll")]
+        internal static extern Int32 NtQuerySystemInformation(
+            SYSTEM_DMA_GUARD_POLICY_INFORMATION SystemDmaGuardPolicyInformation,
+            IntPtr SystemInformation,
+            Int32 SystemInformationLength,
+            out Int32 ReturnLength);
+
+        public static byte BootDmaCheck() {
+            Int32 result;
+            Int32 SystemInformationLength = 1;
+            IntPtr SystemInformation = Marshal.AllocHGlobal(SystemInformationLength);
+            Int32 ReturnLength;
+
+            result = NativeMethods.NtQuerySystemInformation(
+                        NativeMethods.SYSTEM_DMA_GUARD_POLICY_INFORMATION.SystemDmaGuardPolicyInformation,
+                        SystemInformation,
+                        SystemInformationLength,
+                        out ReturnLength);
+
+            if (result == 0) {
+                byte info = Marshal.ReadByte(SystemInformation, 0);
+                return info;
+            }
+
+            return 0;
+        }
+    }
+}
+"@
+    Add-Type -TypeDefinition $bootDMAProtectionCheck
+
+    $bootDMAProtection = ([SystemInfo.NativeMethods]::BootDmaCheck()) -ne 0
+
+    if ($bootDMAProtection) {
+        Write-Host "Kernel DMA Protection: On" -ForegroundColor Green
+        return $true
+    } else {
+        Write-Host "Kernel DMA Protection: Off or Not Supported" -ForegroundColor Red
+        return $false
+    }
+}
+
+# Function to check PCR7 Configuration status
+function Check-PCR7Configuration {
+    $tempFile = "$env:TEMP\msinfo32_report.txt"
+    Start-Process -FilePath "msinfo32.exe" -ArgumentList "/categories SystemSummary /report $tempFile" -NoNewWindow -Wait
+    Start-Sleep -Milliseconds 500
+
+    $pcr7Status = Select-String -Path $tempFile -Pattern "PCR7 Configuration"
+
+    $isPCR7Ready = $false
+    if ($pcr7Status) {
+        $isPCR7Ready = $pcr7Status -match "Binding Possible|Bound" 
+        if ($isPCR7Ready) {
+            Write-Host "PCR7 Configuration is ready for Encryption" -ForegroundColor Green
+        } else {
+            Write-Host "PCR7 is not ready for encryption" -ForegroundColor Red
+        }
+    } else {
+        Write-Host "PCR7 Configuration line not found" -ForegroundColor Yellow
+    }
+
+    Remove-Item $tempFile -Force
+
+    return $isPCR7Ready
+}
+
+# Function to check WinRE status
+function Check-WinREStatus {
+    try {
+        $winREConfig = (reagentc /info) 2>&1
+        
+        if ($winREConfig -match "Windows RE status.*Enabled") {
+            Write-Host "WinRE is enabled." -ForegroundColor Green
+            return $true
+        } else {
+            Write-Host "WinRE is either disabled or cannot be determined." -ForegroundColor Red
+            return $false
+        }
+    } catch {
+        Write-Host "Error querying WinRE status: $_" -ForegroundColor Yellow
+        return $false
+    }
+}
+
+# Main Detection Block
+$tpmCheck = Check-TPM
+$uefiCheck = Check-UEFI
+$secureBootCheck = Check-SecureBoot
+$kernelDMACheck = Check-KernelDMAProtection
+$pcr7Check = Check-PCR7Configuration
+$winRECheck = Check-WinREStatus
+
+Write-Host "`nResults Summary:" -ForegroundColor Yellow
+Write-Host "-------------------"
+
+# Store results in hashtable for easy reference
+$results = @{
+    "TPM Status" = $tpmCheck
+    "UEFI Status" = $uefiCheck
+    "Secure Boot Status" = $secureBootCheck
+    "Kernel DMA Protection" = $kernelDMACheck
+    "PCR7 Configuration" = $pcr7Check
+    "WinRE Status" = $winRECheck
+}
+
+# Display failed checks only
+$failedChecks = $results.GetEnumerator() | Where-Object { $_.Value -eq $false }
+if ($failedChecks) {
+    Write-Host "Failed Requirements:"
+    foreach ($check in $failedChecks) {
+        Write-Host "- $($check.Name) check failed" -ForegroundColor Red
+    }
+}
+
+if ($failedChecks.Count -eq 0) {
+    Write-Host "All requirements for BitLocker silent encryption are met." -ForegroundColor Green
+    exit 0
+} else {
+    Write-Host "`nSome requirements for BitLocker silent encryption are not met." -ForegroundColor Red
+    exit 1
+}
