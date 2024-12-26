@@ -1,1 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omar Osman | SCCM & Intune Admin</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1e1e2f, #25293e);
+            color: #fff;
+            overflow-x: hidden;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 4em;
+            margin: 0;
+        }
+        p {
+            font-size: 1.2em;
+            margin: 10px 0 40px;
+        }
+        .clock {
+            font-size: 2em;
+            margin: 20px 0;
+        }
+        .links a {
+            margin: 10px;
+            padding: 12px 30px;
+            background: #4e54c8;
+            border-radius: 30px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        .links a:hover {
+            background: #8f94fb;
+        }
+        .social {
+            margin-top: 30px;
+        }
+        .social a {
+            color: #8f94fb;
+            margin: 0 15px;
+            font-size: 2em;
+            transition: color 0.3s;
+        }
+        .social a:hover {
+            color: #4e54c8;
+        }
+        .portfolio {
+            margin-top: 50px;
+            max-width: 1000px;
+            text-align: left;
+        }
+        .portfolio h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #4e54c8;
+        }
+        .portfolio p, .portfolio ul {
+            font-size: 1.1em;
+            line-height: 1.8em;
+        }
+        .portfolio ul li {
+            margin: 10px 0;
+        }
+        .footer {
+            margin-top: 50px;
+            font-size: 1em;
+            color: #bbb;
+        }
+        .consultancy {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            text-align: left;
+        }
+        .consultancy p {
+            margin: 5px 0;
+            font-size: 1em;
+        }
+        .consultancy i {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        .animation {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            animation: iconTransition 6s infinite alternate;
+        }
+        @keyframes iconTransition {
+            0% { background: url('https://cdn-icons-png.flaticon.com/512/1828/1828874.png') no-repeat center/cover; }
+            100% { background: url('https://cdn-icons-png.flaticon.com/512/732/732229.png') no-repeat center/cover; }
+        }
+    </style>
+</head>
+<body>
+    <div class="consultancy">
+        <p><i class="fas fa-envelope"></i> redomarjobs@gmail.com</p>
+        <p><i class="fas fa-phone"></i> </p>
+    </div>
+    <div class="container">
+        <div class="animation"></div>
+        <h1>Omar Osman</h1>
+        <p>SCCM & Intune Administrator | IT Systems Expert</p>
+        <div class="clock" id="clock"></div>
+        <div class="links">
+            <a href="https://github.com/thekingsmakers" target="_blank">GitHub</a>
+            <a href="https://twitter.com/thekingsmakers" target="_blank">Twitter</a>
+        </div>
+        <div class="social">
+            <a href="https://github.com/thekingsmakers" target="_blank">&#xf09b;</a>
+            <a href="https://twitter.com/thekingsmakers" target="_blank">&#xf099;</a>
+        </div>
+        <div class="portfolio">
+            <h2>My Work & Projects</h2>
+            <p>Welcome to my portfolio. Below are some of the custom scripts and unique solutions I've created to streamline IT operations, automate administrative tasks, and enhance endpoint security.</p>
+            <ul>
+                <li><strong>Password Expiration Notification Script</strong> - A GUI-based PowerShell tool that alerts users when their passwords are nearing expiration and provides an intuitive way to update passwords.</li>
+                <li><strong>BitLocker Compliance Checker</strong> - A script that evaluates device compatibility for BitLocker silent encryption by analyzing PCR7 Configuration and Kernel DMA Protection.</li>
+                <li><strong>Wallpaper Deployment Tool</strong> - Deploys custom wallpapers across devices through Intune, ensuring branding consistency across the enterprise.</li>
+                <li><strong>Camera Restriction by Geolocation</strong> - A PowerShell script that disables or enables device cameras based on geographic location.</li>
+                <li><strong>Trust Relationship Fixer</strong> - A script deployed via Intune that restores domain trust relationships, preventing costly reimaging or device recovery operations.</li>
+                <li><strong>Conditional Access Policies</strong> - Implemented secure Conditional Access Policies for enterprise data, including MFA, device compliance checks, and geofencing.</li>
+                <li><strong>Software Deployment</strong> - Automated deployment of enterprise applications using SCCM and Intune, reducing manual overhead and increasing efficiency.</li>
+            </ul>
+        </div>
+        <div class="footer">
+            <p>For consultancy and expertise on MDM and MAM, contact me at <strong>redomarjobs@gmail.com</strong> or <strong>+97455102655</strong>.</p>
+            <p>Follow me on <a href="https://github.com/thekingsmakers" target="_blank">GitHub</a> and <a href="https://twitter.com/thekingsmakers" target="_blank">Twitter</a>.</p>
+            <p>&copy; 2024 The Kingsmakers</p>
+        </div>
+    </div>
+
+    <script>
+        let hue = 0;
+        setInterval(() => {
+            hue += 1;
+            document.body.style.background = `linear-gradient(135deg, hsl(${hue}, 50%, 15%), hsl(${hue + 60}, 40%, 20%))`;
+        }, 100);
+
+        function updateClock() {
+            const clock = document.getElementById('clock');
+            const now = new Date();
+            clock.innerHTML = now.toLocaleTimeString();
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
 
