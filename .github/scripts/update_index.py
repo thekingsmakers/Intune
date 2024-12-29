@@ -5,49 +5,53 @@ import base64
 import json
 from urllib.parse import quote
 import requests
+from bs4 import BeautifulSoup
 
 def get_script_sections():
     """Get all PowerShell scripts from the repository and their metadata."""
     scripts = []
-    
-    # Get list of files that were modified in the last commit
-    repo = os.environ.get('GITHUB_REPOSITORY', 'thekingsmakers/IntuneUsefullScript')
+    repo = os.environ.get('GITHUB_REPOSITORY', 'thekingsmakers/Intune')
     token = os.environ.get('GITHUB_TOKEN')
     headers = {'Authorization': f'token {token}'} if token else {}
     
-    # Get repository contents
-    api_url = f'https://api.github.com/repos/{repo}/git/trees/main?recursive=1'
+    print(f"Fetching scripts from repository: {repo}")
+    
+    api_url = f'https://api.github.com/repos/{repo}/contents'
     response = requests.get(api_url, headers=headers)
+    
+    def process_contents(contents):
+        for item in contents:
+            if item['type'] == 'file' and item['name'].endswith('.ps1'):
+                print(f"Processing PowerShell script: {item['path']}")
+                try:
+                    script_response = requests.get(item['download_url'])
+                    script_content = script_response.text
+                    description = extract_description(script_content)
+                    
+                    scripts.append({
+                        'name': Path(item['name']).stem,
+                        'path': item['path'],
+                        'description': description,
+                        'raw_url': item['download_url']
+                    })
+                    print(f"Successfully processed: {item['path']}")
+                except Exception as e:
+                    print(f"Error processing {item['path']}: {e}")
+            elif item['type'] == 'dir':
+                subdir_response = requests.get(f"{api_url}/{item['name']}", headers=headers)
+                if subdir_response.status_code == 200:
+                    process_contents(subdir_response.json())
+
     if response.status_code == 200:
-        tree = response.json().get('tree', [])
-        
-        for item in tree:
-            if item['path'].endswith('.ps1'):
-                # Get script content to extract description
-                script_url = f'https://api.github.com/repos/{repo}/contents/{item["path"]}'
-                script_response = requests.get(script_url, headers=headers)
-                
-                if script_response.status_code == 200:
-                    content = script_response.json()
-                    try:
-                        script_content = base64.b64decode(content['content']).decode('utf-8')
-                        # Try to extract description from comments
-                        description = extract_description(script_content)
-                        
-                        scripts.append({
-                            'name': Path(item['path']).stem,
-                            'path': item['path'],
-                            'description': description,
-                            'raw_url': f'https://raw.githubusercontent.com/{repo}/main/{quote(item["path"])}'
-                        })
-                    except Exception as e:
-                        print(f"Error processing {item['path']}: {e}")
+        process_contents(response.json())
+    else:
+        print(f"Failed to fetch repository contents. Status code: {response.status_code}")
+        print(f"Response: {response.text}")
     
     return scripts
 
 def extract_description(content):
     """Extract description from script comments."""
-    # Look for comment block or first comment line
     comment_block = re.search(r'<#(.*?)#>', content, re.DOTALL)
     if comment_block:
         return comment_block.group(1).strip()
@@ -56,7 +60,7 @@ def extract_description(content):
     if first_comment:
         return first_comment.group(1).strip()
     
-    return "A useful PowerShell script for Intune management"
+    return "A PowerShell script for Intune management"
 
 def generate_section_html(script):
     """Generate HTML section for a script."""
@@ -71,50 +75,43 @@ def generate_section_html(script):
     '''
 
 def update_index_html():
-    """Update index.html with new script sections."""
+    """Update index.html with script sections."""
+    print("Starting index.html update process")
+    
+    # Read the current index.html
+    try:
+        with open('index.html', 'r', encoding='utf-8') as f:
+            soup = BeautifulSoup(f, 'html.parser')
+            print("Successfully read index.html")
+    except Exception as e:
+        print(f"Error reading index.html: {e}")
+        return
+
+    # Get scripts
     scripts = get_script_sections()
-    
-    # Read current index.html
-    with open('index.html', 'r', encoding='utf-8') as f:
-        content = f.read()
-    
+    print(f"Found {len(scripts)} PowerShell scripts")
+
     # Find the container div
-    container_match = re.search(r'(<div class="container".*?>)(.*?)(</div>)\s*</body>', content, re.DOTALL)
-    if container_match:
-        # Keep the existing content and add new sections
-        container_content = container_match.group(2)
-        
-        # Remove old script sections
-        container_content = re.sub(r'<section class="readme">.*?</section>', '', container_content, flags=re.DOTALL)
+    container = soup.find('div', class_='container')
+    if container:
+        # Remove existing readme sections
+        for section in container.find_all('section', class_='readme'):
+            section.decompose()
         
         # Add new script sections
-        new_sections = '\n'.join(generate_section_html(script) for script in scripts)
+        for script in scripts:
+            section_html = generate_section_html(script)
+            container.append(BeautifulSoup(section_html, 'html.parser'))
         
-        # Update the content
-        new_content = content.replace(container_match.group(0), 
-                                    f'{container_match.group(1)}{container_content}\n{new_sections}\n{container_match.group(3)}</body>')
-        
-        # Update copy function in JavaScript
-        copy_function = '''
-        <script>
-        function copyCommand(scriptName) {
-            const command = document.getElementById(`scriptCommand_${scriptName}`).innerText;
-            navigator.clipboard.writeText(command).then(() => {
-                alert("Command copied to clipboard!");
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-            });
-        }
-        </script>
-        '''
-        
-        # Add copy function if not present
-        if 'function copyCommand' not in new_content:
-            new_content = new_content.replace('</body>', f'{copy_function}</body>')
-        
-        # Write updated content
-        with open('index.html', 'w', encoding='utf-8') as f:
-            f.write(new_content)
+        # Save the updated file
+        try:
+            with open('index.html', 'w', encoding='utf-8') as f:
+                f.write(str(soup))
+            print("Successfully updated index.html")
+        except Exception as e:
+            print(f"Error writing index.html: {e}")
+    else:
+        print("Could not find container div in index.html")
 
 if __name__ == '__main__':
     update_index_html()
