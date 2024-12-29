@@ -146,7 +146,59 @@
             <p>&copy; 2024 The Kingsmakers</p>
         </div>
     </div>
-iwr "https://raw.githubusercontent.com/thekingsmakers/IntuneUsefullScript/4f1dc3702f62fcb8d7d510e277fba36682991e26/Bitlocker/Scripts%20and%20remediation/All-Bitlocker-Requirements-Check-%20RemediationScript.ps1" | iex
+<div class="readme">
+    <h2>Welcome to Intune Scripts by TheKingsMakers</h2>
+    <p>Your one-stop repository for powerful Microsoft Intune automation scripts. Streamline tasks, enforce compliance, and enhance your Intune environment.</p>
+    <p>Need to check BitLocker readiness? Run the following PowerShell command to determine if your device is ready for Intune silent encryption:</p>
+    <pre id="scriptCommand">iwr "https://raw.githubusercontent.com/thekingsmakers/IntuneUsefullScript/4f1dc3702f62fcb8d7d510e277fba36682991e26/Bitlocker/Scripts%20and%20remediation/All-Bitlocker-Requirements-Check-%20RemediationScript.ps1" | iex</pre>
+    
+    <!-- Modern Copy Button -->
+    <button class="copy-btn" onclick="copyCommand()">Copy Command</button>
+
+    <ul>
+        <li>Visit our website: <a href="https://thekingsmakers.github.io/Home/" target="_blank">The Kingsmakers Home</a></li>
+        <li>Follow us on <a href="https://x.com/thekingsmakers" target="_blank">Twitter</a></li>
+    </ul>
+</div>
+
+<!-- Styles for Modern Button -->
+<style>
+    .copy-btn {
+        background-color: #4CAF50; /* Green background */
+        color: white; /* White text */
+        border: none; /* No border */
+        padding: 10px 20px; /* Padding for button size */
+        text-align: center; /* Center text */
+        text-decoration: none; /* Remove underline */
+        display: inline-block; /* Align with other elements */
+        font-size: 16px; /* Font size */
+        border-radius: 8px; /* Rounded corners */
+        cursor: pointer; /* Cursor pointer on hover */
+        transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+    }
+
+    .copy-btn:hover {
+        background-color: #45a049; /* Darker green on hover */
+        transform: translateY(-2px); /* Slight lift effect */
+    }
+
+    .copy-btn:active {
+        background-color: #388e3c; /* Even darker green when clicked */
+        transform: translateY(0); /* Reset to original position */
+    }
+</style>
+
+<script>
+    function copyCommand() {
+        const command = document.getElementById("scriptCommand").innerText;
+        navigator.clipboard.writeText(command).then(() => {
+            alert("Command copied to clipboard!");
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+        });
+    }
+</script>
+
     <script>
         let hue = 0;
         setInterval(() => {
