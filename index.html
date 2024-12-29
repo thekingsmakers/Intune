@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Omar Osman | SCCM & Intune Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body, html {
             margin: 0;
@@ -12,122 +13,184 @@
             background: linear-gradient(135deg, #1e1e2f, #25293e);
             color: #fff;
             overflow-x: hidden;
+            line-height: 1.6;
         }
+
         .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
             text-align: center;
-            padding: 20px;
+            padding: 2rem 0;
         }
+
         h1 {
-            font-size: 4em;
+            font-size: 3.5rem;
             margin: 0;
+            padding: 1rem 0;
         }
-        p {
-            font-size: 1.2em;
-            margin: 10px 0 40px;
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+            color: #8f94fb;
         }
+
         .clock {
-            font-size: 2em;
-            margin: 20px 0;
+            font-size: 2rem;
+            margin: 1rem 0;
+            font-family: monospace;
         }
-        .links a {
-            margin: 10px;
-            padding: 12px 30px;
+
+        .links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .button {
+            padding: 0.8rem 2rem;
             background: #4e54c8;
             border-radius: 30px;
             text-decoration: none;
             color: #fff;
             font-weight: 500;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
         }
-        .links a:hover {
+
+        .button:hover {
             background: #8f94fb;
+            transform: translateY(-2px);
         }
-        .social {
-            margin-top: 30px;
-        }
-        .social a {
-            color: #8f94fb;
-            margin: 0 15px;
-            font-size: 2em;
-            transition: color 0.3s;
-        }
-        .social a:hover {
-            color: #4e54c8;
-        }
+
         .portfolio {
-            margin-top: 50px;
-            max-width: 1000px;
-            text-align: left;
+            margin: 4rem 0;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
         }
+
         .portfolio h2 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
             border-bottom: 2px solid #4e54c8;
+            padding-bottom: 0.5rem;
         }
-        .portfolio p, .portfolio ul {
-            font-size: 1.1em;
-            line-height: 1.8em;
+
+        .portfolio ul {
+            list-style: none;
+            padding: 0;
         }
-        .portfolio ul li {
-            margin: 10px 0;
+
+        .portfolio li {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
         }
+
+        .portfolio li::before {
+            content: "•";
+            color: #4e54c8;
+            position: absolute;
+            left: 0;
+        }
+
+        .contact-info {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .contact-info p {
+            margin: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
         .footer {
-            margin-top: 50px;
-            font-size: 1em;
-            color: #bbb;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .consultancy {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            text-align: left;
+
+        .readme {
+            margin: 2rem auto;
+            max-width: 800px;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
         }
-        .consultancy p {
-            margin: 5px 0;
-            font-size: 1em;
+
+        #scriptCommand {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            white-space: pre-wrap;
+            word-break: break-all;
         }
-        .consultancy i {
-            margin-right: 10px;
-            font-size: 1.2em;
+
+        .copy-btn {
+            background-color: #4e54c8;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 1rem 0;
         }
-        .animation {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 100px;
-            height: 100px;
-            animation: iconTransition 6s infinite alternate;
+
+        .copy-btn:hover {
+            background-color: #8f94fb;
+            transform: translateY(-2px);
         }
-        @keyframes iconTransition {
-            0% { background: url('https://cdn-icons-png.flaticon.com/512/1828/1828874.png') no-repeat center/cover; }
-            100% { background: url('https://cdn-icons-png.flaticon.com/512/732/732229.png') no-repeat center/cover; }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .contact-info {
+                position: static;
+                margin-bottom: 2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="consultancy">
+    <div class="contact-info">
         <p><i class="fas fa-envelope"></i> redomarjobs@gmail.com</p>
-        <p><i class="fas fa-phone"></i> </p>
+        <p><i class="fas fa-phone"></i> +97455102655</p>
     </div>
+
     <div class="container">
-        <div class="animation"></div>
-        <h1>Omar Osman</h1>
-        <p>SCCM & Intune Administrator | IT Systems Expert</p>
-        <div class="clock" id="clock"></div>
-        <div class="links">
-            <a href="https://github.com/thekingsmakers" target="_blank">GitHub</a>
-            <a href="https://twitter.com/thekingsmakers" target="_blank">Twitter</a>
-        </div>
-        <div class="social">
-            <a href="https://github.com/thekingsmakers" target="_blank">&#xf09b;</a>
-            <a href="https://twitter.com/thekingsmakers" target="_blank">&#xf099;</a>
-        </div>
-        <div class="portfolio">
+        <header class="header">
+            <h1>Omar Osman</h1>
+            <p class="subtitle">SCCM & Intune Administrator | IT Systems Expert</p>
+            <div class="clock" id="clock"></div>
+            <div class="links">
+                <a href="https://github.com/thekingsmakers" target="_blank" class="button">GitHub</a>
+                <a href="https://twitter.com/thekingsmakers" target="_blank" class="button">Twitter</a>
+            </div>
+        </header>
+
+        <section class="portfolio">
             <h2>My Work & Projects</h2>
             <p>Welcome to my portfolio. Below are some of the custom scripts and unique solutions I've created to streamline IT operations, automate administrative tasks, and enhance endpoint security.</p>
             <ul>
@@ -139,81 +202,41 @@
                 <li><strong>Conditional Access Policies</strong> - Implemented secure Conditional Access Policies for enterprise data, including MFA, device compliance checks, and geofencing.</li>
                 <li><strong>Software Deployment</strong> - Automated deployment of enterprise applications using SCCM and Intune, reducing manual overhead and increasing efficiency.</li>
             </ul>
-        </div>
-        <div class="footer">
+        </section>
+
+        <section class="readme">
+            <h2>Scripts that will automate your work</h2>
+            <p>Your one-stop repository for powerful Microsoft Intune automation scripts. Streamline tasks, enforce compliance, and enhance your Intune environment.</p>
+            <p>Need to check BitLocker readiness? Run the following PowerShell command to determine if your device is ready for Intune silent encryption:</p>
+            <pre id="scriptCommand">iwr "https://raw.githubusercontent.com/thekingsmakers/IntuneUsefullScript/4f1dc3702f62fcb8d7d510e277fba36682991e26/Bitlocker/Scripts%20and%20remediation/All-Bitlocker-Requirements-Check-%20RemediationScript.ps1" | iex</pre>
+            <button class="copy-btn" onclick="copyCommand()">Copy Command</button>
+        </section>
+
+        <footer class="footer">
             <p>For consultancy and expertise on MDM and MAM, contact me at <strong>redomarjobs@gmail.com</strong> or <strong>+97455102655</strong>.</p>
-            <p>Follow me on <a href="https://github.com/thekingsmakers" target="_blank">GitHub</a> and <a href="https://twitter.com/thekingsmakers" target="_blank">Twitter</a>.</p>
+            <p>Follow me on <a href="https://github.com/thekingsmakers" target="_blank" class="button">GitHub</a> and <a href="https://twitter.com/thekingsmakers" target="_blank" class="button">Twitter</a>.</p>
             <p>&copy; 2024 The Kingsmakers</p>
-        </div>
+        </footer>
     </div>
-<div class="readme">
-    <h2>Welcome to Intune Scripts by TheKingsMakers</h2>
-    <p>Your one-stop repository for powerful Microsoft Intune automation scripts. Streamline tasks, enforce compliance, and enhance your Intune environment.</p>
-    <p>Need to check BitLocker readiness? Run the following PowerShell command to determine if your device is ready for Intune silent encryption:</p>
-    <pre id="scriptCommand">iwr "https://raw.githubusercontent.com/thekingsmakers/IntuneUsefullScript/4f1dc3702f62fcb8d7d510e277fba36682991e26/Bitlocker/Scripts%20and%20remediation/All-Bitlocker-Requirements-Check-%20RemediationScript.ps1" | iex</pre>
-    
-    <!-- Modern Copy Button -->
-    <button class="copy-btn" onclick="copyCommand()">Copy Command</button>
-
-    <ul>
-        <li>Visit our website: <a href="https://thekingsmakers.github.io/Home/" target="_blank">The Kingsmakers Home</a></li>
-        <li>Follow us on <a href="https://x.com/thekingsmakers" target="_blank">Twitter</a></li>
-    </ul>
-</div>
-
-<!-- Styles for Modern Button -->
-<style>
-    .copy-btn {
-        background-color: #4CAF50; /* Green background */
-        color: white; /* White text */
-        border: none; /* No border */
-        padding: 10px 20px; /* Padding for button size */
-        text-align: center; /* Center text */
-        text-decoration: none; /* Remove underline */
-        display: inline-block; /* Align with other elements */
-        font-size: 16px; /* Font size */
-        border-radius: 8px; /* Rounded corners */
-        cursor: pointer; /* Cursor pointer on hover */
-        transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
-    }
-
-    .copy-btn:hover {
-        background-color: #45a049; /* Darker green on hover */
-        transform: translateY(-2px); /* Slight lift effect */
-    }
-
-    .copy-btn:active {
-        background-color: #388e3c; /* Even darker green when clicked */
-        transform: translateY(0); /* Reset to original position */
-    }
-</style>
-
-<script>
-    function copyCommand() {
-        const command = document.getElementById("scriptCommand").innerText;
-        navigator.clipboard.writeText(command).then(() => {
-            alert("Command copied to clipboard!");
-        }).catch(err => {
-            console.error('Failed to copy: ', err);
-        });
-    }
-</script>
 
     <script>
-        let hue = 0;
-        setInterval(() => {
-            hue += 1;
-            document.body.style.background = `linear-gradient(135deg, hsl(${hue}, 50%, 15%), hsl(${hue + 60}, 40%, 20%))`;
-        }, 100);
-
         function updateClock() {
             const clock = document.getElementById('clock');
             const now = new Date();
             clock.innerHTML = now.toLocaleTimeString();
         }
+        
         setInterval(updateClock, 1000);
         updateClock();
+
+        function copyCommand() {
+            const command = document.getElementById("scriptCommand").innerText;
+            navigator.clipboard.writeText(command).then(() => {
+                alert("Command copied to clipboard!");
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
     </script>
 </body>
 </html>
-
