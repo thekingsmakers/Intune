@@ -1,6 +1,6 @@
 # URLs to the raw scripts on GitHub
-$script1Url = "https://raw.githubusercontent.com/user/repo/branch/script1.ps1"
-$script2Url = "https://raw.githubusercontent.com/user/repo/branch/script2.ps1"
+$script1Url = "https://github.com/thekingsmakers/Intune/blob/eb1fb857320d3c530b25efaa246480ce931129f8/Brave%20Browser/BraveDetection.ps1"
+$script2Url = "https://github.com/thekingsmakers/Intune/blob/c5c7f5d1fe67627308750f1bda9d1c810bef7344/Brave%20Browser/BraveUninstall.ps1"
 
 # Run the first script
 Invoke-Expression (Invoke-WebRequest -Uri $script1Url).Content
