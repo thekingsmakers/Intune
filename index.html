@@ -1,304 +1,132 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Omar Osman | SCCM &amp; Intune Admin</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
-<style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #1e1e2f, #25293e);
-            color: #fff;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .header {
-            text-align: center;
-            padding: 2rem 0;
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            margin: 0;
-            padding: 1rem 0;
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            margin: 0.5rem 0;
-            color: #8f94fb;
-        }
-
-        .clock {
-            font-size: 2rem;
-            margin: 1rem 0;
-            font-family: monospace;
-        }
-
-        .links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        .button {
-            padding: 0.8rem 2rem;
-            background: #4e54c8;
-            border-radius: 30px;
-            text-decoration: none;
-            color: #fff;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .button:hover {
-            background: #8f94fb;
-            transform: translateY(-2px);
-        }
-
-        .portfolio {
-            margin: 4rem 0;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-        }
-
-        .portfolio h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid #4e54c8;
-            padding-bottom: 0.5rem;
-        }
-
-        .portfolio ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .portfolio li {
-            margin: 1.5rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .portfolio li::before {
-            content: "•";
-            color: #4e54c8;
-            position: absolute;
-            left: 0;
-        }
-
-        .contact-info {
-            position: fixed;
-            top: 1rem;
-            left: 1rem;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 1rem;
-            border-radius: 10px;
-        }
-
-        .contact-info p {
-            margin: 0.5rem 0;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 4rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .readme {
-            margin: 2rem auto;
-            max-width: 800px;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-        }
-
-        #scriptCommand {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 1rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 1rem 0;
-            white-space: pre-wrap;
-            word-break: break-all;
-        }
-
-        .copy-btn {
-            background-color: #4e54c8;
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: block;
-            margin: 1rem 0;
-        }
-
-        .copy-btn:hover {
-            background-color: #8f94fb;
-            transform: translateY(-2px);
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            .contact-info {
-                position: static;
-                margin-bottom: 2rem;
-            }
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omar Osman Mahat - Portfolio</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="contact-info">
-<p><i class="fas fa-envelope"></i> redomarjobs@gmail.com</p>
-<p><i class="fas fa-phone"></i> +97455102655</p>
-</div>
-<div class="container">
-<header class="header">
-<h1>Omar Osman</h1>
-<p class="subtitle">SCCM &amp; Intune Administrator | IT Systems Expert</p>
-<div class="clock" id="clock"></div>
-<div class="links">
-<a class="button" href="https://github.com/thekingsmakers" target="_blank">GitHub</a>
-<a class="button" href="https://twitter.com/thekingsmakers" target="_blank">Twitter</a>
-<a class="button" href="https://www.linkedin.com/in/omar-osman-mahat" target="_blank">Linkedin</a>
-</div>
-</header>
-<section class="portfolio">
-<h2>My Work &amp; Projects</h2>
-<p>Welcome to my portfolio. Below are some of the custom scripts and unique solutions I've created to streamline IT operations, automate administrative tasks, and enhance endpoint security.</p>
-<ul>
-<li><strong>Password Expiration Notification Script</strong> - A GUI-based PowerShell tool that alerts users when their passwords are nearing expiration and provides an intuitive way to update passwords.</li>
-<li><strong>BitLocker Compliance Checker</strong> - A script that evaluates device compatibility for BitLocker silent encryption by analyzing PCR7 Configuration and Kernel DMA Protection.</li>
-<li><strong>Wallpaper Deployment Tool</strong> - Deploys custom wallpapers across devices through Intune, ensuring branding consistency across the enterprise.</li>
-<li><strong>Camera Restriction by Geolocation</strong> - A PowerShell script that disables or enables device cameras based on geographic location.</li>
-<li><strong>Trust Relationship Fixer</strong> - A script deployed via Intune that restores domain trust relationships, preventing costly reimaging or device recovery operations.</li>
-<li><strong>Conditional Access Policies</strong> - Implemented secure Conditional Access Policies for enterprise data, including MFA, device compliance checks, and geofencing.</li>
-<li><strong>Software Deployment</strong> - Automated deployment of enterprise applications using SCCM and Intune, reducing manual overhead and increasing efficiency.</li>
-</ul>
-</section>
-<footer class="footer">
-<p>For consultancy and expertise on MDM and MAM, contact me at <strong>redomarjobs@gmail.com</strong> or <strong>+97455102655</strong>.</p>
-<p>Follow me on <a class="button" href="https://github.com/thekingsmakers" target="_blank">GitHub</a> and <a class="button" href="https://twitter.com/thekingsmakers" target="_blank">Twitter</a> and <a class="button" href="https://www.linkedin.com/in/omar-osman-mahat" target="_blank">Linkedin</a>.</p>
-<p>© 2024 The Kingsmakers</p>
-</footer>
+    <div class="container">
+        <header>
+            <h1>Omar Osman Mahat</h1>
+            <p class="subtitle">SCCM & Intune Administrator | IT Systems Expert</p>
+            <div class="clock" id="clock"></div>
+            <div class="theme-switch">
+                <label class="switch">
+                    <input type="checkbox" id="themeToggle">
+                    <span class="slider round"></span>
+                </label>
+                <span id="themeLabel">Light Mode</span>
+            </div>
+            <div class="links">
+                <a class="button" href="https://github.com/thekingsmakers" target="_blank">GitHub</a>
+                <a class="button" href="https://twitter.com/thekingsmakers" target="_blank">Twitter</a>
+                <a class="button" href="https://www.linkedin.com/in/omar-osman-mahat" target="_blank">LinkedIn</a>
+            </div>
+        </header>
 
+        <section class="portfolio">
+            <h2>My Work & Projects</h2>
+            <table>
+                <tr>
+                    <th>Project</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Password Expiration Notification</td>
+                    <td>GUI-based PowerShell tool that alerts users when passwords are near expiration.</td>
+                </tr>
+                <tr>
+                    <td>BitLocker Compliance Checker</td>
+                    <td>Evaluates device readiness for BitLocker silent encryption.</td>
+                </tr>
+                <tr>
+                    <td>Wallpaper Deployment</td>
+                    <td>Deploys custom wallpapers across enterprise devices using Intune.</td>
+                </tr>
+                <tr>
+                    <td>Camera Restriction by Location</td>
+                    <td>Enables/disables cameras based on geolocation using PowerShell.</td>
+                </tr>
+            </table>
+        </section>
 
+        <section class="readme">
+            <h2>TSS Log Collector</h2>
+            <p>Collect TSS logs with Intune Remediation</p>
+            <p>The script does the following:</p>
+            <hr>
+            <ol>
+                <li>Downloads the TSS tool: https://aka.ms/getTSS</li>
+                <li>Creates a TempZ folder in C:\ and copy the TSS folder and unzip it</li>
+                <li>Runs PowerShell as administrator and navigates to Temp folder with cd C:\Tempz\TSS</li>
+                <li>Then runs the script with this command: .\TSS.ps1 -CollectLog DND_SetupReport -AcceptEula</li>
+                <li>Waits until the script completes, you will find the result in: C:\MS_DATA</li>
+            </ol>
+            <hr>
+            <p>Created By Omar Osman Mahat</p>
+            <p>Date: 17/12/2024</p>
+            <p>Run the following PowerShell command to execute this script:</p>
+            <pre id="scriptCommand_TSS_LOG_Collector">iwr "https://raw.githubusercontent.com/thekingsmakers/Intune/main/Tss%20Logs/TSS_LOG_Collector.ps1" | iex</pre>
+            <button class="copy-btn" onclick="copyCommand('scriptCommand_TSS_LOG_Collector')">Copy Command</button>
+        </section>
 
+        <section class="readme">
+            <h2>Intune Silent BitLocker Encryption Readiness</h2>
+            <p>Define the registry paths</p>
+            <p>Run the following PowerShell command to execute this script:</p>
+            <p>The script does the following:</p>
+            <hr>
+            <p>BitLocker Silent Readiness check script</p>
+            <p>Description</p>
+            <p>This script checks if the system meets the requirements for BitLocker silent encryption, including TPM version 1.2, UEFI boot mode, Secure Boot status, Kernel DMA Protection, WinRE Status and PCR7 Configuration status.</p>
+            <p>The script performs a series of checks to validate that the system is equipped for BitLocker silent encryption. It checks:</p>
+            <ul>
+                <li>TPM (Trusted Platform Module) availability and version (requires version 1.2 or higher)</li>
+                <li>UEFI firmware mode, ensuring the system is not in Legacy BIOS mode</li>
+                <li>Secure Boot status, verifying if Secure Boot is enabled</li>
+                <li>PCR7 Configuration status to confirm readiness for encryption</li>
+                <li>Kernel DMA Protection status</li>
+                <li>WinRE status check</li>
+            </ul>
+            <hr>
+            <p>Created by Omar Osman Mahat</p>
+            <p>Date: 17/12/2024</p>
+            <pre id="Bitcheck">iwr "https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/Bitlocker/Scripts%20and%20remediation/All-Bitlocker-Requirements-Check-%20RemediationScript.ps1" | iex</pre>
+            <button class="copy-btn" onclick="copyCommand('Bitcheck')">Copy Command</button>
+        </section>
 
-<section class="readme">
-  <h2>Intune Silent BitLocker Encryption Readiness</h2>
-  <p>Ensure your system is ready for silent BitLocker encryption by running the following PowerShell command:</p>
-  <pre id="scriptCommand_Deleting apps and sidecars">iwr "https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/Bitlocker/Scripts%20and%20remediation/All-Bitlocker-Requirements-Check-%20RemediationScript.ps1" | iex</pre>
-  <button class="copy-btn" onclick="copyCommand('Deleting apps and sidecars')">Copy Command</button>
-  
-  <h3>Script Overview</h3>
-  <p>This script checks if your system meets all the necessary requirements for BitLocker silent encryption. It ensures the following conditions are satisfied:</p>
-  <ul>
-    <li>TPM (Trusted Platform Module) version 1.2 or higher is available.</li>
-    <li>System is running in UEFI firmware mode (not Legacy BIOS).</li>
-    <li>Secure Boot is enabled.</li>
-    <li>PCR7 Configuration is ready for encryption.</li>
-    <li>Kernel DMA Protection is active.</li>
-    <li>Windows Recovery Environment (WinRE) status is verified.</li>
-  </ul>
-  
-  <h3>Author and Date</h3>
-  <p>Created by: Omar Osman Mahat<br>
-  Date: 17/12/2024</p>
-  
-  <p>Script URL:<br>
- <pre id="Bitcheck">iwr "https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/Bitlocker/Scripts%20and%20remediation/All-Bitlocker-Requirements-Check-%20RemediationScript.ps1 | iex ">Download Script</a></p>
- <button class="copy-btn" onclick="copyCommand('Bitcheck')">Copy Command</button>
-</section>
+        <script>
+            function copyCommand(id) {
+                var copyText = document.getElementById(id).innerText;
+                navigator.clipboard.writeText(copyText)
+                    .then(() => alert("Copied to clipboard!"))
+                    .catch(err => console.error('Failed to copy:', err));
+            }
 
+            // Clock functionality
+            function updateClock() {
+                const now = new Date();
+                document.getElementById('clock').textContent = now.toLocaleTimeString();
+            }
+            setInterval(updateClock, 1000);
+            updateClock();
 
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('themeToggle');
+            const themeLabel = document.getElementById('themeLabel');
 
-
-
-
-<section class="readme">
-<h2>Deleting Apps And Sidecars for Intune</h2>
-<p>Define the registry paths</p>
-<p>Run the following PowerShell command to execute this script:</p>
-<pre id="scriptCommand_Deleting apps and sidecars">iwr "https://raw.githubusercontent.com/thekingsmakers/Intune/main/Intune%20Management/Deleting%20apps%20and%20sidecars.ps1" | iex</pre>
-<button class="copy-btn" onclick="copyCommand('Deleting apps and sidecars')">Copy Command</button>
-</section>
-
-
-
-<section class="readme">
-  <h2>TSS Log Collector</h2>
-  <p>Collect TSS logs with Intune Remediation by executing the following steps:</p>
-  <ul>
-    <li>Downloads the TSS tool from <a href="https://aka.ms/getTSS">aka.ms/getTSS</a></li>
-    <li>Creates a TempZ folder in C:\ and copies the TSS folder, then unzips it.</li>
-    <li>Runs PowerShell as administrator and navigates to the Temp folder with: <code>cd C:\Tempz\TSS</code></li>
-    <li>Executes the script using: <code>.\TSS.ps1 -CollectLog DND_SetupReport -AcceptEula</code></li>
-    <li>Results are stored in: <code>C:\MS_DATA</code></li>
-  </ul>
-  
-  <h3>Author and Date</h3>
-  <p>Created by: Omar Osman Mahat<br>
-  Date: 17/12/2024</p>
-
-  <p>Run the following PowerShell command to execute this script:</p>
-  <pre id="scriptCommand_TSS_LOG_Collector">iwr "https://raw.githubusercontent.com/thekingsmakers/Intune/main/Tss%20Logs/TSS_LOG_Collector.ps1" | iex</pre>
-  <button class="copy-btn" onclick="copyCommand('TSS_LOG_Collector')">Copy Command</button>
-</section>
-
-
-
-
-
-
-
-
-</div>
-<script>
-        function updateClock() {
-            const clock = document.getElementById('clock');
-            const now = new Date();
-            clock.innerHTML = now.toLocaleTimeString();
-        }
-        
-        setInterval(updateClock, 1000);
-        updateClock();
-
-        function copyCommand() {
-            const command = document.getElementById("scriptCommand").innerText;
-            navigator.clipboard.writeText(command).then(() => {
-                alert("Command copied to clipboard!");
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
+            themeToggle.addEventListener('change', function() {
+                document.body.classList.toggle('dark-mode');
+                themeLabel.textContent = document.body.classList.contains('dark-mode') ? 'Dark Mode' : 'Light Mode';
             });
-        }
-    </script>
+        </script>
+
+        <footer class="footer">
+            <p>For consultancy and expertise, contact me at <strong>redomarjobs@gmail.com</strong> or <strong>+97455102655</strong>.</p>
+            <p>Follow me on <a href="https://github.com/thekingsmakers" target="_blank">GitHub</a> and <a href="https://twitter.com/thekingsmakers" target="_blank">Twitter</a>.</p>
+            <p>© 2024 @thekingsmakers. All rights reserved.</p>
+        </footer>
+    </div>
 </body>
-</html>
