@@ -112,7 +112,7 @@ function Show-GUI {
 
     # Title Label
     $titleLabel = New-Object System.Windows.Forms.Label
-    $titleLabel.Text = "Omar Osman Mahat Software Installer"
+    $titleLabel.Text = "Omar Osman Software Installer"
     $titleLabel.AutoSize = $true
     $titleLabel.Font = New-Object System.Drawing.Font("Segoe UI", 16, [System.Drawing.FontStyle]::Bold)
     $titleLabel.Location = New-Object System.Drawing.Point(20, 20)
