@@ -90,7 +90,7 @@ function Show-GUI {
 
     # Create the main form
     $form = New-Object System.Windows.Forms.Form
-    $form.Text = "Omar Osman Mahat Software Installer"
+    $form.Text = "Omar Osman Software Installer"
     $form.Size = New-Object System.Drawing.Size(600, 500)
     $form.StartPosition = "CenterScreen"
     $form.BackColor = [System.Drawing.Color]::FromArgb(30, 30, 30) # Dark background
@@ -121,7 +121,7 @@ function Show-GUI {
 
     # Credits Label
     $creditsLabel = New-Object System.Windows.Forms.Label
-    $creditsLabel.Text = "Created by Omar Osman Mahat | Twitter: @thekingsmakers"
+    $creditsLabel.Text = "Created by Omar Osman | Twitter: @thekingsmakers"
     $creditsLabel.AutoSize = $true
     $creditsLabel.Font = New-Object System.Drawing.Font("Segoe UI", 10)
     $creditsLabel.Location = New-Object System.Drawing.Point(20, 60)
