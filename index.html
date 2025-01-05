@@ -6,6 +6,41 @@
     <title>Omar Osman Mahat - Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Styles for the Microsoft Services Status tab */
+        .status-list {
+            list-style: none;
+            padding: 0;
+        }
+        .status-list li {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+        .status-up {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status-down {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -34,6 +69,7 @@
                 <button class="tab-button active" data-tab="portfolio">Portfolio</button>
                 <button class="tab-button" data-tab="scripts">Scripts</button>
                 <button class="tab-button" data-tab="about">About Me</button>
+                <button class="tab-button" data-tab="status">Microsoft Services Status</button>
             </div>
             <div class="tab-content">
                 <!-- Portfolio Tab -->
@@ -90,22 +126,22 @@
                     </div>
                 </div>
 
-                 
-
                 <!-- About Me Tab -->
                 <div id="about" class="tab-pane">
                     <h2>About Me</h2>
                     <p>Hi, I’m Omar – an Intune admin, ex-SCCM admin, and tech enthusiast with a passion for automation and IT systems management. I specialize in developing PowerShell scripts and automation tools that simplify device management, enhance security, and improve user experiences. From deploying software through Intune and SCCM to automating password management and BitLocker configurations, I focus on making IT workflows efficient and user-friendly.</p>
-    
-    <p>I’m currently working on GitHub projects that automate software installations during computer imaging, using PowerShell to dynamically fetch and install the latest software. Additionally, I’m developing GitHub Actions bots that scrape Microsoft Intune documentation and tweet updates, ensuring IT professionals stay informed.</p>
-    
-    <p>My interests also extend to home automation and IoT, where I’m building tools to monitor electricity usage and control sockets via Arduino and Bluetooth. These projects reflect my drive to merge technology with practical, real-world solutions.</p>
-    
-    <p>Beyond tech, I run a Quran and Dawah channel, creating content that educates and inspires.</p>
-    
-    <p>Whether automating IT tasks or developing innovative tools, I’m always learning, evolving, and pushing the boundaries of what’s possible.</p>
-    
-    <p>Let’s innovate and automate the future together!</p>
+                    <p>I’m currently working on GitHub projects that automate software installations during computer imaging, using PowerShell to dynamically fetch and install the latest software. Additionally, I’m developing GitHub Actions bots that scrape Microsoft Intune documentation and tweet updates, ensuring IT professionals stay informed.</p>
+                    <p>My interests also extend to home automation and IoT, where I’m building tools to monitor electricity usage and control sockets via Arduino and Bluetooth. These projects reflect my drive to merge technology with practical, real-world solutions.</p>
+                    <p>Beyond tech, I run a Quran and Dawah channel, creating content that educates and inspires.</p>
+                    <p>Whether automating IT tasks or developing innovative tools, I’m always learning, evolving, and pushing the boundaries of what’s possible.</p>
+                    <p>Let’s innovate and automate the future together!</p>
+                </div>
+
+                <!-- Microsoft Services Status Tab -->
+                <div id="status" class="tab-pane">
+                    <h2>Microsoft Services Status</h2>
+                    <button class="button" onclick="checkStatus()">Check Status</button>
+                    <ul class="status-list" id="statusList"></ul>
                 </div>
             </div>
         </section>
@@ -117,7 +153,7 @@
             <p>© 2024 @thekingsmakers. All rights reserved.</p>
         </footer>
     </div>
-    
+
     <!-- Chatbot Popup -->
     <div class="chatbot-popup" id="chatbotPopup">
         <div class="chatbot-header">
@@ -145,5 +181,43 @@
 
     <!-- JavaScript -->
     <script src="script.js"></script>
+    <script>
+        // JavaScript for Microsoft Services Status
+        const sites = [
+            { name: 'Microsoft Entra ID', url: 'https://aka.ms/MSEntraPortal' },
+            { name: 'Azure Portal', url: 'https://portal.azure.com' },
+            { name: 'Microsoft Intune', url: 'https://intune.microsoft.com/' },
+            { name: 'Exchange Admin Center', url: 'https://admin.exchange.microsoft.com' },
+            { name: 'Microsoft 365 Admin Center', url: 'https://admin.microsoft.com' },
+            { name: 'Defender XDR', url: 'https://security.microsoft.com' },
+            { name: 'Microsoft Purview Compliance', url: 'https://compliance.microsoft.com' },
+            { name: 'Teams Admin Center', url: 'https://admin.teams.microsoft.com' }
+        ];
+
+        function checkStatus() {
+            const statusList = document.getElementById('statusList');
+            statusList.innerHTML = '';
+            
+            sites.forEach(site => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `Checking ${site.name}...`;
+                statusList.appendChild(listItem);
+
+                fetch(site.url, { mode: 'no-cors' })
+                    .then(() => {
+                        listItem.textContent = `${site.name} is up and running`;
+                        listItem.className = 'status-up';
+                    })
+                    .catch(() => {
+                        listItem.textContent = `${site.name} is down`;
+                        listItem.className = 'status-down';
+                    });
+            });
+        }
+        
+        window.onload = () => {
+            setInterval(checkStatus, 5000);
+        };
+    </script>
 </body>
 </html>
