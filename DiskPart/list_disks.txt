@@ -1,0 +1,3 @@
+list disk
+detail disk > disk_info.txt
+exit
