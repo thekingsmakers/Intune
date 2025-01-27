@@ -1,0 +1,27 @@
+﻿﻿<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+  <DeviceNaming>
+    <Prefix>dsfdasfsdf</Prefix>
+  </DeviceNaming>
+  <DomainJoin>
+    <Enabled>True</Enabled>
+    <DomainName>dfdfdffdfd</DomainName>
+    <DomainIP>dfffasf</DomainIP>
+    <OUPath>dsfsaf</OUPath>
+    <Credentials>
+      <Username>dsfdsfdsf</Username>
+    </Credentials>
+  </DomainJoin>
+  <WindowsActivation>
+    <ProductKey>xxxxx-xxxxx-xxxxx-xxxxx-xxxxx</ProductKey>
+  </WindowsActivation>
+  <SoftwareInstallation>
+    <Packages>
+      <Package>ChromeEnterprise</Package>
+      <Package>AdobeAcrobat</Package>
+      <Package>Wireshark</Package>
+      <Package>WinRAR</Package>
+      <Package>7-Zip</Package>
+    </Packages>
+  </SoftwareInstallation>
+</Configuration>

@@ -1,0 +1,64 @@
+**IMPORTANT: THIS IS A BASIC EULA TEMPLATE FOR DISCUSSION PURPOSES ONLY AND IS NOT A SUBSTITUTE FOR PROFESSIONAL LEGAL ADVICE. YOU MUST CONSULT WITH A SOFTWARE LICENSING LAWYER TO CREATE A LEGALLY SOUND AND ENFORCEABLE END-USER LICENSE AGREEMENT (EULA) TAILORED TO YOUR SPECIFIC NEEDS AND JURISDICTION.**
+
+**END-USER LICENSE AGREEMENT (EULA)**
+
+**FOR MDT EXTENSION**
+
+**BY THEKINGSMAKERS**
+
+**Last Updated: [Date]**
+
+**1.  ACCEPTANCE OF TERMS**
+
+By downloading, installing, copying, or otherwise using the MDT Extension (the "Software"), you ("Licensee" or "You") agree to be bound by the terms and conditions of this End-User License Agreement ("EULA"). If you do not agree to these terms, do not download, install, copy, or use the Software.
+
+**2.  GRANT OF LICENSE**
+
+Subject to the terms and conditions of this EULA, Thekingsmakers ("Licensor" or "We") grants you a limited, non-exclusive, non-transferable, non-sublicensable, revocable license to use the Software solely for your internal business operations.
+
+**3.  LICENSE RESTRICTIONS**
+
+You shall not:
+
+*   Copy, modify, or distribute the Software, except as expressly permitted in this EULA.
+*   Reverse engineer, decompile, or disassemble the Software, or attempt to derive the source code.
+*   Rent, lease, lend, sell, sublicense, assign, or otherwise transfer your rights to the Software to any third party.
+*   Use the Software for any illegal or unauthorized purpose.
+*   Remove or alter any copyright notices or other proprietary markings on the Software.
+*   Use the Software in a manner that violates any applicable laws or regulations.
+
+**4.  INTELLECTUAL PROPERTY RIGHTS**
+
+The Software is protected by copyright laws and international treaties. The Software and all intellectual property rights therein are owned by Thekingsmakers. This EULA does not grant you any ownership rights in the Software.
+
+**5.  DISCLAIMER OF WARRANTY**
+
+THE SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. WE DO NOT WARRANT THAT THE SOFTWARE WILL BE ERROR-FREE OR UNINTERRUPTED, OR THAT IT WILL MEET YOUR REQUIREMENTS.
+
+**6.  LIMITATION OF LIABILITY**
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL THEKINGSMMAKERS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR REVENUES, WHETHER INCURRED DIRECTLY OR INDIRECTLY, OR ANY LOSS OF DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES, RESULTING FROM (I) YOUR USE OR INABILITY TO USE THE SOFTWARE; (II) ANY UNAUTHORIZED ACCESS TO OR USE OF OUR SERVERS AND/OR ANY PERSONAL INFORMATION STORED THEREIN; (III) ANY INTERRUPTION OR CESSATION OF TRANSMISSION TO OR FROM OUR SERVICES; (IV) ANY BUGS, VIRUSES, TROJAN HORSES, OR THE LIKE THAT MAY BE TRANSMITTED TO OR THROUGH OUR SOFTWARE; OR (V) ANY ERRORS OR OMISSIONS IN ANY CONTENT OR FOR ANY LOSS OR DAMAGE OF ANY KIND INCURRED AS A RESULT OF YOUR USE OF THE SOFTWARE, WHETHER BASED ON WARRANTY, CONTRACT, TORT (INCLUDING NEGLIGENCE), OR ANY OTHER LEGAL THEORY, EVEN IF WE HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+**7.  TERMINATION**
+
+This EULA is effective until terminated. We may terminate this EULA at any time if you fail to comply with any term or condition of this EULA. Upon termination, you must cease all use of the Software and destroy all copies, full or partial, thereof.
+
+**8.  GOVERNING LAW**
+
+This EULA shall be governed by and construed in accordance with the laws of [Your Jurisdiction], without regard to its conflict of law provisions.
+
+**9.  ENTIRE AGREEMENT**
+
+This EULA constitutes the entire agreement between you and Thekingsmakers concerning the Software and supersedes all prior or contemporaneous communications and proposals, whether oral or written, between you and Thekingsmakers with respect to the Software.
+
+**10. CONTACT INFORMATION**
+
+For any questions regarding this EULA, please contact:
+
+Thekingsmakers
+[Your Email Address or Contact Form Link]
+[Your Website (Optional)]
+
+---
+
+**PLEASE NOTE AGAIN: THIS IS A BASIC TEMPLATE AND REQUIRES REVIEW AND CUSTOMIZATION BY A LEGAL PROFESSIONAL TO ENSURE IT IS SUITABLE FOR YOUR SPECIFIC NEEDS AND LEGALLY ENFORCEABLE IN YOUR JURISDICTION.**

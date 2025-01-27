@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Configuration>
+    <DeviceNaming>
+        <Prefix></Prefix>
+    </DeviceNaming>
+    <DomainJoin>
+        <Enabled>false</Enabled>
+        <DomainName></DomainName>
+        <DomainIP></DomainIP>
+        <OUPath></OUPath>
+        <Credentials>
+            <Username></Username>
+            <Password></Password>
+        </Credentials>
+    </DomainJoin>
+    <WindowsActivation>
+        <ProductKey></ProductKey>
+    </WindowsActivation>
+    <SoftwareInstallation>
+        <Packages>
+        </Packages>
+    </SoftwareInstallation>
+</Configuration>
