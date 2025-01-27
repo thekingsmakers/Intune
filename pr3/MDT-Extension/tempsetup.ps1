@@ -24,7 +24,7 @@ $AvailableSoftwareList = @(
 #region GUI Elements
 $form = New-Object System.Windows.Forms.Form
 $form.Text = "MDT Extension Initial Configuration - $($CompanyName)"
-$form.Size = New-Object System.Drawing.Size(600, 650) # Reduced form height
+$form.Size = New-Object System.Drawing.Size(600, 750) # Increased form height
 $form.StartPosition = "CenterScreen"
 
 # --- Header Panel ---
@@ -65,7 +65,7 @@ $form.Controls.Add($groupBoxDeviceNaming)
 $groupBoxDomainJoin = New-Object System.Windows.Forms.GroupBox
 $groupBoxDomainJoin.Text = "Domain Join Configuration"
 $groupBoxDomainJoin.Location = New-Object System.Drawing.Point(20, 130) # Adjusted Y position
-$groupBoxDomainJoin.Size = New-Object System.Drawing.Size(540, 150) # Reduced height
+$groupBoxDomainJoin.Size = New-Object System.Drawing.Size(540, 180)
 # ... (Rest of Domain Join GroupBox controls - same as before)
 # (Copy from previous script - Domain Join GroupBox controls)
 $checkBoxDomainJoinEnabled = New-Object System.Windows.Forms.CheckBox
@@ -107,7 +107,6 @@ $textBoxOUPath.Location = New-Object System.Drawing.Point(120, 110)
 $textBoxOUPath.Size = New-Object System.Drawing.Size(300, 20) # Wider textbox for OU Path
 $groupBoxDomainJoin.Controls.Add($textBoxOUPath)
 
-
 $labelUsername = New-Object System.Windows.Forms.Label
 $labelUsername.Location = New-Object System.Drawing.Point(10, 140)
 $labelUsername.Size = New-Object System.Drawing.Size(100, 20)
@@ -119,6 +118,18 @@ $textBoxUsername.Location = New-Object System.Drawing.Point(120, 140)
 $textBoxUsername.Size = New-Object System.Drawing.Size(200, 20)
 $groupBoxDomainJoin.Controls.Add($textBoxUsername)
 
+$labelPassword = New-Object System.Windows.Forms.Label
+$labelPassword.Location = New-Object System.Drawing.Point(330, 140)
+$labelPassword.Size = New-Object System.Drawing.Size(100, 20)
+$labelPassword.Text = "Password:"
+$groupBoxDomainJoin.Controls.Add($labelPassword)
+
+$textBoxPassword = New-Object System.Windows.Forms.TextBox
+$textBoxPassword.Location = New-Object System.Drawing.Point(440, 140)
+$textBoxPassword.Size = New-Object System.Drawing.Size(90, 20)
+$textBoxPassword.UseSystemPasswordChar = $true
+$groupBoxDomainJoin.Controls.Add($textBoxPassword)
+
 
 $form.Controls.Add($groupBoxDomainJoin)
 
@@ -126,7 +137,7 @@ $form.Controls.Add($groupBoxDomainJoin)
 # --- Windows Activation ---
 $groupBoxWindowsActivation = New-Object System.Windows.Forms.GroupBox
 $groupBoxWindowsActivation.Text = "Windows Activation"
-$groupBoxWindowsActivation.Location = New-Object System.Drawing.Point(20, 290) # Adjusted Y position
+$groupBoxWindowsActivation.Location = New-Object System.Drawing.Point(20, 320) # Adjusted Y position
 $groupBoxWindowsActivation.Size = New-Object System.Drawing.Size(540, 80)
 
 $labelProductKey = New-Object System.Windows.Forms.Label
@@ -146,7 +157,7 @@ $form.Controls.Add($groupBoxWindowsActivation)
 # --- Software Installation ---
 $groupBoxSoftwareInstallation = New-Object System.Windows.Forms.GroupBox
 $groupBoxSoftwareInstallation.Text = "Software Installation"
-$groupBoxSoftwareInstallation.Location = New-Object System.Drawing.Point(20, 380) # Adjusted Y position
+$groupBoxSoftwareInstallation.Location = New-Object System.Drawing.Point(20, 410) # Adjusted Y position
 $groupBoxSoftwareInstallation.Size = New-Object System.Drawing.Size(540, 250)
 
 $checkedListBoxSoftware = New-Object System.Windows.Forms.CheckedListBox
@@ -163,7 +174,7 @@ $form.Controls.Add($groupBoxSoftwareInstallation)
 
 # --- Buttons ---
 $buttonSaveConfig = New-Object System.Windows.Forms.Button
-$buttonSaveConfig.Location = New-Object System.Drawing.Point(250, 640) # Adjusted button position
+$buttonSaveConfig.Location = New-Object System.Drawing.Point(250, 670) # Adjusted button position
 $buttonSaveConfig.Size = New-Object System.Drawing.Size(100, 30)
 $buttonSaveConfig.Text = "Save Config"
 $form.Controls.Add($buttonSaveConfig)
@@ -171,7 +182,7 @@ $form.Controls.Add($buttonSaveConfig)
 
 # --- Footer Panel ---
 $footerPanel = New-Object System.Windows.Forms.Panel
-$footerPanel.Location = New-Object System.Drawing.Point(0, 680) # Adjusted Y position
+$footerPanel.Location = New-Object System.Drawing.Point(0, 710) # Adjusted Y position
 $footerPanel.Size = New-Object System.Drawing.Size(600, 40)
 $footerPanel.BackColor = [System.Drawing.SystemColors]::ControlLight
 $footerLabel = New-Object System.Windows.Forms.Label
@@ -272,6 +283,8 @@ else
     $credentialsElement = $xmlConfig.CreateElement("Credentials")
     $usernameElement = $xmlConfig.CreateElement("Username")
     $credentialsElement.AppendChild($usernameElement)
+    $passwordElement = $xmlConfig.CreateElement("Password")
+    $credentialsElement.AppendChild($passwordElement)
     $domainJoinElement.AppendChild($credentialsElement)
     $configurationElement.AppendChild($domainJoinElement)
 
@@ -300,6 +313,7 @@ $buttonSaveConfig.Add_Click({
         $xmlConfig.Configuration.DomainJoin.DomainIP = $textBoxDomainIP.Text
         $xmlConfig.Configuration.DomainJoin.OUPath = $textBoxOUPath.Text
         $xmlConfig.Configuration.DomainJoin.Credentials.Username = $textBoxUsername.Text
+        $xmlConfig.Configuration.DomainJoin.Credentials.Password = $textBoxPassword.Text
         $xmlConfig.Configuration.WindowsActivation.ProductKey = $textBoxProductKey.Text
 
         # Ensure SoftwareInstallation node exists
