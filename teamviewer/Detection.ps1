@@ -1,3 +1,9 @@
+#Script Name:    Detect Team Viewer
+# Description:     Detects TeamViewer presence on machine
+# Notes:          
+#                
+
+
 # Define function to check registry for installed software
 function Check-TeamViewerRegistry {
     $registryPaths = @(
