@@ -1,25 +1,63 @@
-# PowerShell Detection Script for TeamViewer
-
-$installedSoftware = Get-ChildItem "HKLM:\\Software\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall", 
-                                    "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall" -ErrorAction SilentlyContinue
-
-# Checking if TeamViewer is in the list of installed software
-$teamViewerFound = $false
-foreach ($item in $installedSoftware) {
-    $displayName = (Get-ItemProperty -Path $item.PSPath).DisplayName
-    if ($displayName -like "*TeamViewer*") {
-        $teamViewerFound = $true
-        break
+# Define function to check registry for installed software
+function Check-TeamViewerRegistry {
+    $registryPaths = @(
+        "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*",
+        "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*",
+        "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*"
+    )
+    
+    foreach ($path in $registryPaths) {
+        if (Test-Path $path) {
+            $installedApps = Get-ItemProperty -Path $path -ErrorAction SilentlyContinue
+            foreach ($app in $installedApps) {
+                if ($app.DisplayName -match "TeamViewer") {
+                    Write-Output "TeamViewer found in registry: $($app.DisplayName)"
+                    return $true
+                }
+            }
+        }
     }
+    return $false
 }
 
-# Output and exit codes based on the detection
-if ($teamViewerFound) {
-    $teamViewerStatus = "Detected"
-    Write-Output ($teamViewerStatus | ConvertTo-Json -Compress)
-    Exit 1  # Exit with code 1, indicating TeamViewer is detected
+# Define function to check running processes
+function Check-TeamViewerProcesses {
+    $processes = Get-Process -ErrorAction SilentlyContinue | Where-Object { $_.ProcessName -match "TeamViewer" }
+    if ($processes) {
+        Write-Output "TeamViewer is running as a process."
+        return $true
+    }
+    return $false
+}
+
+# Define function to check common installation paths
+function Check-TeamViewerPaths {
+    $possiblePaths = @(
+        "C:\Program Files\TeamViewer",
+        "C:\Program Files (x86)\TeamViewer",
+        "$env:APPDATA\TeamViewer",
+        "$env:PROGRAMDATA\TeamViewer"
+    )
+
+    foreach ($path in $possiblePaths) {
+        if (Test-Path $path) {
+            Write-Output "TeamViewer installation found at: $path"
+            return $true
+        }
+    }
+    return $false
+}
+
+# Run all detection functions
+$foundRegistry = Check-TeamViewerRegistry
+$foundProcesses = Check-TeamViewerProcesses
+$foundPaths = Check-TeamViewerPaths
+
+# Determine final detection result and exit accordingly
+if ($foundRegistry -or $foundProcesses -or $foundPaths) {
+    Write-Output "TeamViewer is detected on this system."
+    exit 1
 } else {
-    $teamViewerStatus = "Not Detected"
-    Write-Output ($teamViewerStatus | ConvertTo-Json -Compress)
-    Exit 0  # Exit with code 0, indicating TeamViewer is not detected
+    Write-Output "TeamViewer is NOT detected on this system."
+    exit 0
 }
