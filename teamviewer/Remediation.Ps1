@@ -7,84 +7,42 @@
 #
 #=============================================================================================================================
 
-# Define Variables and Paths
-$teamViewerUninstallPaths = @("C:\Program Files\TeamViewer\uninstall.exe", "C:\Program Files (x86)\TeamViewer\uninstall.exe")
-$fileNamePattern = "teamviewer*.exe"
-$shortcutPaths = @([Environment]::GetFolderPath("CommonDesktopDirectory"), [Environment]::GetFolderPath("DesktopDirectory"), 
-"$env:ProgramData\Microsoft\Windows\Start Menu\Programs")
-$retryCount = 2
+# Define function to find TeamViewer uninstall path
+function Get-TeamViewerUninstallPath {
+    $possiblePaths = @(
+        "C:\Program Files\TeamViewer\uninstall.exe",
+        "C:\Program Files (x86)\TeamViewer\uninstall.exe",
+        "$env:PROGRAMDATA\TeamViewer\uninstall.exe",
+        "$env:APPDATA\TeamViewer\uninstall.exe"
+    )
 
-# Function Definitions
-function DeleteFile ($path, $filePattern) {
-    if (Test-Path $path) {
-        $foundFiles = Get-ChildItem -Path $path -Recurse -Filter $filePattern -ErrorAction SilentlyContinue | Where-Object { 
-!$_.PSIsContainer }
-        foreach ($foundFile in $foundFiles) {
-            try {
-                Remove-Item -Path $foundFile.FullName -Force -ErrorAction Stop
-            } catch {
-                Write-Warning "Unable to delete file: $($foundFile.FullName). Error: $_"
-            }
+    foreach ($path in $possiblePaths) {
+        if (Test-Path $path) {
+            return $path
         }
     }
+    return $null
 }
 
-function DeleteWithRetries($path, $pattern) {
-    $count = 0
-    do {
-        try {
-            Get-ChildItem -Path $path -Filter $pattern -Recurse | Remove-Item -Force -ErrorAction Stop
-            return
-        } catch {
-            Start-Sleep -Seconds 2
-            $count++
-        }
-    } while ($count -lt $global:retryCount)
-}
+# Get the uninstall path
+$uninstallPath = Get-TeamViewerUninstallPath
 
-function UninstallWithRetries($uninstallPath) {
-    $uninstallRetryCount = 0
-    do {
-        try {
-            Start-Process $uninstallPath -ArgumentList "/S" -Wait -ErrorAction Stop
-            Write-Host "Successfully uninstalled TeamViewer using path: $uninstallPath"
-            return
-        } catch {
-            Write-Warning "Attempt to uninstall TeamViewer failed. Error: $_"
-            Start-Sleep -Seconds 2
-            $uninstallRetryCount++
-        }
-    } while ($uninstallRetryCount -lt $global:retryCount)
-    Write-Warning "Failed to uninstall TeamViewer after multiple retries."
-}
-
-# Execution Starts Here
-try {
-    # Uninstall TeamViewer with retries
-    foreach ($path in $teamViewerUninstallPaths) {
-        if (Test-Path -Path $path) {
-            UninstallWithRetries $path
-        } else {
-            Write-Host "Uninstaller not found at $path."
-        }
+if ($uninstallPath) {
+    Write-Output "TeamViewer uninstall.exe found at: $uninstallPath"
+    
+    # Run silent uninstall
+    Start-Process -FilePath $uninstallPath -ArgumentList "/S" -NoNewWindow -Wait
+    
+    # Verify if uninstallation was successful
+    Start-Sleep -Seconds 5
+    if (-Not (Test-Path "C:\Program Files\TeamViewer") -and -Not (Test-Path "C:\Program Files (x86)\TeamViewer")) {
+        Write-Output "TeamViewer has been successfully removed."
+        exit 0
+    } else {
+        Write-Output "Failed to remove TeamViewer. Please check manually."
+        exit 1
     }
-
-    # Delete TeamViewer executables
-    DeleteFile "C:\Users" $fileNamePattern
-    if (Test-Path -Path "D:\") {
-        DeleteFile "D:\" $fileNamePattern
-    }
-
-    # Delete Shortcuts with Retry Logic
-    foreach ($shortcutPath in $shortcutPaths) {
-        DeleteWithRetries $shortcutPath "*TeamViewer*.lnk"
-    }
-
-    Write-Host "TeamViewer remediation process completed successfully."
+} else {
+    Write-Output "TeamViewer uninstall.exe not found. It may already be uninstalled."
     exit 0
-}
-catch {
-    $errMsg = $_.Exception.Message
-    Write-Error "Error occurred: $errMsg"
-    exit 1
 }
