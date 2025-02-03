@@ -17,23 +17,15 @@ Function Write-Log {
     "$TimeStamp - $Message" | Out-File -Append -Encoding utf8 $LogFile
 }
 
-# --- Step 1: Stop the SEP service using smc.exe ---
-try {
-    if (Test-Path $SmcPath) {
-        # Stop the service using the documented command
-        $StopCommand = "-p $UninstallPassword -stop"
-        Write-Log "Stopping SEP service with: $SmcPath $StopCommand"
-        Start-Process -FilePath $SmcPath -ArgumentList $StopCommand -Wait -NoNewWindow
-        Write-Log "SEP service stop command executed."
-    }
-    else {
-        Write-Log "smc.exe not found at $SmcPath."
-        Write-Host "smc.exe not found. Cannot stop SEP service."
-    }
+if (Test-Path $SmcPath) {
+    $arguments = '-p Symantec@#$1234 -stop'
+    Write-Output "Stopping Symantec Endpoint Protection..."
+    Start-Process -FilePath $SmcPath -ArgumentList $arguments -NoNewWindow -Wait
+    Write-Output "Symantec Endpoint Protection has been stopped."
+} else {
+    Write-Output "Symantec Endpoint Protection service not found at the specified path."
 }
-catch {
-    Write-Log "Error stopping SEP service: $_"
-}
+
 
 # --- Step 2: Find the Product ID (MSI Product Code) for SEP ---
 try {
