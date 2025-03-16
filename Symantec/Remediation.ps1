@@ -5,7 +5,8 @@ The script searches for the product symantec and uninstalls it
 created by : Omar Osman
 
 27/2/2025
-#/>
+#>
+
 ﻿# Define the display name of Symantec Endpoint Protection
 $appName = "Symantec Endpoint Protection"
 
