@@ -1,0 +1,32 @@
+{ 
+    "Rules":[ 
+    {  
+           "SettingName":"Name", 
+           "Operator":"IsEquals", 
+           "DataType":"String", 
+           "Operand":"Symantec Endpoint Protection", 
+           "MoreInfoUrl":"https://qatareducation-my.sharepoint.com/:u:/g/personal/t-o_mahat_edu_gov_qa/EdQqBiPJJD5Nv3oCSu39wrsBJsTCCGqr4fpUlVbRlumpjg?e=cNS2Zi", 
+           "RemediationStrings":[  
+              {  
+                 "Language":"en_US", 
+                 "Title":"Symantec is not installed and must be installed for this device to be compliant", 
+                 "Description": "Symantec must be installed" 
+              } 
+           ] 
+        }, 
+    { 
+      "SettingName":"Version", 
+      "Operator":"GreaterEquals", 
+      "DataType":"Version", 
+      "Operand":"14.3.9707.7000", 
+      "MoreInfoUrl":"https://qatareducation-my.sharepoint.com/:u:/g/personal/t-o_mahat_edu_gov_qa/EdQqBiPJJD5Nv3oCSu39wrsBJsTCCGqr4fpUlVbRlumpjg?e=cNS2Zi", 
+      "RemediationStrings":[  
+         {  
+            "Language":"en_US", 
+            "Title":"Symantec is running an outdated version and needs to be updated before this device will be marked as compliant", 
+            "Description": "Update Symantec to version 14.3.9707.7000 or newer" 
+         } 
+      ] 
+    } 
+    ] 
+    } 
