@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DeploymentConfig>
+  <!-- Software packages to install -->
+  <Software>
+    <Package>C:\Path\To\Software1.msi</Package>
+    <Package>C:\Path\To\Software2.exe</Package>
+  </Software>
+
+  <!-- Device hostname -->
+  <Hostname>NEW-DEVICE-01</Hostname>
+
+  <!-- WiFi configuration -->
+  <Network>
+    <SSID>YourWiFiNetwork</SSID>
+    <Password>WiFiPassword</Password>
+  </Network>
+
+  <!-- Windows activation -->
+  <WindowsActivation>
+    <ProductKey>XXXXX-XXXXX-XXXXX-XXXXX-XXXXX</ProductKey>
+  </WindowsActivation>
+
+  <!-- Optional Windows features -->
+  <Features>
+    <Feature>TelnetClient</Feature>
+    <Feature>HypervisorPlatform</Feature>
+  </Features>
+
+  <!-- Domain join configuration -->
+  <Domain>
+    <JoinDomain>false</JoinDomain>
+    <DomainName>example.com</DomainName>
+    <DomainUser>admin@example.com</DomainUser>
+    <DomainPassword>domainPassword123</DomainPassword>
+  </Domain>
+</DeploymentConfig>

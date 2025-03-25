@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Deployment>
+  <!-- Software packages to install -->
+  <Software>
+    <Package>
+      <Name>software1.exe</Name>
+      <Arguments>/silent /norestart</Arguments>
+    </Package>
+    <Package>
+      <Name>software2.msi</Name>
+      <Arguments>ALLUSERS=1 /qn</Arguments>
+    </Package>
+  </Software>
+
+  <!-- System configuration -->
+  <Hostname>NEW-PC-01</Hostname>
+  
+  <!-- Network configuration -->
+  <Network>
+    <SSID>CorporateWiFi</SSID>
+    <Password>securepassword123</Password>
+  </Network>
+
+  <!-- Windows activation -->
+  <WindowsActivation>
+    <ProductKey>XXXXX-XXXXX-XXXXX-XXXXX-XXXXX</ProductKey>
+  </WindowsActivation>
+
+  <!-- Windows features to enable -->
+  <Features>
+    <Feature>TelnetClient</Feature>
+    <Feature>Microsoft-Hyper-V</Feature>
+  </Features>
+
+  <!-- Domain join configuration -->
+  <Domain>
+    <JoinDomain>true</JoinDomain>
+    <DomainName>corp.example.com</DomainName>
+    <DomainUser>admin@corp.example.com</DomainUser>
+    <DomainPassword>domainadminpass</DomainPassword>
+  </Domain>
+
+  <!-- Post-deployment options -->
+  <RestartAfter>true</RestartAfter>
+</Deployment>

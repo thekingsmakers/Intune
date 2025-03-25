@@ -1,0 +1,29 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20250325124400
+Username: QSEC\t-o.mahat-hd
+RunAs User: QSEC\t-o.mahat-hd
+Configuration Name: 
+Machine: MOE-L-BV0Z2F3 (Microsoft Windows NT 10.0.19045.0)
+Host Application: powershell -ExecutionPolicy Bypass -File D:\ImageDeploy\Automation\Deploy-Image.ps1
+Process ID: 23432
+PSVersion: 5.1.19041.5486
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.5486
+BuildVersion: 10.0.19041.5486
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is D:\ImageDeploy\Automation\Deployment.log
+PS>TerminatingError(Start-Process): "This command cannot be run due to the error: The system cannot find the file specified."
+D:\ImageDeploy\Automation\Deploy-Image.ps1 : Deployment failed: This command cannot be run due to the error: The system 
+cannot find the file specified.
+    + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,Deploy-Image.ps1
+D:\ImageDeploy\Automation\Deploy-Image.ps1 : Deployment failed: This command cannot be run due to the error: The
+system cannot find the file specified.
+    + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,Deploy-Image.ps1
+

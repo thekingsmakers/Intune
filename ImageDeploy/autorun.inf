@@ -1,0 +1,5 @@
+[autorun]
+label=Windows Deployment Tool
+icon=setup.ico
+open=Deployment\StartDeploy.bat
+action=Start Windows Deployment
