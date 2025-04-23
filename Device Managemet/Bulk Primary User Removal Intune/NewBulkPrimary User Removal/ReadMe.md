@@ -1,6 +1,6 @@
 # AzureAD Module Checker and Installer
 
-This PowerShell snippet ensures that the correct version (`2.0.2.140`) of the **AzureAD** module is installed on the system before proceeding with the rest of your script. If the module is missing or a different version is installed, it will:
+This PowerShell snippet ensures that the correct version (`2.0.2.140`) of the **AzureAD** module is installed on the system before proceeding with Device Managemet/Bulk Primary User Removal Intune/NewBulkPrimary User Removal/WorkingIntunePrimaryUserRemovalScript.ps1 script. If the module is missing or a different version is installed, it will:
 
 1. Uninstall all existing versions of the `AzureAD` module.
 2. Install the required version (`2.0.2.140`).
