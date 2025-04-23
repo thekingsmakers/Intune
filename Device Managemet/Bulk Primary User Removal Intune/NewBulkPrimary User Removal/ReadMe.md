@@ -46,5 +46,10 @@ if ($null -eq $installedModule -or $installedModule.Version.ToString() -ne $requ
 
 # Or you can do the following 
 - run the below in powershell and run the new bulkprimary user removal script
+
+```powershell
+ 
 Uninstall-Module -Name AzureAD
 Install-Module AzureAD -RequiredVersion 2.0.2.140
+
+```
