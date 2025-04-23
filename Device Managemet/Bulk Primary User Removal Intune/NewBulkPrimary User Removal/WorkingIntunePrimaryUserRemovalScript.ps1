@@ -1,10 +1,9 @@
-﻿<#
-
-.COPYRIGHT
-Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
-See LICENSE in the project root for license information.
-
-#>
+#—————————————————————————————————————————————
+# Version: 1.1.4
+# Author: Omar Osman (@thekingsmakers)
+# Twitter @thekingsmakers
+# Description: Remove primary users from Intune devices by managedDeviceId
+#—————————————————————————————————————————————
 
 ####################################################
 
