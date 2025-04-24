@@ -1,15 +1,10 @@
 ﻿# Define the list of specific public IPs to monitor
 $specificPublicIPs = @(
-    "10.12.13.150", "10.12.13.151", "10.12.13.152", 
-    "10.12.13.153", "10.12.13.154", "10.12.13.155", 
-    "10.12.13.156", "10.12.13.157", "10.12.13.158"
-)
+    List Ips
 
 # Define the domains and ports to block/unblock
 $domainsToBlock = @(
-    "api-mtls.euwe1.uds.lenovo.com:443", 
-    "api.euwe1.uds.lenovo.com:443", 
-    "mqtt-mtls.euwe1.uds.lenovo.com:8883"
+   List Urls
     
 )
 
