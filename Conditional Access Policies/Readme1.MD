@@ -1,4 +1,4 @@
-### Update Weekly TOR Exit Node Blocklist Using Conditional Access Policy
+## update Weekly TOR Exit Node Blocklist Using Conditional Access Policy
 
 #Purpose
 
@@ -6,12 +6,11 @@
 To ensure the security and integrity of our network by regularly updating the blocklist of TOR exit nodes 
 using a conditional access policy.
 
-##Scope
+#Scope
 
 
 This procedure applies to all IT personnel responsible for maintaining network security.
-
-##Procedure
+#Procedure
 
 
 • Obtain the TOR Exit List:
