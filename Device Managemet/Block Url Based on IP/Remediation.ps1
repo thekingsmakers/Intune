@@ -1,5 +1,5 @@
 ﻿# Define the list of specific public IPs to monitor
-$specificPublicIPs = @("178.20.20.20", "10.12.13.145", "10.12.13.150")  # Replace with your list of IPs
+$specificPublicIPs = @(")  # Replace with your list of IPs
 
 # Define the domain to block/unblock
 $domainToBlock = "api.euwe1.uds.lenovo.com"
