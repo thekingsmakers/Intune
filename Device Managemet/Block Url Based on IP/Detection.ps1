@@ -1,7 +1,7 @@
 ﻿# Detection Script - Checks if device is connected to a specific public IP
 
 # Define the list of specific public IPs to monitor
-$specificPublicIPs = @("178..2.3.4", "10.10.22.145", "10.10.22.150")
+$specificPublicIPs = @(")
 
 # Function to get the current public IP of the device
 function Get-PublicIP {
