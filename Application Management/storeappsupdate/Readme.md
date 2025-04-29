@@ -4,11 +4,8 @@
 ## Usage:  when you have store blocked in your organization. it can be very difficult upgrading application. below method will work for you seeamlessly 
 
 #### create a file structure as below 
-###### Folder PATH listing for volume Windows
-###### Volume serial number is 84FC-3B87
-###### C:.
 ######
-'''''
+```
 Main_folder
 - Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
 winget
@@ -18,11 +15,11 @@ winget
     ├───x64
     └───x86
 
-'''''
+```
 
 ### Run the below powershell script for installation. for this example i am upgrading company portal 
 
-Powershell ''''
+``` Powershell 
 
 # -------------------------------
 # Set the base path using $PSScriptRoot or current directory if empty
@@ -140,7 +137,7 @@ Write-Host "Installing Company Portal using Winget..."
 winget install --id 9wzdncrfj3pz --silent --accept-package-agreements --accept-source-agreements
 
 Write-Host "Installation process completed successfully!"
-'''''''
+```
 
 
 ## change the app id that you wana upgrade
