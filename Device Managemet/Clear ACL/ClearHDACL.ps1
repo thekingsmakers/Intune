@@ -24,7 +24,7 @@ foreach ($folder in $folders) {
     
     #Skip any HD account and continue
     if ($folder.Name -match '-hd$') {
-        Write-Host "Skipping folder: $path (matches -hd)"
+        Write-Host "Skipping folder: $path (matches -PW)"
         continue
     }
     
