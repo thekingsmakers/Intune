@@ -21,6 +21,8 @@ The repository is organized into directories based on functionality to facilitat
 - **User Handling/User Creation** Scripts for managing user accounts and profile.
 - **deletenow** Scripts for immediate deletion task.
 - **pr3/MDT-Extension** Extensions and scripts for Microsoft Deployment Toolkit (MDT.
+- **Chrome Auto Update using Intune Remediation for managed chrome.
+- **Winrar Auto Update using Intune Remediation.
 
 ---
 
