@@ -26,7 +26,7 @@ The repository is organized into directories based on functionality to facilitat
 
 ---
 
-## 🚀 Getting Starte
+## 🚀 Getting Started
 
 To utilize the scripts in this repository:
 
