@@ -7,7 +7,7 @@ PowerShell WinForms tool to validate Microsoft Intune PowerShell scripts, Proact
 - Single-file and whole-folder validation
 - Live folder watcher to validate new/changed scripts
 - Microsoft-guided checks with actionable messages
-- Optional auto-fixes written as `<name>.fixed.ps1`
+
 
 ### Validations (summary)
 - No reboots or shutdowns (`Restart-Computer`, `Stop-Computer`, `shutdown.exe`)
@@ -31,7 +31,7 @@ PowerShell WinForms tool to validate Microsoft Intune PowerShell scripts, Proact
 2. Launch from PowerShell:
 ```powershell
 cd "D:\scripts\Intune Script Validator"
-./Validator.ps1
+.exe
 ```
 
 ### Using the App
@@ -72,5 +72,6 @@ cd "D:\scripts\Intune Script Validator"
 
 ### License
 Provided as-is, without warranty. Review outputs before applying changes to production scripts.
+
 
 
