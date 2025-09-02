@@ -2,7 +2,7 @@
 <#!
 The Kingsmaker – PowerShell Script Signer (WPF GUI)
 Website: https://thekingsmaker.org
-Created by: The Kingsmaker
+Created by: The Kingsmakers
 
 Description
 -----------
