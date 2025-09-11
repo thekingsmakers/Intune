@@ -57,8 +57,8 @@ It provides a user-friendly interface, script validation, branding, and informat
 ---
 
 ## 🛠 Example Use Cases
-- Validate and remediate **Wireshark versions** in Intune.  
-- Check and repair **device trust relationship issues**.  
+- Validate and remediate **daily issue** with Intune.  
+- Check and repair **device health check remediation**.  
 - Automate repetitive detection & remediation workflows.
 
 ---
