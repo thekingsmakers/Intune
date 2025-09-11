@@ -2,6 +2,7 @@
 
 A modern PowerShell GUI tool (packaged as an EXE) designed to simplify **Intune detection and remediation script execution**.  
 It provides a user-friendly interface, script validation, branding, and informative logging.
+<img width="1147" height="662" alt="image" src="https://github.com/user-attachments/assets/192a3ad5-0a44-413e-850f-4597fd4c6c2c" />
 
 ---
 
