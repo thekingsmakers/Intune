@@ -1,0 +1,112 @@
+<#
+.SYNOPSIS
+Force Intune-assigned apps installation and monitor progress.
+
+.DESCRIPTION
+This script:
+1. Locates the Intune Windows Agent executable.
+2. Triggers sync to force all required apps installation.
+3. Monitors installation status via Intune Management Extension logs.
+4. Logs success/failure per app.
+5. Retries failed apps automatically.
+
+.NOTES
+- Requires administrator privileges.
+- Compatible with Windows 10/11 clients with Intune Management Extension installed.
+#>
+
+#-----------------------------#
+# Configuration
+#-----------------------------#
+$RetryCount = 2          # Number of times to retry failed apps
+$WaitBetweenChecks = 30  # Seconds between log checks
+$LogFolder = "$env:LOCALAPPDATA\IntuneForceInstallLogs"
+if (-not (Test-Path $LogFolder)) { New-Item -Path $LogFolder -ItemType Directory | Out-Null }
+$LogFile = Join-Path $LogFolder "IntuneAppInstall_$(Get-Date -Format 'yyyyMMdd_HHmmss').log"
+
+#-----------------------------#
+# Ensure admin
+#-----------------------------#
+if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltinRole] "Administrator")) {
+    Write-Warning "This script must be run as Administrator."
+    Exit 1
+}
+
+#-----------------------------#
+# Locate Intune Agent
+#-----------------------------#
+Write-Host "Searching for IntuneWindowsAgent executable..." -ForegroundColor Cyan
+$IMEPaths = @(
+    "C:\Program Files\Microsoft Intune Management Extension",
+    "C:\Program Files (x86)\Microsoft Intune Management Extension"
+)
+
+$AgentExe = $null
+foreach ($path in $IMEPaths) {
+    if (Test-Path $path) {
+        $AgentExe = Get-ChildItem -Path $path -Recurse -Filter "Microsoft.Management.Services.IntuneWindowsAgent.exe" -ErrorAction SilentlyContinue |
+                     Select-Object -First 1
+        if ($AgentExe) { break }
+    }
+}
+
+if (-not $AgentExe) {
+    Write-Error "Intune Windows Agent executable not found. Make sure this device is managed by Intune."
+    Exit 1
+}
+
+Write-Host "IntuneWindowsAgent found at: $($AgentExe.FullName)" -ForegroundColor Green
+Add-Content -Path $LogFile -Value "$(Get-Date) - IntuneWindowsAgent found at: $($AgentExe.FullName)"
+
+#-----------------------------#
+# Trigger sync
+#-----------------------------#
+Write-Host "Triggering Intune assigned apps installation..." -ForegroundColor Cyan
+Start-Process -FilePath $AgentExe.FullName -ArgumentList "intunemanagementextension://syncapp" -Wait
+Add-Content -Path $LogFile -Value "$(Get-Date) - Sync triggered."
+
+#-----------------------------#
+# Monitor installation
+#-----------------------------#
+$IMELogPath = "$env:ProgramData\Microsoft\IntuneManagementExtension\Logs\IntuneManagementExtension.log"
+if (-not (Test-Path $IMELogPath)) {
+    Write-Warning "IME log not found at $IMELogPath. Cannot monitor app installation."
+    Add-Content -Path $LogFile -Value "$(Get-Date) - WARNING: IME log not found."
+    Exit 1
+}
+
+Write-Host "Monitoring app installation..." -ForegroundColor Cyan
+
+$pendingApps = @()
+$retryCounter = 0
+
+do {
+    Start-Sleep -Seconds $WaitBetweenChecks
+
+    # Read log and find apps still not detected
+    $pendingApps = Select-String -Path $IMELogPath -Pattern "DetectionState: NotDetected" | ForEach-Object {
+        ($_ -split "AppName: ")[1].Split(",")[0]
+    } | Sort-Object -Unique
+
+    if ($pendingApps.Count -gt 0) {
+        Write-Host "Pending apps: $($pendingApps -join ', ')" -ForegroundColor Yellow
+        Add-Content -Path $LogFile -Value "$(Get-Date) - Pending apps: $($pendingApps -join ', ')"
+
+        if ($retryCounter -lt $RetryCount) {
+            Write-Host "Retrying sync for pending apps..." -ForegroundColor Cyan
+            Start-Process -FilePath $AgentExe.FullName -ArgumentList "intunemanagementextension://syncapp" -Wait
+            $retryCounter++
+        }
+    }
+
+} while ($pendingApps.Count -gt 0 -and $retryCounter -le $RetryCount)
+
+if ($pendingApps.Count -eq 0) {
+    Write-Host "All assigned apps installed successfully." -ForegroundColor Green
+    Add-Content -Path $LogFile -Value "$(Get-Date) - All assigned apps installed successfully."
+} else {
+    Write-Host "Some apps failed to install: $($pendingApps -join ', ')" -ForegroundColor Red
+    Add-Content -Path $LogFile -Value "$(Get-Date) - WARNING: Some apps failed to install: $($pendingApps -join ', ')"
+}
+
+Write-Host "Log saved to $LogFile"
