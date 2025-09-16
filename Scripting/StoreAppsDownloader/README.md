@@ -1,4 +1,4 @@
-## TheKingsmaker Store Downloader v1.5
+## TheKingsmaker Apps Store Downloader v1.5
 
 Modern Windows Forms GUI for downloading Microsoft Store packages without changing the original download logic.
 
@@ -53,3 +53,4 @@ Modern Windows Forms GUI for downloading Microsoft Store packages without changi
 
 ### License
 - © 2025 TheKingsmakers.org - All rights reserved
+
