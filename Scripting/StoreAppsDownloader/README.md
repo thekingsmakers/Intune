@@ -9,10 +9,8 @@ Modern Windows Forms GUI for downloading Microsoft Store packages without changi
 
 ### Getting Started
 1. Download or clone this folder to a local path (no admin required to run UI).
-2. Right-click `Downloader.ps1` → Run with PowerShell, or run from a PowerShell 5.1 prompt:
-   ```powershell
-   powershell.exe -ExecutionPolicy Bypass -File .\Downloader.ps1
-   ```
+2. open the exe file
+
 
 ### Usage
 - Package: Select a Microsoft Store package from the list, or enter a Product ID.
@@ -53,4 +51,5 @@ Modern Windows Forms GUI for downloading Microsoft Store packages without changi
 
 ### License
 - © 2025 TheKingsmakers.org - All rights reserved
+
 
