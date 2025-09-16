@@ -130,7 +130,7 @@ $objForm = New-Object System.Windows.Forms.Form
 $objForm.Size = New-Object System.Drawing.Size(600,460)
 $objForm.StartPosition = 'CenterScreen'
 $objForm.MaximizeBox = $false
-$objForm.Text = 'Microsoft Store Apps v1.05'
+$objForm.Text = 'Thekingsmaker- Store Downloader- V1.5'
 
 if ($PSVersionTable.PSVersion.Major -le 5) {
     $objForm.Icon = [System.Drawing.Icon]::ExtractAssociatedIcon($PSHOME + '\powershell.exe')
