@@ -22,7 +22,8 @@ param(
     [Alias('l')][switch]$List,
     [Alias('d')][string[]]$Detect,
     [Alias('i')][string[]]$Info,
-    [Alias('u')][string[]]$Uninstall
+    [Alias('u')][string[]]$Uninstall,
+    [switch]$Fuzzy
 )
 
 # Globals
@@ -250,11 +251,57 @@ function Get-InstalledApps {
 }
 
 # Normalize a string for fuzzy matching (lowercase, remove non-alphanumerics)
-function Normalize-Text {
+function ConvertTo-NormalizedText {
     param([AllowNull()][string]$Text)
     if ([string]::IsNullOrWhiteSpace($Text)) { return "" }
     $lower = $Text.ToLowerInvariant()
     return ([regex]::Replace($lower, "[^a-z0-9]", ""))
+}
+
+# Resolve the best single match for a given name with scoring
+function Resolve-BestAppMatch {
+    param(
+        [Parameter(Mandatory=$true)] [array]$Apps,
+        [Parameter(Mandatory=$true)] [string]$Name,
+        [switch]$Fuzzy
+    )
+    $needle = ConvertTo-NormalizedText $Name
+    if ([string]::IsNullOrWhiteSpace($needle)) { return @() }
+
+    $scored = foreach ($app in $Apps) {
+        if (-not $app.DisplayName) { continue }
+        $dn = [string]$app.DisplayName
+        $norm = ConvertTo-NormalizedText $dn
+        $score = 0
+        if ($dn -ieq $Name) { $score = 100 }
+        elseif ($norm -eq $needle) { $score = 95 }
+        elseif ($norm.StartsWith($needle)) { $score = 75 }
+        elseif ($Fuzzy -and $norm -like ("*{0}*" -f $needle)) { $score = 50 }
+
+        if ($score -gt 0) {
+            [pscustomobject]@{ App = $app; Score = $score; DisplayName = $dn }
+        }
+    }
+
+    if (-not $scored) { return @() }
+    $sorted = $scored | Sort-Object -Property @{ Expression = 'Score'; Descending = $true }, @{ Expression = 'DisplayName'; Descending = $false }
+
+    # In exact mode, only accept scores >=75 (exact/eq/startswith). Otherwise return empty to force explicit name.
+    if (-not $Fuzzy) {
+        $filtered = $sorted | Where-Object { $_.Score -ge 75 }
+        if (-not $filtered -or ($filtered | Measure-Object | Select-Object -ExpandProperty Count) -ne 1) {
+            return @()
+        }
+        return @($filtered[0].App)
+    }
+
+    # Fuzzy mode: take top unique highest score; if multiple share top score, abort to avoid mass uninstall
+    $topScore = $sorted[0].Score
+    $topMatches = $sorted | Where-Object { $_.Score -eq $topScore }
+    if (($topMatches | Measure-Object | Select-Object -ExpandProperty Count) -gt 1) {
+        return @()
+    }
+    return @($topMatches[0].App)
 }
 
 # Detect installer type and return appropriate silent parameters
@@ -387,8 +434,14 @@ function Show-SoftwareInfo {
         $any = $false
         foreach ($name in $Software) {
             Write-Log ("Gathering info for '{0}'..." -f $name) 'debug'
-            $needle = Normalize-Text $name
-            $infoMatches = @($apps | Where-Object { $_.DisplayName -and (( $_.DisplayName -like "*${name}*" ) -or (Normalize-Text $_.DisplayName -like "*${needle}*")) })
+    $needle = ConvertTo-NormalizedText $name
+            $needle = ConvertTo-NormalizedText $name
+            if ([string]::IsNullOrWhiteSpace($needle)) { continue }
+            $infoMatches = if ($Fuzzy) {
+                @($apps | Where-Object { $_.DisplayName -and (( $_.DisplayName -like "*${name}*" ) -or (ConvertTo-NormalizedText $_.DisplayName -like "*${needle}*")) })
+            } else {
+                @($apps | Where-Object { $_.DisplayName -and ( ($_.DisplayName -ieq $name) -or ((ConvertTo-NormalizedText $_.DisplayName).StartsWith($needle)) ) })
+            }
             if (-not $infoMatches -or $infoMatches.Count -eq 0) {
                 Write-Output ("No matches for '{0}'." -f $name)
                 continue
@@ -438,8 +491,13 @@ function Find-Software {
         $anyFound = $false
         foreach ($name in $Software) {
             Write-Log "Detecting $name (registry)..."
-            $needle = Normalize-Text $name
-            $matchingApps = $apps | Where-Object { $_.DisplayName -and (( $_.DisplayName -like "*${name}*" ) -or (Normalize-Text $_.DisplayName -like "*${needle}*")) }
+            $needle = ConvertTo-NormalizedText $name
+            if ([string]::IsNullOrWhiteSpace($needle)) { continue }
+            $matchingApps = if ($Fuzzy) {
+                $apps | Where-Object { $_.DisplayName -and (( $_.DisplayName -like "*${name}*" ) -or (ConvertTo-NormalizedText $_.DisplayName -like "*${needle}*")) }
+            } else {
+                $apps | Where-Object { $_.DisplayName -and ( ($_.DisplayName -ieq $name) -or ((ConvertTo-NormalizedText $_.DisplayName).StartsWith($needle)) ) }
+            }
             if ($matchingApps) {
                 $count = ($matchingApps | Measure-Object | Select-Object -ExpandProperty Count)
                 Write-Log ("Found {0} matching entries for '{1}'." -f $count, $name)
@@ -475,16 +533,14 @@ function Uninstall-Software {
             if (-not $allApps) { Write-Log "No installed apps found via registry." 'debug' }
             else { Write-Log ("Enumerated {0} installed app entries." -f ($allApps | Measure-Object | Select-Object -ExpandProperty Count)) 'debug' }
 
-            $needle = Normalize-Text $Software
-            $candidates = @($allApps | Where-Object {
-                ($_.DisplayName -and ( ($_.DisplayName -like "*$Software*") -or (Normalize-Text $_.DisplayName -like "*${needle}*") )) -or
-                ($_.UninstallString -and ($_.UninstallString -like "*$Software*"))
-            })
-            if (-not $candidates -or $candidates.Count -eq 0) {
-                Write-Log ("No registry uninstall candidates matched '{0}'." -f $Software)
+            $best = Resolve-BestAppMatch -Apps $allApps -Name $Software -Fuzzy:$Fuzzy
+            if (-not $best -or $best.Count -eq 0) {
+                Write-Log ("No unique match for '{0}'. Use exact name or -Fuzzy." -f $Software)
+                continue
             }
+            Write-Log ("Selected uninstall target: {0}" -f $best[0].DisplayName) 'debug'
+            $candidates = $best
             if ($candidates -and $candidates.Count -gt 0) {
-                Write-Log ("Found {0} uninstall candidate(s) for '{1}'." -f $candidates.Count, $Software) 'debug'
                 foreach ($app in $candidates) {
                     if (-not $app.UninstallString) { 
                         Write-Log "No uninstall string for '$($app.DisplayName)'." 'debug'
