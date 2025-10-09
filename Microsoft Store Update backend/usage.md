@@ -182,4 +182,3 @@ Invoke-TKMUpdateAllStoreApps -DryRun -LogPath 'C:\ProgramData\TKM\logs\all-dryru
 - Add a small `packaging` script to build a sample `.intunewin` (requires the Win32 Content Prep Tool binary).
 
 ---
-File created: `usage.md` — let me know which next step above you want me to run (run tests, add Pester mocks, or create packaging script).
