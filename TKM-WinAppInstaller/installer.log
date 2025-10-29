@@ -1,0 +1,555 @@
+[2025-10-28 19:50:54] [Warning] Operation requires elevation. Attempting to elevate...
+[2025-10-28 19:50:56] [Info] Installing test using winget
+[2025-10-28 19:50:56] [Info] Operation completed successfully
+[2025-10-28 19:51:54] [Info] Operation completed successfully
+[2025-10-28 19:58:14] [Info] Operation completed successfully
+[2025-10-28 19:58:34] [Info] Operation completed successfully
+[2025-10-28 19:59:47] [Info] Available package managers: winget, choco
+[2025-10-28 19:59:48] [Info] Searching for 'chrome' using winget
+[2025-10-28 19:59:57] [Info] Found 1 results
+[2025-10-28 19:59:57] [Info] Operation completed successfully
+[2025-10-28 20:00:09] [Info] Available package managers: winget, choco
+[2025-10-28 20:00:10] [Info] Listing installed packages using winget
+[2025-10-28 20:00:14] [Info] Found 1 installed packages
+[2025-10-28 20:00:14] [Info] Operation completed successfully
+[2025-10-28 20:00:35] [Info] Available package managers: winget, choco
+[2025-10-28 20:00:36] [Info] Listing installed packages using winget
+[2025-10-28 20:00:39] [Info] Found 1 installed packages
+[2025-10-28 20:00:40] [Info] Operation completed successfully
+[2025-10-28 20:03:08] [Error] Operation failed: The term 'Get-AvailablePackageManagers' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+[2025-10-28 20:04:20] [Info] Listing installed packages using winget
+[2025-10-28 20:04:25] [Info] Found 89 installed packages
+[2025-10-28 20:04:25] [Info] Operation completed successfully
+[2025-10-28 20:05:52] [Info] Listing installed packages using winget
+[2025-10-28 20:05:56] [Info] Found 89 installed packages
+[2025-10-28 20:05:56] [Info] Operation completed successfully
+[2025-10-28 20:06:35] [Info] Searching for 'chrome' using winget
+[2025-10-28 20:06:38] [Info] Found 32 results
+[2025-10-28 20:06:39] [Info] Operation completed successfully
+[2025-10-28 20:07:32] [Warning] Operation requires elevation. Attempting to elevate...
+[2025-10-28 20:07:40] [Warning] Operation requires elevation. Attempting to elevate...
+[2025-10-28 20:08:05] [Warning] Operation requires elevation. Attempting to elevate...
+[2025-10-28 20:17:37] [Info] Listing installed packages using winget
+[2025-10-28 20:17:42] [Info] Found 94 result(s)
+[2025-10-28 20:17:42] [Info] Operation completed successfully
+[2025-10-28 20:18:07] [Info] Installing Google.Chrome using multiple methods with fallbacks
+[2025-10-28 20:18:08] [Info] Will try installation methods in order: winget
+[2025-10-28 20:18:08] [Info] Attempting installation with winget...
+[2025-10-28 20:18:08] [Warning] Installation failed with winget: Winget failed: Error executing winget: Cannot validate argument on parameter 'ArgumentList'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again.
+[2025-10-28 20:18:08] [Error] All installation methods failed. Last error: Winget failed: Error executing winget: Cannot validate argument on parameter 'ArgumentList'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again.
+[2025-10-28 20:18:08] [Error] Operation failed: Installation failed for 'Google.Chrome'. Tried methods: winget. Last error: Winget failed: Error executing winget: Cannot validate argument on parameter 'ArgumentList'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again.
+[2025-10-28 20:18:22] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 20:18:23] [Info] Installing Google.Chrome using multiple methods with fallbacks
+[2025-10-28 20:18:24] [Info] Will try installation methods in order: winget
+[2025-10-28 20:18:24] [Info] Attempting installation with winget...
+[2025-10-28 20:18:24] [Warning] Installation failed with winget: Winget failed: Error executing winget: Cannot validate argument on parameter 'ArgumentList'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again.
+[2025-10-28 20:18:24] [Error] All installation methods failed. Last error: Winget failed: Error executing winget: Cannot validate argument on parameter 'ArgumentList'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again.
+[2025-10-28 20:18:24] [Error] Operation failed: Installation failed for 'Google.Chrome'. Tried methods: winget. Last error: Winget failed: Error executing winget: Cannot validate argument on parameter 'ArgumentList'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again.
+[2025-10-28 20:18:28] [Info] Listing installed packages using winget
+[2025-10-28 20:18:32] [Info] Found 94 result(s)
+[2025-10-28 20:20:30] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 20:20:31] [Info] Installing Google.Chrome using multiple methods with fallbacks
+[2025-10-28 20:20:32] [Info] Will try installation methods in order: winget
+[2025-10-28 20:20:32] [Info] Attempting installation with winget...
+[2025-10-28 20:20:32] [Warning] Installation failed with winget: Winget failed: Error executing winget: Cannot validate argument on parameter 'ArgumentList'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again.
+[2025-10-28 20:20:32] [Error] All installation methods failed. Last error: Winget failed: Error executing winget: Cannot validate argument on parameter 'ArgumentList'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again.
+[2025-10-28 20:20:32] [Error] Operation failed: Installation failed for 'Google.Chrome'. Tried methods: winget. Last error: Winget failed: Error executing winget: Cannot validate argument on parameter 'ArgumentList'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again.
+[2025-10-28 20:24:16] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 20:24:18] [Info] Installing Google.Chrome using multiple methods with fallbacks
+[2025-10-28 20:24:19] [Info] Will try installation methods in order: winget
+[2025-10-28 20:24:19] [Info] Attempting installation with winget...
+[2025-10-28 20:28:07] [Info] Installation succeeded using winget
+[2025-10-28 20:28:07] [Info] Operation completed successfully
+[2025-10-28 20:28:22] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 20:28:22] [Error] Operation failed: The term 'Get-AvailablePackageManagers' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+[2025-10-28 20:28:55] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 20:28:56] [Info] Installing 7zip.7zip using multiple methods with fallbacks
+[2025-10-28 20:28:57] [Info] Will try installation methods in order: winget
+[2025-10-28 20:28:57] [Info] Attempting installation with winget...
+[2025-10-28 20:29:16] [Info] Installation succeeded using winget
+[2025-10-28 20:29:16] [Info] Operation completed successfully
+[2025-10-28 20:29:38] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 20:29:39] [Info] Installing 7zip.7zip using multiple methods with fallbacks
+[2025-10-28 20:29:40] [Info] Will try installation methods in order: winget
+[2025-10-28 20:29:40] [Info] Attempting installation with winget...
+[2025-10-28 20:29:42] [Warning] Installation failed with winget: Winget failed:    -    \                                                                                                                            -    \                                                                                                                         Found an existing package already installed. Trying to upgrade the installed package...
+No available upgrade found.
+No newer package versions are available from the configured sources.
+
+[2025-10-28 20:29:42] [Error] All installation methods failed. Last error: Winget failed:    -    \                                                                                                                            -    \                                                                                                                         Found an existing package already installed. Trying to upgrade the installed package...
+No available upgrade found.
+No newer package versions are available from the configured sources.
+
+[2025-10-28 20:29:42] [Error] Operation failed: Installation failed for '7zip.7zip'. Tried methods: winget. Last error: Winget failed:    -    \                                                                                                                            -    \                                                                                                                         Found an existing package already installed. Trying to upgrade the installed package...
+No available upgrade found.
+No newer package versions are available from the configured sources.
+
+[2025-10-28 20:31:43] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 20:31:44] [Info] Installing 7zip.7zip using multiple methods with fallbacks
+[2025-10-28 20:31:45] [Info] Will try installation methods in order: winget
+[2025-10-28 20:31:45] [Info] Attempting installation with winget...
+[2025-10-28 20:31:47] [Warning] Installation failed with winget: Winget failed:    -    \                                                                                                                            -    \                                                                                                                         Found an existing package already installed. Trying to upgrade the installed package...
+No available upgrade found.
+No newer package versions are available from the configured sources.
+
+[2025-10-28 20:31:47] [Error] All installation methods failed. Last error: Winget failed:    -    \                                                                                                                            -    \                                                                                                                         Found an existing package already installed. Trying to upgrade the installed package...
+No available upgrade found.
+No newer package versions are available from the configured sources.
+
+[2025-10-28 20:31:47] [Error] Operation failed: Installation failed for '7zip.7zip'. Tried methods: winget. Last error: Winget failed:    -    \                                                                                                                            -    \                                                                                                                         Found an existing package already installed. Trying to upgrade the installed package...
+No available upgrade found.
+No newer package versions are available from the configured sources.
+
+[2025-10-28 20:33:29] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 20:33:30] [Info] Installing 7zip.7zip using multiple methods with fallbacks
+[2025-10-28 20:33:31] [Info] Will try installation methods in order: winget
+[2025-10-28 20:33:31] [Info] Attempting installation with winget...
+[2025-10-28 20:33:34] [Warning] Installation failed with winget: Winget failed:    -    \                                                                                                                            -    \                                                                                                                         Found an existing package already installed. Trying to upgrade the installed package...
+No available upgrade found.
+No newer package versions are available from the configured sources.
+
+[2025-10-28 20:33:34] [Error] All installation methods failed. Last error: Winget failed:    -    \                                                                                                                            -    \                                                                                                                         Found an existing package already installed. Trying to upgrade the installed package...
+No available upgrade found.
+No newer package versions are available from the configured sources.
+
+[2025-10-28 20:33:34] [Error] Operation failed: Installation failed for '7zip.7zip'. Tried methods: winget. Last error: Winget failed:    -    \                                                                                                                            -    \                                                                                                                         Found an existing package already installed. Trying to upgrade the installed package...
+No available upgrade found.
+No newer package versions are available from the configured sources.
+
+[2025-10-28 20:38:14] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 20:38:16] [Info] Installing Winrar using multiple methods with fallbacks
+[2025-10-28 20:38:17] [Info] Will try installation methods in order: winget
+[2025-10-28 20:38:17] [Info] Attempting installation with winget...
+[2025-10-28 20:38:23] [Warning] Installation failed with winget: Winget failed:    -    \                                                                                                                            -    \                                                                                                                         Multiple packages found matching input criteria. Please refine the input.
+Name                   Id            Source
+--------------------------------------------
+WinRAR - ZIP Extractor 9P0GCKKP4CTN  msstore
+WinRAR                 RARLab.WinRAR winget
+
+[2025-10-28 20:38:23] [Error] All installation methods failed. Last error: Winget failed:    -    \                                                                                                                            -    \                                                                                                                         Multiple packages found matching input criteria. Please refine the input.
+Name                   Id            Source
+--------------------------------------------
+WinRAR - ZIP Extractor 9P0GCKKP4CTN  msstore
+WinRAR                 RARLab.WinRAR winget
+
+[2025-10-28 20:38:23] [Error] Operation failed: Installation failed for 'Winrar'. Tried methods: winget. Last error: Winget failed:    -    \                                                                                                                            -    \                                                                                                                         Multiple packages found matching input criteria. Please refine the input.
+Name                   Id            Source
+--------------------------------------------
+WinRAR - ZIP Extractor 9P0GCKKP4CTN  msstore
+WinRAR                 RARLab.WinRAR winget
+
+[2025-10-28 20:38:55] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 20:38:56] [Info] Installing RARLab.WinRAR using multiple methods with fallbacks
+[2025-10-28 20:38:57] [Info] Will try installation methods in order: winget
+[2025-10-28 20:38:57] [Info] Attempting installation with winget...
+[2025-10-28 20:39:11] [Info] Installation succeeded using winget
+[2025-10-28 20:39:11] [Info] Operation completed successfully
+[2025-10-28 20:49:20] [Info] Upgrading Google.Chrome using multiple methods with fallbacks
+[2025-10-28 20:49:22] [Info] Will try upgrade methods in order: winget
+[2025-10-28 20:49:22] [Info] Attempting upgrade with winget...
+[2025-10-28 20:49:38] [Warning] Upgrade failed with winget: Winget upgrade failed:    -    \    |    /                                                                                                                            -    \                                                                                                                         No installed package found matching input criteria.
+
+[2025-10-28 20:49:38] [Error] All upgrade methods failed. Last error: Winget upgrade failed:    -    \    |    /                                                                                                                            -    \                                                                                                                         No installed package found matching input criteria.
+
+[2025-10-28 20:49:38] [Error] Operation failed: Upgrade failed for 'Google.Chrome'. Tried methods: winget. Last error: Winget upgrade failed:    -    \    |    /                                                                                                                            -    \                                                                                                                         No installed package found matching input criteria.
+
+[2025-10-28 20:51:45] [Info] Upgrading Google.Chrome using multiple methods with fallbacks
+[2025-10-28 20:51:47] [Info] Will try upgrade methods in order: winget, choco
+[2025-10-28 20:51:47] [Info] Attempting upgrade with winget...
+[2025-10-28 20:52:07] [Warning] Upgrade failed with winget: Winget upgrade failed:    -    \    |    /                                                                                                                            -    \                                                                                                                         No installed package found matching input criteria.
+
+[2025-10-28 20:52:09] [Info] Attempting upgrade with choco...
+[2025-10-28 20:53:27] [Warning] Upgrade failed with choco: Choco upgrade failed: Chocolatey v2.5.1
+Chocolatey detected you are not running from an elevated command shell
+ (cmd/powershell).
+
+ You may experience errors - many functions/packages
+ require admin rights. Only advanced users should run choco w/out an
+ elevated shell. When you open the command shell, you should ensure
+ that you do so with "Run as Administrator" selected. If you are
+ attempting to use Chocolatey in a non-administrator setting, you
+ must select a different location other than the default install
+ location. See
+ https://docs.chocolatey.org/en-us/choco/setup#non-administrative-install
+ for details.
+
+For the question below, you have 20 seconds to make a selection.
+
+ Do you want to continue?([Y]es/[N]o): 
+Timeout or your choice of '' is not a valid selection.
+Upgrading the following packages:
+Google.Chrome
+By upgrading, you accept licenses for the packages.
+Google.Chrome is not installed. Installing...
+Google.Chrome not installed. The package was not found with the source(s) listed.
+ Source(s): 'https://community.chocolatey.org/api/v2/'
+ NOTE: When you specify explicit sources, it overrides default sources.
+If the package version is a prerelease and you didn't specify `--pre`,
+ the package may not be found.
+Please see https://docs.chocolatey.org/en-us/troubleshooting for more
+ assistance.
+
+Chocolatey upgraded 0/1 packages. 1 packages failed.
+ See the log for details (C:\ProgramData\chocolatey\logs\chocolatey.log).
+
+Failures
+ - Google.Chrome - Google.Chrome not installed. The package was not found with the source(s) listed.
+ Source(s): 'https://community.chocolatey.org/api/v2/'
+ NOTE: When you specify explicit sources, it overrides default sources.
+If the package version is a prerelease and you didn't specify `--pre`,
+ the package may not be found.
+Please see https://docs.chocolatey.org/en-us/troubleshooting for more
+ assistance.
+
+[2025-10-28 20:53:27] [Error] All upgrade methods failed. Last error: Choco upgrade failed: Chocolatey v2.5.1
+Chocolatey detected you are not running from an elevated command shell
+ (cmd/powershell).
+
+ You may experience errors - many functions/packages
+ require admin rights. Only advanced users should run choco w/out an
+ elevated shell. When you open the command shell, you should ensure
+ that you do so with "Run as Administrator" selected. If you are
+ attempting to use Chocolatey in a non-administrator setting, you
+ must select a different location other than the default install
+ location. See
+ https://docs.chocolatey.org/en-us/choco/setup#non-administrative-install
+ for details.
+
+For the question below, you have 20 seconds to make a selection.
+
+ Do you want to continue?([Y]es/[N]o): 
+Timeout or your choice of '' is not a valid selection.
+Upgrading the following packages:
+Google.Chrome
+By upgrading, you accept licenses for the packages.
+Google.Chrome is not installed. Installing...
+Google.Chrome not installed. The package was not found with the source(s) listed.
+ Source(s): 'https://community.chocolatey.org/api/v2/'
+ NOTE: When you specify explicit sources, it overrides default sources.
+If the package version is a prerelease and you didn't specify `--pre`,
+ the package may not be found.
+Please see https://docs.chocolatey.org/en-us/troubleshooting for more
+ assistance.
+
+Chocolatey upgraded 0/1 packages. 1 packages failed.
+ See the log for details (C:\ProgramData\chocolatey\logs\chocolatey.log).
+
+Failures
+ - Google.Chrome - Google.Chrome not installed. The package was not found with the source(s) listed.
+ Source(s): 'https://community.chocolatey.org/api/v2/'
+ NOTE: When you specify explicit sources, it overrides default sources.
+If the package version is a prerelease and you didn't specify `--pre`,
+ the package may not be found.
+Please see https://docs.chocolatey.org/en-us/troubleshooting for more
+ assistance.
+
+[2025-10-28 20:53:27] [Error] Operation failed: Upgrade failed for 'Google.Chrome'. Tried methods: winget, choco. Last error: Choco upgrade failed: Chocolatey v2.5.1
+Chocolatey detected you are not running from an elevated command shell
+ (cmd/powershell).
+
+ You may experience errors - many functions/packages
+ require admin rights. Only advanced users should run choco w/out an
+ elevated shell. When you open the command shell, you should ensure
+ that you do so with "Run as Administrator" selected. If you are
+ attempting to use Chocolatey in a non-administrator setting, you
+ must select a different location other than the default install
+ location. See
+ https://docs.chocolatey.org/en-us/choco/setup#non-administrative-install
+ for details.
+
+For the question below, you have 20 seconds to make a selection.
+
+ Do you want to continue?([Y]es/[N]o): 
+Timeout or your choice of '' is not a valid selection.
+Upgrading the following packages:
+Google.Chrome
+By upgrading, you accept licenses for the packages.
+Google.Chrome is not installed. Installing...
+Google.Chrome not installed. The package was not found with the source(s) listed.
+ Source(s): 'https://community.chocolatey.org/api/v2/'
+ NOTE: When you specify explicit sources, it overrides default sources.
+If the package version is a prerelease and you didn't specify `--pre`,
+ the package may not be found.
+Please see https://docs.chocolatey.org/en-us/troubleshooting for more
+ assistance.
+
+Chocolatey upgraded 0/1 packages. 1 packages failed.
+ See the log for details (C:\ProgramData\chocolatey\logs\chocolatey.log).
+
+Failures
+ - Google.Chrome - Google.Chrome not installed. The package was not found with the source(s) listed.
+ Source(s): 'https://community.chocolatey.org/api/v2/'
+ NOTE: When you specify explicit sources, it overrides default sources.
+If the package version is a prerelease and you didn't specify `--pre`,
+ the package may not be found.
+Please see https://docs.chocolatey.org/en-us/troubleshooting for more
+ assistance.
+
+[2025-10-28 20:56:47] [Info] Upgrading packages matching 'Google.Chrome' using multiple methods with fallbacks
+[2025-10-28 20:56:47] [Info] Operation completed successfully
+[2025-10-28 20:56:59] [Info] Upgrading packages matching 'Google.Chrome' using multiple methods with fallbacks
+[2025-10-28 20:56:59] [Info] Searching for installed packages matching 'Google.Chrome'
+[2025-10-28 20:57:05] [Info] Upgrading package: Google Chrome (ID: Google.Chrome.EXE) using winget
+[2025-10-28 20:57:22] [Warning] Failed to upgrade Google Chrome: Winget upgrade failed:    -    \                                                                                                                            -    \                                                                                                                         No available upgrade found.
+No newer package versions are available from the configured sources.
+
+[2025-10-28 20:57:22] [Error] Operation failed: No packages were successfully upgraded
+[2025-10-28 20:59:57] [Info] Upgrading packages matching 'Google.Chrome' using multiple methods with fallbacks
+[2025-10-28 20:59:57] [Info] Searching for installed packages matching 'Google.Chrome'
+[2025-10-28 21:00:11] [Info] Upgrading package: Google Chrome (ID: Google.Chrome.EXE) using winget
+[2025-10-28 21:00:26] [Warning] Primary upgrade failed for Google Chrome: Winget upgrade failed:    -    \                                                                                                                            -    \                                                                                                                         No available upgrade found.
+No newer package versions are available from the configured sources.
+
+[2025-10-28 21:01:40] [Warning] Failed to upgrade Google Chrome with any method
+[2025-10-28 21:01:40] [Error] Operation failed: No packages were successfully upgraded
+[2025-10-28 21:04:22] [Info] Upgrading packages matching 'Google.Chrome' using multiple methods with fallbacks
+[2025-10-28 21:04:22] [Info] Searching for installed packages matching 'Google.Chrome'
+[2025-10-28 21:04:29] [Info] Unable to determine versions, proceeding with upgrade attempt
+[2025-10-28 21:04:41] [Warning] Primary upgrade failed for Google Chrome: Winget upgrade failed:    -                                                                                                                            -    \                                                                                                                         No installed package found matching input criteria.
+
+[2025-10-28 21:04:43] [Warning] Failed to upgrade Google Chrome with any method
+[2025-10-28 21:04:43] [Error] Operation failed: No packages were successfully upgraded
+[2025-10-28 21:07:23] [Info] Upgrading packages matching 'Google.Chrome' using multiple methods with fallbacks
+[2025-10-28 21:07:23] [Info] Searching for installed packages matching 'Google.Chrome'
+[2025-10-28 21:07:33] [Info] Unable to determine versions, proceeding with upgrade attempt
+[2025-10-28 21:07:51] [Warning] Primary upgrade failed for Google Chrome: Winget upgrade failed:    -    \                                                                                                                            -    \                                                                                                                         No installed package found matching input criteria.
+Package not found: Google
+No installed package found matching input criteria.
+Package not found: Chrome
+
+[2025-10-28 21:09:09] [Warning] Failed to upgrade Google Chrome with any method
+[2025-10-28 21:09:09] [Error] Operation failed: No packages were successfully upgraded
+[2025-10-28 21:16:19] [Info] Upgrading packages matching 'Google.Chrome' using multiple methods with fallbacks
+[2025-10-28 21:16:19] [Info] Searching for installed packages matching 'Google.Chrome'
+[2025-10-28 21:16:22] [Info] Operation completed successfully
+[2025-10-28 21:16:49] [Info] Upgrading packages matching 'Google.Chrome' using multiple methods with fallbacks
+[2025-10-28 21:16:49] [Info] Searching for installed packages matching 'Google.Chrome'
+[2025-10-28 21:16:52] [Info] Operation completed successfully
+[2025-10-28 21:17:27] [Info] Upgrading packages matching 'Google.Chrome' using multiple methods with fallbacks
+[2025-10-28 21:17:27] [Info] Searching for installed packages matching 'Google.Chrome'
+[2025-10-28 21:17:29] [Info] Operation completed successfully
+[2025-10-28 21:17:58] [Error] Operation failed: The term 'Upgrade-Package' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+[2025-10-28 21:18:01] [Error] Operation failed: The term 'Upgrade-Package' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+[2025-10-28 21:18:42] [Info] Upgrading packages matching 'Google.Chrome' using multiple methods with fallbacks
+[2025-10-28 21:18:42] [Info] Searching for installed packages matching 'Google.Chrome'
+[2025-10-28 21:18:44] [Info] Operation completed successfully
+[2025-10-28 21:18:49] [Info] Upgrading packages matching 'Google.Chrome' using multiple methods with fallbacks
+[2025-10-28 21:18:49] [Info] Searching for installed packages matching 'Google.Chrome'
+[2025-10-28 21:18:51] [Info] Operation completed successfully
+[2025-10-28 21:19:22] [Info] Upgrading packages matching 'Google.Chrome' using multiple methods with fallbacks
+[2025-10-28 21:19:22] [Info] Searching for installed packages matching 'Google.Chrome'
+[2025-10-28 21:19:25] [Info] Operation completed successfully
+[2025-10-28 21:19:52] [Info] Upgrading packages matching 'Google.Chrome' using multiple methods with fallbacks
+[2025-10-28 21:19:52] [Info] Searching for installed packages matching 'Google.Chrome'
+[2025-10-28 21:19:54] [Info] Operation completed successfully
+[2025-10-28 21:22:23] [Info] Upgrading packages matching 'Google.Chrome' using multiple methods with fallbacks
+[2025-10-28 21:22:23] [Info] Searching for installed packages matching 'Google.Chrome'
+[2025-10-28 21:22:26] [Info] Operation completed successfully
+[2025-10-28 21:22:58] [Info] Listing installed packages using winget
+[2025-10-28 21:22:59] [Error] Operation failed: The term 'Invoke-WingetCommand' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+[2025-10-28 21:23:44] [Info] Upgrading packages matching 'Google.Chrome' using multiple methods with fallbacks
+[2025-10-28 21:23:44] [Info] Searching for installed packages matching 'Google.Chrome'
+[2025-10-28 21:23:47] [Info] Operation completed successfully
+[2025-10-28 21:26:11] [Info] Listing installed packages using winget
+[2025-10-28 21:26:17] [Info] Found 97 result(s)
+[2025-10-28 21:26:17] [Info] Operation completed successfully
+[2025-10-28 21:26:25] [Info] Listing installed packages using winget
+[2025-10-28 21:26:30] [Info] Found 97 result(s)
+[2025-10-28 21:26:30] [Info] Operation completed successfully
+[2025-10-28 21:26:40] [Info] Upgrading packages matching 'Google.Chrome' using multiple methods with fallbacks
+[2025-10-28 21:26:40] [Info] Searching for installed packages matching 'Google.Chrome'
+[2025-10-28 21:26:48] [Info] Unable to determine versions, proceeding with upgrade attempt
+[2025-10-28 21:26:48] [Info] Upgrading package: Google Chrome (ID: Google Chrome) using winget
+[2025-10-28 21:26:49] [Warning] Primary upgrade failed for Google Chrome: Exception in winget upgrade: The term 'Upgrade-PackageWithWinget' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+[2025-10-28 21:26:50] [Warning] Failed to upgrade Google Chrome with any method
+[2025-10-28 21:26:50] [Error] Operation failed: No packages were successfully upgraded
+[2025-10-28 21:28:31] [Info] Upgrading packages matching 'Google.Chrome' using multiple methods with fallbacks
+[2025-10-28 21:28:31] [Info] Searching for installed packages matching 'Google.Chrome'
+[2025-10-28 21:28:39] [Info] Unable to determine versions, proceeding with upgrade attempt
+[2025-10-28 21:28:39] [Info] Upgrading package: Google Chrome (ID: Google Chrome) using winget
+[2025-10-28 21:28:39] [Warning] Primary upgrade failed for Google Chrome: Exception in winget upgrade: The term 'Upgrade-PackageWithWinget' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+[2025-10-28 21:28:40] [Warning] Failed to upgrade Google Chrome with any method
+[2025-10-28 21:28:40] [Error] Operation failed: No packages were successfully upgraded
+[2025-10-28 21:36:00] [Info] Upgrading packages matching 'Google.Chrome' using multiple methods with fallbacks
+[2025-10-28 21:36:00] [Info] Searching for installed packages matching 'Google.Chrome'
+[2025-10-28 21:36:10] [Info] Upgrade needed: 137.0.7151.120 -> 141.0.7390.123
+[2025-10-28 21:36:10] [Info] Upgrading package: Google Chrome (ID: Google.Chrome.EXE) using winget
+[2025-10-28 21:41:08] [Info] Successfully upgraded Google Chrome
+[2025-10-28 21:41:08] [Info] Operation completed successfully
+[2025-10-28 21:42:27] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 21:42:29] [Info] Uninstalling Google.Chrome using multiple methods with fallbacks
+[2025-10-28 21:42:30] [Info] Will try uninstall methods in order: winget
+[2025-10-28 21:42:30] [Info] Attempting uninstall with winget...
+[2025-10-28 21:42:36] [Warning] Uninstall failed with winget: Winget uninstall failed: Error executing winget: Cannot validate argument on parameter 'ArgumentList'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again.
+[2025-10-28 21:42:36] [Error] All uninstall methods failed. Last error: Winget uninstall failed: Error executing winget: Cannot validate argument on parameter 'ArgumentList'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again.
+[2025-10-28 21:42:36] [Error] Operation failed: Uninstall failed for 'Google.Chrome'. Tried methods: winget. Last error: Winget uninstall failed: Error executing winget: Cannot validate argument on parameter 'ArgumentList'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again.
+[2025-10-28 21:46:03] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 21:46:04] [Info] Uninstalling Google.Chrome using multiple methods with fallbacks
+[2025-10-28 21:46:05] [Info] Will try uninstall methods in order: winget
+[2025-10-28 21:46:05] [Info] Attempting uninstall with winget...
+[2025-10-28 21:46:17] [Warning] Uninstall failed with winget: Winget uninstall failed:    -                                                                                                                            -    \                                                                                                                         No installed package found matching input criteria.
+
+[2025-10-28 21:46:17] [Error] All uninstall methods failed. Last error: Winget uninstall failed:    -                                                                                                                            -    \                                                                                                                         No installed package found matching input criteria.
+
+[2025-10-28 21:46:17] [Error] Operation failed: Uninstall failed for 'Google.Chrome'. Tried methods: winget. Last error: Winget uninstall failed:    -                                                                                                                            -    \                                                                                                                         No installed package found matching input criteria.
+
+[2025-10-28 21:50:21] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 21:50:22] [Info] Uninstalling Google.Chrome using multiple methods with fallbacks
+[2025-10-28 21:50:23] [Info] Will try uninstall methods in order: winget
+[2025-10-28 21:50:23] [Info] Attempting uninstall with winget...
+[2025-10-28 21:50:36] [Warning] Uninstall failed with winget: Winget uninstall failed:    -                                                                                                                            -    \                                                                                                                         No installed package found matching input criteria.
+
+[2025-10-28 21:50:36] [Error] All uninstall methods failed. Last error: Winget uninstall failed:    -                                                                                                                            -    \                                                                                                                         No installed package found matching input criteria.
+
+[2025-10-28 21:50:36] [Error] Operation failed: Uninstall failed for 'Google.Chrome'. Tried methods: winget. Last error: Winget uninstall failed:    -                                                                                                                            -    \                                                                                                                         No installed package found matching input criteria.
+
+[2025-10-28 21:51:09] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 21:51:10] [Info] Uninstalling Google.Chrome using multiple methods with fallbacks
+[2025-10-28 21:51:11] [Info] Will try uninstall methods in order: winget
+[2025-10-28 21:51:11] [Info] Attempting uninstall with winget...
+[2025-10-28 21:51:23] [Warning] Uninstall failed with winget: Winget uninstall failed:    -                                                                                                                            -    \                                                                                                                         No installed package found matching input criteria.
+
+[2025-10-28 21:51:23] [Error] All uninstall methods failed. Last error: Winget uninstall failed:    -                                                                                                                            -    \                                                                                                                         No installed package found matching input criteria.
+
+[2025-10-28 21:51:23] [Error] Operation failed: Uninstall failed for 'Google.Chrome'. Tried methods: winget. Last error: Winget uninstall failed:    -                                                                                                                            -    \                                                                                                                         No installed package found matching input criteria.
+
+[2025-10-28 21:56:09] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 21:56:10] [Info] Uninstalling Google.Chrome using multiple methods with fallbacks
+[2025-10-28 21:56:11] [Info] Will try uninstall methods in order: winget
+[2025-10-28 21:56:11] [Info] Attempting uninstall with winget...
+[2025-10-28 21:56:24] [Warning] Uninstall failed with winget: Winget uninstall failed:    -                                                                                                                            -    \                                                                                                                         No installed package found matching input criteria.
+
+[2025-10-28 21:56:24] [Error] All uninstall methods failed. Last error: Winget uninstall failed:    -                                                                                                                            -    \                                                                                                                         No installed package found matching input criteria.
+
+[2025-10-28 21:56:24] [Error] Operation failed: Uninstall failed for 'Google.Chrome'. Tried methods: winget. Last error: Winget uninstall failed:    -                                                                                                                            -    \                                                                                                                         No installed package found matching input criteria.
+
+[2025-10-28 21:58:27] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 21:58:28] [Info] Uninstalling Google.Chrome using multiple methods with fallbacks
+[2025-10-28 21:58:29] [Info] Will try uninstall methods in order: winget
+[2025-10-28 21:58:29] [Info] Attempting uninstall with winget...
+[2025-10-28 21:58:41] [Warning] Uninstall failed with winget: Winget uninstall failed:    -    \                                                                                                                            -    \                                                                                                                         No installed package found matching input criteria.
+
+[2025-10-28 21:58:41] [Error] All uninstall methods failed. Last error: Winget uninstall failed:    -    \                                                                                                                            -    \                                                                                                                         No installed package found matching input criteria.
+
+[2025-10-28 21:58:41] [Error] Operation failed: Uninstall failed for 'Google.Chrome'. Tried methods: winget. Last error: Winget uninstall failed:    -    \                                                                                                                            -    \                                                                                                                         No installed package found matching input criteria.
+
+[2025-10-28 22:01:09] [Info] Listing installed packages using winget
+[2025-10-28 22:01:19] [Info] Found 97 result(s)
+[2025-10-28 22:01:19] [Info] Operation completed successfully
+[2025-10-28 22:03:26] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 22:03:26] [Info] Uninstalling Google.Chrome using multiple methods with fallbacks
+[2025-10-28 22:03:27] [Info] Will try uninstall methods in order: winget, choco, powershell
+[2025-10-28 22:03:27] [Info] Attempting uninstall with winget...
+[2025-10-28 22:03:40] [Warning] Uninstall failed with winget: Winget uninstall failed:    -                                                                                                                            -    \                                                                                                                         No installed package found matching input criteria.
+
+[2025-10-28 22:03:42] [Info] Attempting uninstall with choco...
+[2025-10-28 22:04:54] [Warning] Uninstall failed with choco: Choco uninstall failed: Chocolatey v2.5.1
+Chocolatey detected you are not running from an elevated command shell
+ (cmd/powershell).
+
+ You may experience errors - many functions/packages
+ require admin rights. Only advanced users should run choco w/out an
+ elevated shell. When you open the command shell, you should ensure
+ that you do so with "Run as Administrator" selected. If you are
+ attempting to use Chocolatey in a non-administrator setting, you
+ must select a different location other than the default install
+ location. See
+ https://docs.chocolatey.org/en-us/choco/setup#non-administrative-install
+ for details.
+
+For the question below, you have 20 seconds to make a selection.
+
+ Do you want to continue?([Y]es/[N]o): 
+Timeout or your choice of '' is not a valid selection.
+Uninstalling the following packages:
+Google.Chrome
+Google.Chrome is not installed. Cannot uninstall a non-existent package.
+
+Chocolatey uninstalled 0/1 packages. 1 packages failed.
+ See the log for details (C:\ProgramData\chocolatey\logs\chocolatey.log).
+
+Failures
+ - Google.Chrome - Google.Chrome is not installed. Cannot uninstall a non-existent package.
+
+If a package uninstall is failing and/or you've already uninstalled the
+ software outside of Chocolatey, you can attempt to run the command
+ with `-n` to skip running a chocolateyUninstall script, additionally
+ adding `--skip-autouninstaller` to skip an attempt to automatically
+ remove system-installed software. Only the packaging files are removed
+ and not things like software installed to Programs and Features.
+
+If a package is failing because it is a dependency of another package
+ or packages, then you may first need to consider if it needs to be
+ removed as packages have dependencies for a reason. If
+ you decide that you still want to remove it, head into
+ `$env:ChocolateyInstall\lib` and find the package folder you want to
+ be removed. Then delete the folder for the package. You should use
+ this option only as a last resort.
+ 
+
+[2025-10-28 22:04:56] [Info] Attempting uninstall with powershell...
+[2025-10-28 22:05:36] [Warning] Uninstall failed with powershell: PowerShell uninstall failed: All methods exhausted
+[2025-10-28 22:05:36] [Error] All uninstall methods failed. Last error: PowerShell uninstall failed: All methods exhausted
+[2025-10-28 22:05:36] [Error] Operation failed: Uninstall failed for 'Google.Chrome'. Tried methods: winget, choco, powershell. Last error: PowerShell uninstall failed: All methods exhausted
+[2025-10-28 22:11:00] [Info] Uninstalling chrome using multiple methods with fallbacks
+[2025-10-28 22:11:13] [Info] Will try uninstall methods in order: winget, choco, powershell
+[2025-10-28 22:11:13] [Info] Attempting uninstall with winget...
+[2025-10-28 22:11:19] [Warning] Uninstall failed with winget: Winget uninstall failed: Error executing winget: Cannot validate argument on parameter 'ArgumentList'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again.
+[2025-10-28 22:11:21] [Info] Attempting uninstall with choco...
+[2025-10-28 22:11:21] [Warning] Uninstall failed with choco: Exception in choco uninstall: Failed to execute choco command: Cannot validate argument on parameter 'ArgumentList'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again.
+[2025-10-28 22:11:23] [Info] Attempting uninstall with powershell...
+[2025-10-28 22:12:03] [Warning] Uninstall failed with powershell: PowerShell uninstall failed: All methods exhausted
+[2025-10-28 22:12:03] [Error] All uninstall methods failed for all packages
+[2025-10-28 22:16:19] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 22:16:19] [Info] Uninstalling Google.Chrome using multiple methods with fallbacks
+[2025-10-28 22:16:35] [Warning] No packages found matching 'Google.Chrome'
+[2025-10-28 22:16:35] [Error] Operation failed: Package 'Google.Chrome' is not installed or not found by any package manager.
+[2025-10-28 22:16:56] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 22:16:56] [Error] Operation failed: A parameter cannot be found that matches parameter name 'Checksum'.
+[2025-10-28 22:17:01] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 22:17:01] [Error] Operation failed: A parameter cannot be found that matches parameter name 'Checksum'.
+[2025-10-28 22:17:15] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 22:17:15] [Error] Operation failed: A parameter cannot be found that matches parameter name 'Checksum'.
+[2025-10-28 22:20:18] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 22:20:18] [Error] Operation failed: A parameter cannot be found that matches parameter name 'Checksum'.
+[2025-10-28 22:24:52] [Info] Listing installed packages using winget
+[2025-10-28 22:24:57] [Info] Found 96 result(s)
+[2025-10-28 22:24:57] [Info] Operation completed successfully
+[2025-10-28 22:25:08] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 22:25:08] [Error] Operation failed: A parameter cannot be found that matches parameter name 'Checksum'.
+[2025-10-28 22:25:31] [Info] Listing installed packages using winget
+[2025-10-28 22:25:36] [Info] Found 96 result(s)
+[2025-10-28 22:25:36] [Info] Operation completed successfully
+[2025-10-28 22:26:28] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 22:26:28] [Error] Operation failed: A parameter cannot be found that matches parameter name 'Checksum'.
+[2025-10-28 22:26:32] [Info] Listing installed packages using winget
+[2025-10-28 22:26:37] [Info] Found 96 result(s)
+[2025-10-28 22:26:37] [Info] Operation completed successfully
+[2025-10-28 22:26:51] [Info] Listing installed packages using winget
+[2025-10-28 22:26:56] [Info] Found 96 result(s)
+[2025-10-28 22:26:56] [Info] Operation completed successfully
+[2025-10-28 22:28:32] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 22:28:32] [Error] Operation failed: A parameter cannot be found that matches parameter name 'Checksum'.
+[2025-10-28 23:49:43] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-28 23:49:43] [Info] Installing Google.Chrome using multiple methods with fallbacks
+[2025-10-28 23:49:46] [Info] Will try install methods in order: winget, choco, direct, powershell
+[2025-10-28 23:49:46] [Info] Attempting install with winget...
+[2025-10-28 23:53:04] [Info] Install succeeded using winget
+[2025-10-28 23:53:04] [Info] Operation completed successfully
+[2025-10-28 23:59:01] [Info] Upgrading packages matching 'Google.Chrome' using multiple methods with fallbacks
+[2025-10-28 23:59:01] [Info] Searching for installed packages matching 'Google.Chrome'
+[2025-10-28 23:59:12] [Info] Package Google Chrome is already up to date (v141.0.7390.123)
+[2025-10-28 23:59:12] [Info] Operation completed successfully
+[2025-10-29 00:13:03] [Info] Upgrading packages matching 'Google.Chrome' using multiple methods with fallbacks
+[2025-10-29 00:13:03] [Info] Searching for installed packages matching 'Google.Chrome'
+[2025-10-29 00:13:13] [Info] Package Google Chrome is already up to date (v141.0.7390.123)
+[2025-10-29 00:13:13] [Info] Operation completed successfully
+[2025-10-29 17:50:50] [Warning] Operation may require elevation. Will attempt to elevate if needed.
+[2025-10-29 17:50:50] [Info] Installing notepad++ using multiple methods with fallbacks
+[2025-10-29 17:50:52] [Info] Will try install methods in order: winget, choco, direct, powershell
+[2025-10-29 17:50:52] [Info] Attempting install with winget...
+[2025-10-29 17:51:20] [Info] Install succeeded using winget
+[2025-10-29 17:51:20] [Info] Operation completed successfully
+[2025-10-29 19:39:11] [Info] Listing installed packages using winget
+[2025-10-29 19:40:04] [Info] Found 100 result(s)
+[2025-10-29 19:40:04] [Info] Operation completed successfully

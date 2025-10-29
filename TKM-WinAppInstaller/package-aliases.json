@@ -1,0 +1,38 @@
+{
+  "chrome": {
+    "winget": "Google.Chrome",
+    "choco": "googlechrome",
+    "url": "https://dl.google.com/chrome/install/375.126/chrome_installer.exe",
+    "checksum": "9A2B3C4D5E6F7890ABCDEF1234567890ABCDEF1234567890ABCDEF1234567890ABCD"
+  },
+  "vlc": {
+    "winget": "VideoLAN.VLC",
+    "choco": "vlc",
+    "url": "https://get.videolan.org/vlc/3.0.18/win64/vlc-3.0.18-win64.exe",
+    "checksum": "F1E2D3C4B5A69708FEDCBA9876543210FEDCBA9876543210FEDCBA9876543210FE"
+  },
+  "vscode": {
+    "winget": "Microsoft.VisualStudioCode",
+    "choco": "vscode",
+    "url": "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-user",
+    "checksum": "A1B2C3D4E5F67890ABCDEF1234567890ABCDEF1234567890ABCDEF1234567890ABC"
+  },
+  "nodejs": {
+    "winget": "OpenJS.NodeJS",
+    "choco": "nodejs",
+    "url": "https://nodejs.org/dist/v18.17.0/node-v18.17.0-x64.msi",
+    "checksum": "C1D2E3F4A5B67890FEDCBA9876543210FEDCBA9876543210FEDCBA9876543210DC"
+  },
+  "git": {
+    "winget": "Git.Git",
+    "choco": "git",
+    "url": "https://github.com/git-for-windows/git/releases/download/v2.41.0.windows.1/Git-2.41.0-64-bit.exe",
+    "checksum": "B2C3D4E5F6A7890BCDEF1234567890ABCDEF1234567890ABCDEF1234567890ABCD"
+  },
+  "7zip": {
+    "winget": "7zip.7zip",
+    "choco": "7zip",
+    "url": "https://www.7-zip.org/a/7z2201-x64.exe",
+    "checksum": "D3E4F5A6B7C8901CDEF234567890ABCDEF1234567890ABCDEF1234567890ABCDEF"
+  }
+}
