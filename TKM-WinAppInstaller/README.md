@@ -40,6 +40,9 @@ iwr https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-
 
 # Upgrade Git and Node.js
 iwr https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/bootstrap.ps1 | iex -Upgrade git,nodejs
+
+# Show help (when run without parameters)
+iwr https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/bootstrap.ps1 | iex
 ```
 
 ### 3. How It Works

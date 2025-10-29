@@ -3,19 +3,31 @@
 # Single small script that users can download and run
 # Supports: iwr <url> | iex -List (or -Install, -Uninstall, -Upgrade, etc.)
 
-# Handle parameters for both direct execution and IEX piping
 param(
     [Parameter(Position = 0)]
     [string]$Command,
-    [Parameter(Position = 1)]
+    [Parameter(Position = 1, ValueFromRemainingArguments = $true)]
     [string[]]$Arguments
 )
 
 # If no parameters passed via param(), check $args (for IEX piping)
 if (-not $Command -and $args.Count -gt 0) {
     # Parse arguments for IEX style: iwr url | iex -List package
-    $Command = $args[0].TrimStart('-')
-    $Arguments = $args[1..($args.Count-1)]
+    # Handle both -Parameter and Parameter formats
+    for ($i = 0; $i -lt $args.Count; $i++) {
+        $arg = $args[$i]
+        if ($arg -match '^-(\w+)$') {
+            # -Parameter format
+            $Command = $matches[1]
+            $Arguments = $args[($i + 1)..($args.Count - 1)]
+            break
+        } elseif ($arg -notmatch '^-') {
+            # Parameter format (assuming first non-dash arg is command)
+            $Command = $arg
+            $Arguments = $args[($i + 1)..($args.Count - 1)]
+            break
+        }
+    }
 }
 
 # Convert command to proper parameter format
@@ -40,26 +52,59 @@ $Checksum = $null
 
 # Parse based on command
 switch ($Command) {
-    'List' { $List = $true }
-    'Search' { if ($Arguments) { $Search = $Arguments[0] } }
-    'Info' { if ($Arguments) { $Info = $Arguments[0] } }
-    'Install' { if ($Arguments) { $Install = $Arguments } }
-    'Uninstall' { if ($Arguments) { $Uninstall = $Arguments } }
-    'Upgrade' { if ($Arguments) { $Upgrade = $Arguments } }
+    {$_ -in @('List', 'list', 'LIST')} {
+        $List = $true
+    }
+    {$_ -in @('Search', 'search', 'SEARCH')} {
+        if ($Arguments) { $Search = $Arguments[0] }
+    }
+    {$_ -in @('Info', 'info', 'INFO')} {
+        if ($Arguments) { $Info = $Arguments[0] }
+    }
+    {$_ -in @('Install', 'install', 'INSTALL')} {
+        if ($Arguments) { $Install = $Arguments }
+    }
+    {$_ -in @('Uninstall', 'uninstall', 'UNINSTALL')} {
+        if ($Arguments) { $Uninstall = $Arguments }
+    }
+    {$_ -in @('Upgrade', 'upgrade', 'UPGRADE')} {
+        if ($Arguments) { $Upgrade = $Arguments }
+    }
     default {
-        Write-Host "Usage: iwr <bootstrap-url> | iex <command> [arguments]" -ForegroundColor Yellow
-        Write-Host "" -ForegroundColor Yellow
-        Write-Host "Commands:" -ForegroundColor Cyan
-        Write-Host "  -List" -ForegroundColor White
-        Write-Host "  -Search <query>" -ForegroundColor White
-        Write-Host "  -Install <package>" -ForegroundColor White
-        Write-Host "  -Uninstall <package>" -ForegroundColor White
-        Write-Host "  -Upgrade <package>" -ForegroundColor White
-        Write-Host "  -Info <package>" -ForegroundColor White
-        Write-Host "" -ForegroundColor Yellow
-        Write-Host "Examples:" -ForegroundColor Cyan
+        # Show help when no valid command or when run without parameters
+        Write-Host "==================================================================" -ForegroundColor Cyan
+        Write-Host "               THE KINGSMAKERS WINAPP TOOL                        " -ForegroundColor Cyan
+        Write-Host "                    GITHUB BOOTSTRAP                              " -ForegroundColor Yellow
+        Write-Host "                                                                  " -ForegroundColor Cyan
+        Write-Host "            Created by thekingsmakers                             " -ForegroundColor Yellow
+        Write-Host "            Website: thekingsmaker.org                            " -ForegroundColor Yellow
+        Write-Host "            Twitter: thekingsmakers                               " -ForegroundColor Yellow
+        Write-Host "==================================================================" -ForegroundColor Cyan
+        Write-Host ""
+        Write-Host "USAGE: iwr <bootstrap-url> | iex <command> [arguments]" -ForegroundColor Cyan
+        Write-Host ""
+        Write-Host "COMMANDS:" -ForegroundColor Yellow
+        Write-Host "  -List              List installed packages" -ForegroundColor White
+        Write-Host "  -Search <query>    Search for available packages" -ForegroundColor White
+        Write-Host "  -Install <pkg>     Install package(s) (comma-separated)" -ForegroundColor White
+        Write-Host "  -Uninstall <pkg>   Uninstall package(s) (comma-separated)" -ForegroundColor White
+        Write-Host "  -Upgrade <pkg>     Upgrade package(s) (comma-separated)" -ForegroundColor White
+        Write-Host "  -Info <pkg>        Get package information" -ForegroundColor White
+        Write-Host ""
+        Write-Host "EXAMPLES:" -ForegroundColor Cyan
         Write-Host "  iwr https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/bootstrap.ps1 | iex -List" -ForegroundColor White
         Write-Host "  iwr https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/bootstrap.ps1 | iex -Install vscode" -ForegroundColor White
+        Write-Host "  iwr https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/bootstrap.ps1 | iex -Upgrade git,nodejs" -ForegroundColor White
+        Write-Host ""
+        Write-Host "DOWNLOAD URL:" -ForegroundColor Gray
+        Write-Host "  https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/bootstrap.ps1" -ForegroundColor DarkGray
+        Write-Host ""
+        Write-Host "The script automatically downloads required modules from GitHub." -ForegroundColor Gray
+        Write-Host "No installation required - just run the commands above!" -ForegroundColor Green
+        Write-Host ""
+        Write-Host "==================================================================" -ForegroundColor Cyan
+        Write-Host "            Created by thekingsmakers - 2025                      " -ForegroundColor Yellow
+        Write-Host "==================================================================" -ForegroundColor Cyan
         exit 0
     }
 }
