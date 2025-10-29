@@ -1,47 +1,86 @@
 # THE KINGSMAKERS WINAPP TOOL - GitHub Bootstrap Script
 # Downloads and loads all modules from GitHub automatically
 # Single small script that users can download and run
+# Supports: iwr <url> | iex -List (or -Install, -Uninstall, -Upgrade, etc.)
 
+# Handle parameters for both direct execution and IEX piping
 param(
-    [string[]]$Install,
-    [string[]]$Uninstall,
-    [string[]]$Upgrade,
-    [string]$Search,
-    [switch]$List,
-    [string]$Info,
-    [ValidateSet('winget', 'choco', 'direct', 'powershell', 'auto')]
-    [string]$Manager = 'auto',
-    [switch]$Silent,
-    [switch]$SkipElevation,
-    [switch]$Force,
-    [switch]$DryRun,
-    [switch]$Parallel,
-    [int]$MaxConcurrency = 3,
-    [string]$LogFile,
-    [ValidateSet('Error', 'Warning', 'Info', 'Debug', 'Trace')]
-    [string]$LogLevel = 'Info',
-    [string]$CacheDirectory,
-    [string[]]$AdditionalArgs = @(),
-    [string]$Checksum
+    [Parameter(Position = 0)]
+    [string]$Command,
+    [Parameter(Position = 1)]
+    [string[]]$Arguments
 )
 
+# If no parameters passed via param(), check $args (for IEX piping)
+if (-not $Command -and $args.Count -gt 0) {
+    # Parse arguments for IEX style: iwr url | iex -List package
+    $Command = $args[0].TrimStart('-')
+    $Arguments = $args[1..($args.Count-1)]
+}
+
+# Convert command to proper parameter format
+$Install = @()
+$Uninstall = @()
+$Upgrade = @()
+$Search = $null
+$List = $false
+$Info = $null
+$Manager = 'auto'
+$Silent = $false
+$SkipElevation = $false
+$Force = $false
+$DdryRun = $false
+$Parallel = $false
+$MaxConcurrency = 3
+$LogFile = $null
+$LogLevel = 'Info'
+$CacheDirectory = $null
+$AdditionalArgs = @()
+$Checksum = $null
+
+# Parse based on command
+switch ($Command) {
+    'List' { $List = $true }
+    'Search' { if ($Arguments) { $Search = $Arguments[0] } }
+    'Info' { if ($Arguments) { $Info = $Arguments[0] } }
+    'Install' { if ($Arguments) { $Install = $Arguments } }
+    'Uninstall' { if ($Arguments) { $Uninstall = $Arguments } }
+    'Upgrade' { if ($Arguments) { $Upgrade = $Arguments } }
+    default {
+        Write-Host "Usage: iwr <bootstrap-url> | iex <command> [arguments]" -ForegroundColor Yellow
+        Write-Host "" -ForegroundColor Yellow
+        Write-Host "Commands:" -ForegroundColor Cyan
+        Write-Host "  -List" -ForegroundColor White
+        Write-Host "  -Search <query>" -ForegroundColor White
+        Write-Host "  -Install <package>" -ForegroundColor White
+        Write-Host "  -Uninstall <package>" -ForegroundColor White
+        Write-Host "  -Upgrade <package>" -ForegroundColor White
+        Write-Host "  -Info <package>" -ForegroundColor White
+        Write-Host "" -ForegroundColor Yellow
+        Write-Host "Examples:" -ForegroundColor Cyan
+        Write-Host "  iwr https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/bootstrap.ps1 | iex -List" -ForegroundColor White
+        Write-Host "  iwr https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/bootstrap.ps1 | iex -Install vscode" -ForegroundColor White
+        exit 0
+    }
+}
+
 # GitHub repository details (UPDATE THESE FOR YOUR REPO)
-$GitHubUser = "yourusername"  # Replace with your GitHub username
-$Repository = "WinAppInstaller"  # Replace with your repository name
+$GitHubUser = "thekingsmakers"  # Replace with your GitHub username
+$Repository = "Intune"  # Replace with your repository name
 $Branch = "main"  # Or "master" depending on your default branch
 
 # Raw GitHub URLs for each module (update these with your actual GitHub URLs)
 $moduleUrls = @{
-    "Utils" = "https://raw.githubusercontent.com/$GitHubUser/$Repository/$Branch/Utils.ps1"
-    "Aliases" = "https://raw.githubusercontent.com/$GitHubUser/$Repository/$Branch/Aliases.ps1"
-    "PackageManagers" = "https://raw.githubusercontent.com/$GitHubUser/$Repository/$Branch/PackageManagers.ps1"
-    "Detection" = "https://raw.githubusercontent.com/$GitHubUser/$Repository/$Branch/Detection.ps1"
-    "Winget" = "https://raw.githubusercontent.com/$GitHubUser/$Repository/$Branch/Winget.ps1"
-    "Chocolatey" = "https://raw.githubusercontent.com/$GitHubUser/$Repository/$Branch/Chocolatey.ps1"
-    "Install" = "https://raw.githubusercontent.com/$GitHubUser/$Repository/$Branch/Install.ps1"
-    "Uninstall" = "https://raw.githubusercontent.com/$GitHubUser/$Repository/$Branch/Uninstall.ps1"
-    "Upgrade" = "https://raw.githubusercontent.com/$GitHubUser/$Repository/$Branch/Upgrade.ps1"
-    "AliasesJson" = "https://raw.githubusercontent.com/$GitHubUser/$Repository/$Branch/package-aliases.json"
+    "Utils" = "https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/Utils.ps1"
+    "Aliases" = "https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/Aliases.ps1"
+    "PackageManagers" = "https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/PackageManagers.ps1"
+    "Detection" = "https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/Detection.ps1"
+    "Winget" = "https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/Winget.ps1"
+    "Chocolatey" = "https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/Chocolatey.ps1"
+    "Install" = "https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/Install.ps1"
+    "Uninstall" = "https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/Uninstall.ps1"
+    "Upgrade" = "https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/Upgrade.ps1"
+    "AliasesJson" = "https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/package-aliases.json"
 }
 
 # Global cache for downloaded modules
@@ -153,6 +192,48 @@ try {
     }
 
     Initialize-Logging -LogFile $LogFile -LogLevel $LogLevel
+
+    # Download aliases (needed for package resolution)
+    Download-AliasesJson
+
+    # Download modules based on operation
+    if ($Install.Count -gt 0) {
+        Write-Host "Loading modules for Install operation..." -ForegroundColor Cyan
+        # Install needs: PackageManagers, Detection, Winget, Chocolatey, Install
+        $requiredModules = @("PackageManagers", "Detection", "Winget", "Chocolatey", "Install")
+        foreach ($module in $requiredModules) {
+            if (-not (Download-AndLoadModule $module)) {
+                Write-Host "Warning: Failed to load $module module, install may not work properly" -ForegroundColor Yellow
+            }
+        }
+    } elseif ($Uninstall.Count -gt 0) {
+        Write-Host "Loading modules for Uninstall operation..." -ForegroundColor Cyan
+        # Uninstall needs: PackageManagers, Detection, Winget, Chocolatey, Uninstall
+        $requiredModules = @("PackageManagers", "Detection", "Winget", "Chocolatey", "Uninstall")
+        foreach ($module in $requiredModules) {
+            if (-not (Download-AndLoadModule $module)) {
+                Write-Host "Warning: Failed to load $module module, uninstall may not work properly" -ForegroundColor Yellow
+            }
+        }
+    } elseif ($Upgrade.Count -gt 0) {
+        Write-Host "Loading modules for Upgrade operation..." -ForegroundColor Cyan
+        # Upgrade needs: PackageManagers, Detection, Winget, Chocolatey, Upgrade
+        $requiredModules = @("PackageManagers", "Detection", "Winget", "Chocolatey", "Upgrade")
+        foreach ($module in $requiredModules) {
+            if (-not (Download-AndLoadModule $module)) {
+                Write-Host "Warning: Failed to load $module module, upgrade may not work properly" -ForegroundColor Yellow
+            }
+        }
+    } elseif ($Search -or $List -or $Info) {
+        Write-Host "Loading modules for query operation..." -ForegroundColor Cyan
+        # Search/List/Info needs: PackageManagers, Detection, Winget, Chocolatey
+        $requiredModules = @("PackageManagers", "Detection", "Winget", "Chocolatey")
+        foreach ($module in $requiredModules) {
+            if (-not (Download-AndLoadModule $module)) {
+                Write-Host "Warning: Failed to load $module module, query may not work properly" -ForegroundColor Yellow
+            }
+        }
+    }
 
     if (-not $CacheDirectory) {
         $CacheDirectory = Get-DefaultCacheDirectory

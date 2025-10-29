@@ -4,7 +4,7 @@
 
 1. Go to [GitHub.com](https://github.com) and sign in
 2. Click the "+" icon → "New repository"
-3. Repository name: `WinAppInstaller` (or your preferred name)
+3. Repository name: `Intune` (or your preferred name)
 4. Make it **Public** (so bootstrap can download files)
 5. **Do NOT** initialize with README (we'll upload our own)
 6. Click "Create repository"
@@ -15,19 +15,19 @@
 
 ```bash
 # Initialize git repository (if not already done)
-cd "d:\Projects\WinAppInstaller"
+cd "d:\Projects\Intune"
 git init
 git add .
 git commit -m "Initial commit - THE KINGSMAKERS WINAPP TOOL"
 
 # Add GitHub remote (replace YOUR_USERNAME with your GitHub username)
-git remote add origin https://github.com/YOUR_USERNAME/WinAppInstaller.git
+git remote add origin https://github.com/thekingsmakers/Intune.git
 git push -u origin main
 ```
 
 ### Option B: Manual Upload via GitHub Web Interface
 
-1. Go to your repository: `https://github.com/YOUR_USERNAME/WinAppInstaller`
+1. Go to your repository: `https://github.com/thekingsmakers/Intune`
 2. Click "Add file" → "Upload files"
 3. Upload these files:
    - `bootstrap.ps1` (most important - this is what users download!)
@@ -51,22 +51,23 @@ Edit `bootstrap.ps1` and update the GitHub details AND the specific raw URLs:
 
 ```powershell
 # UPDATE THESE FOR YOUR REPO
-$GitHubUser = "YOUR_USERNAME"        # Replace with your GitHub username
-$Repository = "WinAppInstaller"      # Your repository name
-$Branch = "main"                     # Or "master"
+$GitHubUser = "thekingsmakers"
+$Repository = "Intune"
+$Branch = "main"
+$Folder = "TKM-WinAppInstaller/"
 
 # UPDATE THESE URLs WITH YOUR ACTUAL RAW GITHUB URLs
 $moduleUrls = @{
-    "Utils" = "https://raw.githubusercontent.com/YOUR_USERNAME/WinAppInstaller/main/Utils.ps1"
-    "Aliases" = "https://raw.githubusercontent.com/YOUR_USERNAME/WinAppInstaller/main/Aliases.ps1"
-    "PackageManagers" = "https://raw.githubusercontent.com/YOUR_USERNAME/WinAppInstaller/main/PackageManagers.ps1"
-    "Detection" = "https://raw.githubusercontent.com/YOUR_USERNAME/WinAppInstaller/main/Detection.ps1"
-    "Winget" = "https://raw.githubusercontent.com/YOUR_USERNAME/WinAppInstaller/main/Winget.ps1"
-    "Chocolatey" = "https://raw.githubusercontent.com/YOUR_USERNAME/WinAppInstaller/main/Chocolatey.ps1"
-    "Install" = "https://raw.githubusercontent.com/YOUR_USERNAME/WinAppInstaller/main/Install.ps1"
-    "Uninstall" = "https://raw.githubusercontent.com/YOUR_USERNAME/WinAppInstaller/main/Uninstall.ps1"
-    "Upgrade" = "https://raw.githubusercontent.com/YOUR_USERNAME/WinAppInstaller/main/Upgrade.ps1"
-    "AliasesJson" = "https://raw.githubusercontent.com/YOUR_USERNAME/WinAppInstaller/main/package-aliases.json"
+    "Utils" = "https://raw.githubusercontent.com/thekingsmakers/Intune/99a94c74ed6b956336ef47868ac41909872cb23f/TKM-WinAppInstaller/Utils.ps1"
+    "Aliases" = "https://raw.githubusercontent.com/thekingsmakers/Intune/99a94c74ed6b956336ef47868ac41909872cb23f/TKM-WinAppInstaller/Aliases.ps1"
+    "PackageManagers" = "https://raw.githubusercontent.com/thekingsmakers/Intune/99a94c74ed6b956336ef47868ac41909872cb23f/TKM-WinAppInstaller/PackageManagers.ps1"
+    "Detection" = "https://raw.githubusercontent.com/thekingsmakers/Intune/99a94c74ed6b956336ef47868ac41909872cb23f/TKM-WinAppInstaller/Detection.ps1"
+    "Winget" = "https://raw.githubusercontent.com/thekingsmakers/Intune/99a94c74ed6b956336ef47868ac41909872cb23f/TKM-WinAppInstaller/Winget.ps1"
+    "Chocolatey" = "https://raw.githubusercontent.com/thekingsmakers/Intune/99a94c74ed6b956336ef47868ac41909872cb23f/TKM-WinAppInstaller/Chocolatey.ps1"
+    "Install" = "https://raw.githubusercontent.com/thekingsmakers/Intune/99a94c74ed6b956336ef47868ac41909872cb23f/TKM-WinAppInstaller/Install.ps1"
+    "Uninstall" = "https://raw.githubusercontent.com/thekingsmakers/Intune/99a94c74ed6b956336ef47868ac41909872cb23f/TKM-WinAppInstaller/Uninstall.ps1"
+    "Upgrade" = "https://raw.githubusercontent.com/thekingsmakers/Intune/99a94c74ed6b956336ef47868ac41909872cb23f/TKM-WinAppInstaller/Upgrade.ps1"
+    "AliasesJson" = "https://raw.githubusercontent.com/thekingsmakers/Intune/99a94c74ed6b956336ef47868ac41909872cb23f/TKM-WinAppInstaller/package-aliases.json"
 }
 ```
 
@@ -80,9 +81,9 @@ $moduleUrls = @{
 
 Example URLs:
 ```
-https://raw.githubusercontent.com/YOUR_USERNAME/WinAppInstaller/main/Utils.ps1
-https://raw.githubusercontent.com/YOUR_USERNAME/WinAppInstaller/main/Install.ps1
-https://raw.githubusercontent.com/YOUR_USERNAME/WinAppInstaller/main/package-aliases.json
+https://raw.githubusercontent.com/thekingsmakers/Intune/99a94c74ed6b956336ef47868ac41909872cb23f/TKM-WinAppInstaller/Utils.ps1
+https://raw.githubusercontent.com/thekingsmakers/Intune/99a94c74ed6b956336ef47868ac41909872cb23f/TKM-WinAppInstaller/Install.ps1
+https://raw.githubusercontent.com/thekingsmakers/Intune/99a94c74ed6b956336ef47868ac41909872cb23f/TKM-WinAppInstaller/package-aliases.json
 ```
 
 ## Step 4: Create Release
@@ -118,7 +119,7 @@ https://raw.githubusercontent.com/YOUR_USERNAME/WinAppInstaller/main/package-ali
 ### GitHub Testing (after upload)
 ```powershell
 # Download from your GitHub and test
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/YOUR_USERNAME/WinAppInstaller/main/bootstrap.ps1" -OutFile "bootstrap-test.ps1"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/thekingsmakers/Intune/main/TKM-WinAppInstaller/bootstrap.ps1" -OutFile "bootstrap-test.ps1"
 .\bootstrap-test.ps1 -List
 ```
 
@@ -133,20 +134,21 @@ Update any links in documentation to point to your repository:
 Your GitHub repository should look like this:
 
 ```
-YOUR_USERNAME/WinAppInstaller/
-├── bootstrap.ps1                           # ⭐ MAIN FILE - What users download
-├── THEKINGSMAKERS-WINAPP-TOOL-MONOLITHIC.ps1
-├── Utils.ps1
-├── Aliases.ps1
-├── PackageManagers.ps1
-├── Detection.ps1
-├── Winget.ps1
-├── Chocolatey.ps1
-├── Install.ps1
-├── Uninstall.ps1
-├── Upgrade.ps1
-├── package-aliases.json
-├── README.md                               # Repository documentation
+thekingsmakers/Intune/
+├── TKM-WinAppInstaller/
+│   ├── bootstrap.ps1                           # ⭐ MAIN FILE - What users download
+│   ├── THEKINGSMAKERS-WINAPP-TOOL-MONOLITHIC.ps1
+│   ├── Utils.ps1
+│   ├── Aliases.ps1
+│   ├── PackageManagers.ps1
+│   ├── Detection.ps1
+│   ├── Winget.ps1
+│   ├── Chocolatey.ps1
+│   ├── Install.ps1
+│   ├── Uninstall.ps1
+│   ├── Upgrade.ps1
+│   ├── package-aliases.json
+│   └── README.md                               # Repository documentation
 └── docs/                                   # Additional documentation
 ```
 
@@ -180,13 +182,9 @@ Tell users to:
 ## Example User Workflow
 
 ```powershell
-# Download from GitHub
-wget https://github.com/YOUR_USERNAME/WinAppInstaller/releases/download/v1.0.0/bootstrap.ps1
-
-# First run (downloads modules)
+# Download bootstrap.ps1 from the repository
+# Run with any command - it will download required modules automatically
 .\bootstrap.ps1 -List
-
-# Normal usage
 .\bootstrap.ps1 -Install vscode
 .\bootstrap.ps1 -Uninstall chrome
 ```

@@ -5,33 +5,51 @@ THE KINGSMAKERS WINAPP TOOL (TKM WINAPP TOOL) is a comprehensive Windows package
 
 Created by thekingsmakers | Website: thekingsmaker.org | Twitter: thekingsmakers
 
+## Repository
+- **GitHub**: https://github.com/thekingsmakers/Intune
+- **Folder**: `TKM-WinAppInstaller/`
+- **Bootstrap**: `bootstrap.ps1` (single file download)
+
 ## Quick Start (GitHub Bootstrap)
 
-### 1. Download the Bootstrap Script
+### Option 1: Direct Download & Run
 Download `bootstrap.ps1` from this repository - it's the only file you need!
 
-### 2. Run the Tool
 ```powershell
-# List installed packages (downloads only required modules)
+# Download and run
 .\bootstrap.ps1 -List
-
-# Install Visual Studio Code (downloads Install + related modules)
 .\bootstrap.ps1 -Install vscode
-
-# Uninstall Chrome with advanced cleanup (downloads Uninstall modules)
 .\bootstrap.ps1 -Uninstall chrome
+```
 
-# Search for browsers (downloads Search modules)
-.\bootstrap.ps1 -Search "browser"
+### Option 2: One-Liner (Recommended)
+Run directly from GitHub without downloading:
 
-# Upgrade Git and Node.js (downloads Upgrade modules)
-.\bootstrap.ps1 -Upgrade "git,nodejs"
+```powershell
+# List installed packages
+iwr https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/bootstrap.ps1 | iex -List
+
+# Install Visual Studio Code
+iwr https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/bootstrap.ps1 | iex -Install vscode
+
+# Uninstall Chrome with advanced cleanup
+iwr https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/bootstrap.ps1 | iex -Uninstall chrome
+
+# Search for browsers
+iwr https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/bootstrap.ps1 | iex -Search browser
+
+# Upgrade Git and Node.js
+iwr https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/bootstrap.ps1 | iex -Upgrade git,nodejs
 ```
 
 ### 3. How It Works
 - The bootstrap script downloads **only the modules needed** for your specific operation
 - **First run** downloads core modules (Utils, Aliases)
-- **Operation-specific** modules download as needed (Install, Uninstall, etc.)
+- **Operation-specific** modules download as needed:
+  - **Install**: PackageManagers, Detection, Winget, Chocolatey, Install modules
+  - **Uninstall**: PackageManagers, Detection, Winget, Chocolatey, Uninstall modules  
+  - **Upgrade**: PackageManagers, Detection, Winget, Chocolatey, Upgrade modules
+  - **Search/List**: PackageManagers, Detection, Winget, Chocolatey modules
 - **Caching** prevents re-downloading modules you've already used
 - All downloads happen automatically in the background
 
