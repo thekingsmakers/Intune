@@ -18,8 +18,6 @@ Get-AppXPackage -AllUsers | Foreach {
 }
 ```
 
-[Copy Snippet](#) <!-- Placeholder for copy option -->
-
 ---
 
 ## 📌 Snippet 2: List Installed Programs
@@ -29,8 +27,6 @@ Quickly list all installed programs with their names and versions.
 ```powershell
 Get-WmiObject -Class Win32_Product | Select-Object Name, Version
 ```
-
-[Copy Snippet](#)
 
 ---
 
@@ -42,9 +38,6 @@ Restart Windows Explorer without rebooting your system.
 Stop-Process -Name explorer -Force
 Start-Process explorer.exe
 ```
-
-[Copy Snippet](#)
-
 ---
 
 ## 📌 Snippet 4: Get IP Configuration
@@ -54,8 +47,6 @@ Display detailed IP configuration for all network adapters.
 ```powershell
 Get-NetIPConfiguration
 ```
-
-[Copy Snippet](#)
 
 ---
 
@@ -70,5 +61,4 @@ Get-ChildItem -Path C:\ -Recurse -ErrorAction SilentlyContinue |
     Select-Object FullName, Length
 ```
 
-[Copy Snippet](#)
 ```
