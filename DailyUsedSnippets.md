@@ -1,12 +1,8 @@
-
----
-
-```markdown
+markdown
 # 🐦 PowerShell Snippets 
 
 A curated list of handy PowerShell one-liners and scripts, formatted for quick sharing and easy copy.
 
----
 
 ## 📌 Snippet 1: Re-register All AppX Packages
 **Description:**  
@@ -17,8 +13,6 @@ Get-AppXPackage -AllUsers | Foreach {
     Add-AppxPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppXManifest.xml"
 }
 ```
-
----
 
 ## 📌 Snippet 2: List Installed Programs
 **Description:**  
