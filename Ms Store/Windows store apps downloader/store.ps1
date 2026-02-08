@@ -92,14 +92,14 @@ $PackageList = ConvertFrom-Csv @'
 '@
 
 $DependencyList = [ordered]@{
-    'Microsoft.Advertising.Xaml' = $null
-    'Microsoft.NET.Native.Framework' = $null
-    'Microsoft.NET.Native.Runtime' = $null
+    'Microsoft.Advertising.Xaml'          = $null
+    'Microsoft.NET.Native.Framework'      = $null
+    'Microsoft.NET.Native.Runtime'        = $null
     'Microsoft.Services.Store.Engagement' = $null
-    'Microsoft.UI.Xaml' = $null
-    'UWPDesktop' = $null
-    'Microsoft.VCLibs' = $null
-    'Microsoft.WinJS' = $null
+    'Microsoft.UI.Xaml'                   = $null
+    'UWPDesktop'                          = $null
+    'Microsoft.VCLibs'                    = $null
+    'Microsoft.WinJS'                     = $null
 }
 
 $RingList = ConvertFrom-Csv @'
@@ -127,7 +127,7 @@ $CheckListBox = {
 [System.Windows.Forms.Application]::EnableVisualStyles()
 
 $objForm = New-Object System.Windows.Forms.Form
-$objForm.Size = New-Object System.Drawing.Size(600,460)
+$objForm.Size = New-Object System.Drawing.Size(600, 460)
 $objForm.StartPosition = 'CenterScreen'
 $objForm.MaximizeBox = $false
 $objForm.Text = 'Thekingsmaker- Store Downloader- V1.5'
@@ -147,19 +147,19 @@ else {
 }
 
 $Package_Label = New-Object System.Windows.Forms.Label
-$Package_Label.Location = New-Object System.Drawing.Point(25,10)
-$Package_Label.Size = New-Object System.Drawing.Size(365,20)
+$Package_Label.Location = New-Object System.Drawing.Point(25, 10)
+$Package_Label.Size = New-Object System.Drawing.Size(365, 20)
 $Package_Label.Font = [System.Drawing.Font]::new($Package_Label.Font.Name, $FontSize, [System.Drawing.FontStyle]::Bold)
 $Package_Label.Text = 'Package'
 
 $objForm.Controls.Add($Package_Label)
 
 $Package_ListBox = New-Object System.Windows.Forms.ListBox
-$Package_ListBox.Location = New-Object System.Drawing.Point(25,35)
-$Package_ListBox.Size = New-Object System.Drawing.Size(365,20)
+$Package_ListBox.Location = New-Object System.Drawing.Point(25, 35)
+$Package_ListBox.Size = New-Object System.Drawing.Size(365, 20)
 $Package_ListBox.Height = 220
 $Package_ListBox.Font = [System.Drawing.Font]::new($Package_ListBox.Font.Name, $FontSize)
-$Package_ListBox.add_SelectedIndexChanged({$ProductID_TextBox.Clear(); $CheckListBox})
+$Package_ListBox.add_SelectedIndexChanged({ $ProductID_TextBox.Clear(); $CheckListBox })
 
 Foreach ($item in $PackageList.Identity) {
     [void]$Package_ListBox.Items.Add($item)
@@ -167,50 +167,50 @@ Foreach ($item in $PackageList.Identity) {
 $objForm.Controls.Add($Package_ListBox)
 
 $ProductID_Label = New-Object System.Windows.Forms.Label
-$ProductID_Label.Location = New-Object System.Drawing.Point(25,255)
-$ProductID_Label.Size = New-Object System.Drawing.Size(125,20)
+$ProductID_Label.Location = New-Object System.Drawing.Point(25, 255)
+$ProductID_Label.Size = New-Object System.Drawing.Size(125, 20)
 $ProductID_Label.Font = [System.Drawing.Font]::new($ProductID_Label.Font.Name, $FontSize, [System.Drawing.FontStyle]::Bold)
 $ProductID_Label.Text = 'App Product ID'
 
 $objForm.Controls.Add($ProductID_Label)
 
 $ProductID_TextBox = New-Object System.Windows.Forms.TextBox
-$ProductID_TextBox.Location = New-Object System.Drawing.Point(160,251)
-$ProductID_TextBox.Size = New-Object System.Drawing.Size(155,20)
+$ProductID_TextBox.Location = New-Object System.Drawing.Point(160, 251)
+$ProductID_TextBox.Size = New-Object System.Drawing.Size(155, 20)
 $ProductID_TextBox.Font = [System.Drawing.Font]::new($ProductID_TextBox.Font.Name, $FontSize)
-$ProductID_TextBox.Add_TextChanged({$Package_ListBox.ClearSelected()})
+$ProductID_TextBox.Add_TextChanged({ $Package_ListBox.ClearSelected() })
 
 $objForm.Controls.Add($ProductID_TextBox)
 
 $Arch_Label = New-Object System.Windows.Forms.Label
-$Arch_Label.Location = New-Object System.Drawing.Point(410,10)
-$Arch_Label.Size = New-Object System.Drawing.Size(65,20)
+$Arch_Label.Location = New-Object System.Drawing.Point(410, 10)
+$Arch_Label.Size = New-Object System.Drawing.Size(65, 20)
 $Arch_Label.Font = [System.Drawing.Font]::new($Arch_Label.Font.Name, $FontSize, [System.Drawing.FontStyle]::Bold)
 $Arch_Label.Text = 'Arch'
 
 $objForm.Controls.Add($Arch_Label)
 
 $Arch_ListBox = New-Object System.Windows.Forms.ListBox
-$Arch_ListBox.Location = New-Object System.Drawing.Point(410,35)
-$Arch_ListBox.Size = New-Object System.Drawing.Size(65,20)
+$Arch_ListBox.Location = New-Object System.Drawing.Point(410, 35)
+$Arch_ListBox.Size = New-Object System.Drawing.Size(65, 20)
 $Arch_ListBox.Height = 90
 $Arch_ListBox.Font = [System.Drawing.Font]::new($Arch_ListBox.Font.Name, $FontSize)
 $Arch_ListBox.add_SelectedIndexChanged($CheckListBox)
 
-[void]$Arch_ListBox.Items.AddRange(@('x64','x86','arm64','arm'))
+[void]$Arch_ListBox.Items.AddRange(@('x64', 'x86', 'arm64', 'arm'))
 $objForm.Controls.Add($Arch_ListBox)
 
 $Ring_Label = New-Object System.Windows.Forms.Label
-$Ring_Label.Location = New-Object System.Drawing.Point(495,10)
-$Ring_Label.Size = New-Object System.Drawing.Size(70,20)
+$Ring_Label.Location = New-Object System.Drawing.Point(495, 10)
+$Ring_Label.Size = New-Object System.Drawing.Size(70, 20)
 $Ring_Label.Font = [System.Drawing.Font]::new($Ring_Label.Font.Name, $FontSize, [System.Drawing.FontStyle]::Bold)
 $Ring_Label.Text = 'Ring'
 
 $objForm.Controls.Add($Ring_Label)
 
 $Ring_ListBox = New-Object System.Windows.Forms.ListBox
-$Ring_ListBox.Location = New-Object System.Drawing.Point(495,35)
-$Ring_ListBox.Size = New-Object System.Drawing.Size(70,20)
+$Ring_ListBox.Location = New-Object System.Drawing.Point(495, 35)
+$Ring_ListBox.Size = New-Object System.Drawing.Size(70, 20)
 $Ring_ListBox.Height = 90
 $Ring_ListBox.Font = [System.Drawing.Font]::new($Ring_ListBox.Font.Name, $FontSize)
 $Ring_ListBox.add_SelectedIndexChanged($CheckListBox)
@@ -218,13 +218,13 @@ $Ring_ListBox.add_SelectedIndexChanged($CheckListBox)
 Foreach ($item in $RingList.Name) {
     [void]$Ring_ListBox.Items.Add($item)
 }
-$Ring_ListBox.SetSelected(3,$true)
+$Ring_ListBox.SetSelected(3, $true)
 
 $objForm.Controls.Add($Ring_ListBox)
 
 $PreReq_Checkbox = New-Object System.Windows.Forms.Checkbox
-$PreReq_Checkbox.Location = New-Object System.Drawing.Point(25,295)
-$PreReq_Checkbox.Size = New-Object System.Drawing.Size(215,25)
+$PreReq_Checkbox.Location = New-Object System.Drawing.Point(25, 295)
+$PreReq_Checkbox.Size = New-Object System.Drawing.Size(215, 25)
 $PreReq_Checkbox.Font = [System.Drawing.Font]::new($PreReq_Checkbox.Font.Name, $FontSize)
 $PreReq_Checkbox.Text = 'Download Dependencies'
 $PreReq_Checkbox.Checked = $true
@@ -232,8 +232,8 @@ $PreReq_Checkbox.Checked = $true
 $objForm.Controls.Add($PreReq_Checkbox)
 
 $ShowAll_Checkbox = New-Object System.Windows.Forms.Checkbox
-$ShowAll_Checkbox.Location = New-Object System.Drawing.Point(25,325)
-$ShowAll_Checkbox.Size = New-Object System.Drawing.Size(215,25)
+$ShowAll_Checkbox.Location = New-Object System.Drawing.Point(25, 325)
+$ShowAll_Checkbox.Size = New-Object System.Drawing.Size(215, 25)
 $ShowAll_Checkbox.Font = [System.Drawing.Font]::new($ShowAll_Checkbox.Font.Name, $FontSize)
 $ShowAll_Checkbox.Text = 'Show All Versions'
 $ShowAll_Checkbox.Checked = $false
@@ -242,8 +242,8 @@ $objForm.Controls.Add($ShowAll_Checkbox)
 
 if ($Elevated -eq $true) {
     $Sideload_Checkbox = New-Object System.Windows.Forms.Checkbox
-    $Sideload_Checkbox.Location = New-Object System.Drawing.Point(305,295)
-    $Sideload_Checkbox.Size = New-Object System.Drawing.Size(365,25)
+    $Sideload_Checkbox.Location = New-Object System.Drawing.Point(305, 295)
+    $Sideload_Checkbox.Size = New-Object System.Drawing.Size(365, 25)
     $Sideload_Checkbox.Font = [System.Drawing.Font]::new($Sideload_Checkbox.Font.Name, $FontSize)
     $Sideload_Checkbox.Text = 'Install Packages'
     $Sideload_Checkbox.Checked = $false
@@ -260,28 +260,28 @@ $Pen = New-Object Drawing.Pen Black
 #$objForm.Add_Paint({$FormGraphics.DrawLine($Pen,($Center + 1),0,($Center + 1),$Height)}
 
 $OKButton = New-Object System.Windows.Forms.Button
-$OKButton.Location = New-Object System.Drawing.Point(($Center - 78),($Height - 90))
-$OKButton.Size = New-Object System.Drawing.Size(75,30)
+$OKButton.Location = New-Object System.Drawing.Point(($Center - 78), ($Height - 90))
+$OKButton.Size = New-Object System.Drawing.Size(75, 30)
 $OKButton.Font = [System.Drawing.Font]::new($OKButton.Font.Name, $FontSize)
 $OKButton.Text = 'OK'
 $OKButton.FlatStyle = 'Standard'
-$OKButton.Add_Click({$OKButton.Enabled = $false})
+$OKButton.Add_Click({ $OKButton.Enabled = $false })
 $OKButton.DialogResult = [System.Windows.Forms.DialogResult]::OK
 
 $objForm.Controls.Add($OKButton)
 
 $CancelButton = New-Object System.Windows.Forms.Button
-$CancelButton.Location = New-Object System.Drawing.Point(($Center + 5),($Height - 90))
-$CancelButton.Size = New-Object System.Drawing.Size(75,30)
+$CancelButton.Location = New-Object System.Drawing.Point(($Center + 5), ($Height - 90))
+$CancelButton.Size = New-Object System.Drawing.Size(75, 30)
 $CancelButton.Font = [System.Drawing.Font]::new($CancelButton.Font.Name, $FontSize)
 $CancelButton.Text = 'Cancel'
 $CancelButton.FlatStyle = 'Standard'
-$CancelButton.Add_Click({$objForm.Close()})
+$CancelButton.Add_Click({ $objForm.Close() })
 
 $objForm.Controls.Add($CancelButton)
 
 $objForm.Topmost = $true
-$objForm.Add_Shown({$objForm.Activate()})
+$objForm.Add_Shown({ $objForm.Activate() })
 
 $OKButton.Enabled = $false
 $Result = $objForm.ShowDialog()
@@ -292,16 +292,21 @@ if ($Result -ne [System.Windows.Forms.DialogResult]::OK) {
 
 ############
 
-$PackageFamily = $($PackageList | Where {$_.Identity -eq $Package_ListBox.SelectedItem}).Family
+$PackageFamily = $($PackageList | Where { $_.Identity -eq $Package_ListBox.SelectedItem }).Family
 $Arch = $Arch_ListBox.SelectedItem
-$Ring = $($RingList | Where {$_.Name -eq $Ring_ListBox.SelectedItem}).Value
+$Ring = $($RingList | Where { $_.Name -eq $Ring_ListBox.SelectedItem }).Value
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 $ProgressPreference = 'SilentlyContinue'
+$UserAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+$Headers = @{
+    "Referer" = "https://store.rg-adguard.net/"
+    "Origin"  = "https://store.rg-adguard.net"
+}
 
 if ($ProductID_TextBox.Text -eq '') {
     try {
-        $Response = Invoke-WebRequest -UseBasicParsing -Method 'POST' -Uri 'https://store.rg-adguard.net/api/GetFiles' `
+        $Response = Invoke-WebRequest -UseBasicParsing -UserAgent $UserAgent -Headers $Headers -ContentType "application/x-www-form-urlencoded" -Method 'POST' -Uri 'https://store.rg-adguard.net/api/GetFiles' `
             -Body "type=PackageFamilyName&url=$PackageFamily&ring=$Ring&lang=en-US"
     }
     catch {
@@ -313,7 +318,7 @@ else {
     $ProductID = $ProductID_TextBox.Text
 
     try {
-        $Response = Invoke-WebRequest -UseBasicParsing -Method 'POST' -Uri 'https://store.rg-adguard.net/api/GetFiles' `
+        $Response = Invoke-WebRequest -UseBasicParsing -UserAgent $UserAgent -Headers $Headers -ContentType "application/x-www-form-urlencoded" -Method 'POST' -Uri 'https://store.rg-adguard.net/api/GetFiles' `
             -Body "type=ProductId&url=$ProductID&ring=$Ring&lang=en-US"
     }
     catch {
@@ -322,7 +327,7 @@ else {
     }
 }
 
-$Links = $Response.Links.outerHTML | Where-Object {$_ -notmatch 'BlockMap' -and $_ -notmatch '\.eappx' -and $_ -notmatch '\.emsix' -and ($_ -match "$Arch" -or $_ -match '_neutral_')}
+$Links = $Response.Links.outerHTML | Where-Object { $_ -notmatch 'BlockMap' -and $_ -notmatch '\.eappx' -and $_ -notmatch '\.emsix' -and ($_ -match "$Arch" -or $_ -match '_neutral_') }
 
 $FileList = New-Object System.Collections.ArrayList
 
@@ -332,15 +337,15 @@ Foreach ($File in $Links) {
     $Version = $Package.Split('_')[1]
 
     $null = $FileList.Add([PSCustomObject]@{
-        'Package' = $Package
-        'Family' = $Family
-        'Version' = [Version]$Version
-    })
+            'Package' = $Package
+            'Family'  = $Family
+            'Version' = [Version]$Version
+        })
 }
 
 $AppsOnlyList = New-Object System.Collections.ArrayList
 
-Foreach ($File in ($FileList | Sort-Object -Property Family,Version)) {
+Foreach ($File in ($FileList | Sort-Object -Property Family, Version)) {
     $match = $false
 
     Foreach ($PreReq in ($DependencyList.GetEnumerator()).Name) {
@@ -352,10 +357,10 @@ Foreach ($File in ($FileList | Sort-Object -Property Family,Version)) {
     }
 
     if ($match -eq $false) {
-        $URL = ($Links | Where-Object {$_-match $File.Package}).Split('"')[1]
+        $URL = ($Links | Where-Object { $_ -match $File.Package }).Split('"')[1]
 
         try {
-            $Response = Invoke-WebRequest -UseBasicParsing -Method 'HEAD' -Uri $URL
+            $Response = Invoke-WebRequest -UseBasicParsing -UserAgent $UserAgent -Headers $Headers -Method 'HEAD' -Uri $URL
         }
         catch {
             $_.Exception
@@ -376,30 +381,30 @@ Foreach ($File in ($FileList | Sort-Object -Property Family,Version)) {
         }
 
         $null = $AppsOnlyList.Add([PSCustomObject]@{
-            'Package' = $File.Package
-            'Family' = $File.Family
-            'Version' = [Version]$File.Version
-            'Major' = $File.Version.Major
-            'Last-Modified' = $LastModified
-            'Size' = $Size
-        })
+                'Package'       = $File.Package
+                'Family'        = $File.Family
+                'Version'       = [Version]$File.Version
+                'Major'         = $File.Version.Major
+                'Last-Modified' = $LastModified
+                'Size'          = $Size
+            })
     }
 }
 
 if ($AppsOnlyList.Count -eq 0) {
-    $null = $AppsOnlyList.Add([PSCustomObject]@{'Package' = 'No packages listed.'})
+    $null = $AppsOnlyList.Add([PSCustomObject]@{'Package' = 'No packages listed.' })
     $AppsOnlyList | Out-GridView -Title 'Select Packages for Download' -PassThru | Out-Null
     Exit
 }
 
 if ($ShowAll_Checkbox.Checked -eq $false) {
     $UserSelected = ($AppsOnlyList | Group-Object -Property Major | Foreach { $_.Group | Sort Last-Modified | Select -Last 1 } | `
-        Select-Object Family,Version,Package,Last-Modified,Size | Sort-Object -Property Last-Modified | `
-        Out-GridView -Title 'Select Packages for Download' -PassThru).Package
+            Select-Object Family, Version, Package, Last-Modified, Size | Sort-Object -Property Last-Modified | `
+            Out-GridView -Title 'Select Packages for Download' -PassThru).Package
 }
 else {
-    $UserSelected = ($AppsOnlyList | Select-Object Family,Version,Package,Last-Modified,Size | Sort-Object -Property Last-Modified | `
-        Out-GridView -Title 'Select Packages for Download' -PassThru).Package
+    $UserSelected = ($AppsOnlyList | Select-Object Family, Version, Package, Last-Modified, Size | Sort-Object -Property Last-Modified | `
+            Out-GridView -Title 'Select Packages for Download' -PassThru).Package
 }
 
 if (($UserSelected).Count -eq 0) {
@@ -410,7 +415,7 @@ $DependencyPath = @()
 Set-Location $PSScriptRoot
 
 if ($PreReq_Checkbox.Checked -eq $true) {
-    $CurrentFiles = Get-ChildItem -Name -Include *.msix,*.appx
+    $CurrentFiles = Get-ChildItem -Name -Include *.msix, *.appx
 
     Foreach ($File in $CurrentFiles) {
         Foreach ($PreReq in ($DependencyList.GetEnumerator()).Name) {
@@ -443,7 +448,7 @@ if ($PreReq_Checkbox.Checked -eq $true) {
         }
     }
 
-    $MergedList = ([array]$UserSelected + [array]($DependencyList.Values | Where-Object {$_ -ne $null})) | sort
+    $MergedList = ([array]$UserSelected + [array]($DependencyList.Values | Where-Object { $_ -ne $null })) | sort
 }
 else {
     $MergedList = $UserSelected
@@ -453,29 +458,20 @@ else {
 
 # Assuming $MergedList and $Links are prepared earlier in the script
 
-foreach ($Filename in $MergedList) {
-    $URL = ($Links | Where-Object {$_ -match $Filename}).Split('"')[1]
-    $Identity = $Filename.Split('_')[0]  # Example to extract the app identity; adjust based on actual logic
-
-    # Determine folder name; consider adding logic to extract a more user-friendly name
-    $FolderName = $Identity  # Placeholder for folder naming logic
-
-    # Define directory path based on FolderName
-    # First ensure we have a valid base directory
+# Determine BaseDirectory
 $BaseDirectory = if ([string]::IsNullOrEmpty($PSScriptRoot)) {
-    # Fallback to current directory if $PSScriptRoot is empty
     $PWD.Path
-} else {
+}
+else {
     $PSScriptRoot
 }
 
 foreach ($Filename in $MergedList) {
-    $URL = ($Links | Where-Object {$_ -match $Filename}).Split('"')[1]
+    $URL = ($Links | Where-Object { $_ -match $Filename }).Split('"')[1]
     
     # Extract app identity and version for folder naming
     $FileParts = $Filename.Split('_')
     $Identity = $FileParts[0]
-    $Version = $FileParts[1]
     
     # Create a clean folder name from the identity
     $FolderName = $Identity -replace '[^\w\-\.]', '_'
@@ -502,9 +498,10 @@ foreach ($Filename in $MergedList) {
     try {
         if (-not (Test-Path -Path $FilePath -ErrorAction Stop)) {
             Write-Host "Downloading $Filename to $DirectoryPath"
-            Invoke-WebRequest -Uri $URL -OutFile $FilePath -ErrorAction Stop
+            Invoke-WebRequest -Uri $URL -UserAgent $UserAgent -Headers $Headers -OutFile $FilePath -ErrorAction Stop
             Write-Host "Successfully downloaded $Filename"
-        } else {
+        }
+        else {
             Write-Host "File $Filename already exists in $DirectoryPath. Skipping download."
         }
     }
@@ -514,8 +511,7 @@ foreach ($Filename in $MergedList) {
     }
 }
 
-if (([Environment]::GetCommandLineArgs() | Where-Object {$_ -like '-Command'}).Count -gt 0) {
+if (([Environment]::GetCommandLineArgs() | Where-Object { $_ -like '-Command' }).Count -gt 0) {
     Write-Host -NoNewline 'Press any key to close window.'
     $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
-}
 }
