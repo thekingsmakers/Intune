@@ -27,6 +27,14 @@ Copy-Item -Path "$SourceDir\Bginfo64.exe" -Destination $TargetDir -Force
 Copy-Item -Path "$SourceDir\hostname.bgi" -Destination $TargetDir -Force
 Copy-Item -Path "$SourceDir\bginforefresh.ps1" -Destination $TargetDir -Force
 
+# Create a VBScript wrapper to completely prevent the PowerShell console flash
+$VbsPath = "$TargetDir\runner.vbs"
+$VbsContent = @"
+Set objShell = CreateObject("WScript.Shell")
+objShell.Run "powershell.exe -WindowStyle Hidden -ExecutionPolicy Bypass -Command ""Get-Content '$ScriptPath' -Raw | Invoke-Expression""", 0, False
+"@
+Set-Content -Path $VbsPath -Value $VbsContent -Force
+
 # 3. Create Scheduled Task to run at user logon
 Write-Host "Configuring Scheduled Task: $TaskName"
 
@@ -37,8 +45,8 @@ if ($existingTask) {
     Unregister-ScheduledTask -TaskName $TaskName -Confirm:$false
 }
 
-# The action is to run powershell hidden and bypass execution policy
-$Action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-WindowStyle Hidden -ExecutionPolicy Bypass -Command `"Get-Content '$ScriptPath' -Raw | Invoke-Expression`""
+# The action is to run the VBScript using wscript, which has no console window
+$Action = New-ScheduledTaskAction -Execute "wscript.exe" -Argument "`"$VbsPath`""
 
 # The triggers include Logon, Unlock (8), and Lock (7)
 $TriggerLogon = New-ScheduledTaskTrigger -AtLogon
