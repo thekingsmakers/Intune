@@ -1,0 +1,203 @@
+# IME assemblyBinding checker and fixer
+# - Verifies all required assemblies from the canonical list
+# - Adds missing dependentAssembly entries if DLL exists
+# - Fixes newVersion to match the actual DLL version
+# - Fixes publicKeyToken when needed
+# - Restarts IME only when changes are made
+
+# Paths
+$configPath = "C:\Program Files (x86)\Microsoft Intune Management Extension\Microsoft.Management.Services.IntuneWindowsAgent.exe.config"
+$rootPath   = "C:\Program Files (x86)\Microsoft Intune Management Extension"
+
+if (-not (Test-Path $configPath)) {
+    Write-Host "Config not found at $configPath" -ForegroundColor Red
+    return
+}
+
+# Canonical list of assemblies that must be in the config
+# (based on the original / good IME config you posted)
+$requiredAssemblies = @(
+    @{ Name = "Newtonsoft.Json";                        PublicKeyToken = "30ad4fe6b2a6aeed" }
+    @{ Name = "System.Runtime.CompilerServices.Unsafe"; PublicKeyToken = "b03f5f7f11d50a3a" }
+    @{ Name = "Microsoft.Bcl.AsyncInterfaces";          PublicKeyToken = "cc7b13ffcd2ddd51" }
+    @{ Name = "System.Buffers";                         PublicKeyToken = "cc7b13ffcd2ddd51" }
+    @{ Name = "System.Numerics.Vectors";                PublicKeyToken = "b03f5f7f11d50a3a" }
+    @{ Name = "System.Diagnostics.DiagnosticSource";    PublicKeyToken = "cc7b13ffcd2ddd51" }
+    @{ Name = "Microsoft.Extensions.Logging.Abstractions"; PublicKeyToken = "adb9793829ddae60" }
+    @{ Name = "System.ValueTuple";                      PublicKeyToken = "cc7b13ffcd2ddd51" }
+    @{ Name = "System.Text.Encodings.Web";              PublicKeyToken = "cc7b13ffcd2ddd51" }
+    @{ Name = "System.Text.Json";                       PublicKeyToken = "cc7b13ffcd2ddd51" }
+)
+
+# Load config XML
+[xml]$xml = Get-Content -Path $configPath
+
+$ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
+$ns.AddNamespace("asm", "urn:schemas-microsoft-com:asm.v1")
+
+$runtimeNode = $xml.configuration.runtime
+if (-not $runtimeNode) {
+    Write-Host "No <runtime> node found in config. Aborting." -ForegroundColor Red
+    return
+}
+
+# Collect existing dependentAssembly nodes (by name)
+$existingDependent = @{}
+$dependentAssemblies = $xml.SelectNodes("//configuration/runtime/asm:assemblyBinding/asm:dependentAssembly", $ns)
+
+foreach ($dep in $dependentAssemblies) {
+    $ai = $dep.SelectSingleNode("asm:assemblyIdentity", $ns)
+    if ($ai -and $ai.name) {
+        $existingDependent[$ai.name] = @{
+            Dep     = $dep
+            Binding = $dep.ParentNode
+            AI      = $ai
+        }
+    }
+}
+
+$changes = @()
+$hadChanges = $false
+
+foreach ($req in $requiredAssemblies) {
+    $name = $req.Name
+    $pkt  = $req.PublicKeyToken
+
+    $dllPath = Join-Path $rootPath ("{0}.dll" -f $name)
+    $fileExists = Test-Path $dllPath
+    $version = $null
+    $procArch = $null
+
+    if ($fileExists) {
+        try {
+            $asm      = [System.Reflection.AssemblyName]::GetAssemblyName($dllPath)
+            $version  = $asm.Version.ToString()
+            $procArch = $asm.ProcessorArchitecture
+        }
+        catch {
+            Write-Host ""
+            Write-Host "AssemblyName   : $name"
+            Write-Host "DllPath        : $dllPath"
+            Write-Host "FileExists     : $fileExists"
+            Write-Host "AsmVersion     : <error reading>"
+            Write-Host "ProcessorArch  : $procArch"
+            Write-Host "Match          : FALSE (could not read assembly name)" -ForegroundColor Red
+            continue
+        }
+    }
+
+    Write-Host ""
+    Write-Host "AssemblyName   : $name"
+    Write-Host "DllPath        : $dllPath"
+    Write-Host "FileExists     : $fileExists"
+    Write-Host "AsmVersion     : $version"
+    Write-Host "ProcessorArch  : $procArch"
+
+    if (-not $fileExists -or -not $version) {
+        Write-Host "Match          : FALSE (DLL missing or version unavailable)" -ForegroundColor Yellow
+        continue
+    }
+
+    if ($existingDependent.ContainsKey($name)) {
+        # Update existing entry
+        $info      = $existingDependent[$name]
+        $depNode   = $info.Dep
+        $aiNode    = $info.AI
+        $brNode    = $depNode.SelectSingleNode("asm:bindingRedirect", $ns)
+
+        if (-not $brNode) {
+            # Create bindingRedirect if missing
+            $brNode = $xml.CreateElement("bindingRedirect", "urn:schemas-microsoft-com:asm.v1")
+            $brNode.SetAttribute("oldVersion", "0.0.0.0-$version")
+            $brNode.SetAttribute("newVersion", $version)
+            [void]$depNode.AppendChild($brNode)
+            $hadChanges = $true
+            $changes += "ADD  ${name}: bindingRedirect (0.0.0.0-$version -> $version)"
+        } else {
+            $currentNew = $brNode.GetAttribute("newVersion")
+            if ([string]::IsNullOrWhiteSpace($currentNew)) {
+                $currentNew = "<empty>"
+            }
+
+            if ($currentNew -ne $version) {
+                $changes += "FIX  ${name}: ${currentNew} -> ${version}"
+                $brNode.SetAttribute("oldVersion", "0.0.0.0-$version")
+                $brNode.SetAttribute("newVersion", $version)
+                $hadChanges = $true
+            }
+        }
+
+        # Ensure publicKeyToken matches expected
+        $currentPkt = $aiNode.GetAttribute("publicKeyToken")
+        if ([string]::IsNullOrWhiteSpace($currentPkt)) {
+            $currentPkt = "<empty>"
+        }
+
+        if ($pkt -and ($currentPkt -ne $pkt)) {
+            $changes += "PKT  ${name}: ${currentPkt} -> ${pkt}"
+            $aiNode.SetAttribute("publicKeyToken", $pkt)
+            $hadChanges = $true
+        }
+
+        # For reporting
+        $finalNew = $depNode.SelectSingleNode("asm:bindingRedirect", $ns).GetAttribute("newVersion")
+        $match = $finalNew -eq $version
+        if ($match) {
+            Write-Host "Match          : TRUE (updated existing redirect)" -ForegroundColor Green
+        } else {
+            Write-Host "Match          : FALSE (existing redirect does not match DLL)" -ForegroundColor Red
+        }
+    }
+    else {
+        # Add new dependentAssembly + bindingRedirect under a new assemblyBinding
+        Write-Host "Match          : FALSE (missing in config, will be added)" -ForegroundColor Yellow
+
+        $asmNs = "urn:schemas-microsoft-com:asm.v1"
+        $assemblyBindingNode = $xml.CreateElement("assemblyBinding", $asmNs)
+        $depNode  = $xml.CreateElement("dependentAssembly", $asmNs)
+        $aiNode   = $xml.CreateElement("assemblyIdentity", $asmNs)
+        $brNode   = $xml.CreateElement("bindingRedirect", $asmNs)
+
+        [void]$aiNode.SetAttribute("name",            $name)
+        [void]$aiNode.SetAttribute("publicKeyToken",  $pkt)
+        [void]$aiNode.SetAttribute("culture",         "neutral")
+
+        [void]$brNode.SetAttribute("oldVersion", "0.0.0.0-$version")
+        [void]$brNode.SetAttribute("newVersion", $version)
+
+        [void]$depNode.AppendChild($aiNode)
+        [void]$depNode.AppendChild($brNode)
+        [void]$assemblyBindingNode.AppendChild($depNode)
+        [void]$runtimeNode.AppendChild($assemblyBindingNode)
+
+        $changes += "ADD  ${name}: 0.0.0.0-${version} -> ${version}"
+        $hadChanges = $true
+    }
+}
+
+Write-Host ""
+if (-not $hadChanges) {
+    Write-Host "No changes needed. All required assemblies are present and correctly redirected." -ForegroundColor Green
+    return
+}
+
+Write-Host "Changes to be applied:" -ForegroundColor Yellow
+$changes | ForEach-Object { Write-Host "  $_" }
+
+# Backup original config
+$timestamp  = Get-Date -Format "yyyyMMddHHmmss"
+$backupPath = "$configPath.bak.$timestamp"
+Copy-Item -Path $configPath -Destination $backupPath -Force
+
+# Save updated config
+$tempPath = Join-Path $env:TEMP "Microsoft.Management.Services.IntuneWindowsAgent.exe.config.fixed"
+$xml.Save($tempPath)
+Copy-Item -Path $tempPath -Destination $configPath -Force
+
+Write-Host ""
+Write-Host "Config updated. Restarting Intune Management Extension service..." -ForegroundColor Yellow
+Restart-Service -Name IntuneManagementExtension -Force
+
+Write-Host "Done." -ForegroundColor Green
+Write-Host "Backup of original config: $backupPath"
+Write-Host "Modified copy stored at:   $tempPath"
