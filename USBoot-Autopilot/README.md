@@ -386,6 +386,6 @@ Start-Process "C:\Apps\YourApp.exe" -ArgumentList "/silent /norestart" -Wait
 
 ---
 
-**Created By**: thekingsmakers (Omar Osman Mahat)  
+**Created By**: thekingsmakers (Omar Osman)  
 **Last Updated**: May 20, 2026  
 **Status**: Production Ready
