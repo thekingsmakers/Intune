@@ -142,6 +142,23 @@ function Get-BitLockerStatus {
         }
     }
 }
+
+function Get-DeviceInfo {
+    try {
+        $cs = Get-CimInstance -ClassName Win32_ComputerSystem -ErrorAction Stop
+
+        return @{
+            Manufacturer = $cs.Manufacturer
+            Model        = $cs.Model
+        }
+    } catch {
+        return @{
+            Manufacturer = "Unknown"
+            Model        = "Unknown"
+        }
+    }
+}
+
 # =====================================
 # MAIN
 # =====================================
@@ -156,20 +173,22 @@ try {
     $pcr7 = Get-PCR7
     $winre = Get-WinRE
     $bitlocker = Get-BitLockerStatus
-
+    $device = Get-DeviceInfo
     $Body = @{
-        DeviceName      = $hostname
-        TPM_Present     = $tpm.Present
-        TPM_Version     = $tpm.Version
-        UEFI_Mode       = $uefi
-        SecureBoot      = $secureboot
-        KernelDMA       = $dma
-        PCR7            = $pcr7
-        WinRE           = $winre
-        BitLocker_C     = $bitlocker.C
-        BitLocker_D     = $bitlocker.D
-        Timestamp       = (Get-Date).ToString("s")
-    } | ConvertTo-Json -Depth 3
+    DeviceName      = $hostname
+    Manufacturer    = $device.Manufacturer
+    Model           = $device.Model
+    TPM_Present     = $tpm.Present
+    TPM_Version     = $tpm.Version
+    UEFI_Mode       = $uefi
+    SecureBoot      = $secureboot
+    KernelDMA       = $dma
+    PCR7            = $pcr7
+    WinRE           = $winre
+    BitLocker_C     = $bitlocker.C
+    BitLocker_D     = $bitlocker.D
+    Timestamp       = (Get-Date).ToString("s")
+} | ConvertTo-Json -Depth 3
 
     Invoke-RestMethod -Uri $FlowUrl -Method POST -Body $Body -ContentType "application/json"
 
