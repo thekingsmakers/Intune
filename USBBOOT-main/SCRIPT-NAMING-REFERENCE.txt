@@ -1,0 +1,132 @@
+================================================================================
+SCRIPT NAMING REFERENCE
+================================================================================
+
+All scripts have been renamed to clearly describe their purpose.
+
+================================================================================
+NAMING SCHEME
+================================================================================
+
+OLD NAME                      NEW NAME                         WHAT IT DOES
+─────────────────────────────────────────────────────────────────────────────
+
+AutoPilot-Final.ps1      →   Main-Orchestrator.ps1       Coordinates all provisioning
+                                                         - WiFi auto-connect
+                                                         - Runs all 3 scripts in sequence
+                                                         - Main entry point
+
+Script1.ps1              →   Setup-CopyFiles.ps1         Prepares the environment
+                                                         - Copies Scripts folder
+                                                         - Copies PackageManagement
+                                                         - Copies WindowsPowerShell
+
+Script2.ps1              →   AutoPilot-RegisterDevice.ps1 Registers device with Azure
+                                                         - Collects device hash
+                                                         - Uploads to AutoPilot
+                                                         - Groups device with tag
+                                                         - ⚠️ REQUIRES: Configure credentials
+
+Script6final.ps1         →   Finalize-Sysprep.ps1        Finalizes installation
+                                                         - Removes management registry keys
+                                                         - Runs Sysprep with OOBE
+                                                         - Prepares for admin provisioning
+
+================================================================================
+FILE LOCATIONS
+================================================================================
+
+Root Level:
+  Main-Orchestrator.ps1
+
+AutoPilot Folder:
+  AutoPilot/Setup-CopyFiles.ps1
+  AutoPilot/AutoPilot-RegisterDevice.ps1
+  AutoPilot/Finalize-Sysprep.ps1
+  AutoPilot/home.xml (WiFi profile)
+  AutoPilot/Scripts/ (helper scripts)
+  AutoPilot/PackageManagement/ (NuGet)
+  AutoPilot/WindowsPowerShell/ (modules)
+
+OEM Integration:
+  sources/$OEM$/$$/Setup/Scripts/Main-Orchestrator.ps1
+  sources/$OEM$/$$/Setup/Scripts/SetupComplete.cmd
+  sources/$OEM$/$$/Setup/AutoPilot/Setup-CopyFiles.ps1
+  sources/$OEM$/$$/Setup/AutoPilot/AutoPilot-RegisterDevice.ps1
+  sources/$OEM$/$$/Setup/AutoPilot/Finalize-Sysprep.ps1
+  sources/$OEM$/$$/Setup/AutoPilot/* (all other files)
+
+================================================================================
+EXECUTION SEQUENCE
+================================================================================
+
+1. SetupComplete.cmd runs
+   ↓
+2. Main-Orchestrator.ps1 starts
+   ├─ Step 1/4: WiFi Auto-Connect
+   ├─ Step 2/4: Setup-CopyFiles.ps1
+   ├─ Step 3/4: AutoPilot-RegisterDevice.ps1 ⚠️ (CONFIGURE FIRST)
+   └─ Step 4/4: Finalize-Sysprep.ps1
+   ↓
+3. Installation complete
+
+================================================================================
+CONFIGURATION REQUIRED
+================================================================================
+
+BEFORE DEPLOYMENT:
+
+Edit: AutoPilot/AutoPilot-RegisterDevice.ps1
+Add:
+  $Tenant = "your-tenant-id"
+  $clientid = "your-app-id"
+  $clientSecret = "your-client-secret"
+  $grouptag = "TSUpload"
+
+Optional:
+  Export WiFi to: AutoPilot/home.xml
+  Add apps to: Apps/
+  Configure Office in: Office/
+
+================================================================================
+WHY DESCRIPTIVE NAMES?
+================================================================================
+
+✅ Clear Purpose: Filename immediately tells what the script does
+✅ Easier Debugging: Logs show which script is running
+✅ Better Maintenance: Future admins understand the flow
+✅ Professional: Industry standard naming convention
+✅ Error Tracking: Stack traces reference clear names
+
+================================================================================
+Migration from Old Names
+================================================================================
+
+If you have scripts/tools referencing old names, update:
+
+OLD REFERENCE          →  NEW REFERENCE
+──────────────────────────────────────
+
+Script1.ps1            →  Setup-CopyFiles.ps1
+Script2.ps1            →  AutoPilot-RegisterDevice.ps1
+Script6final.ps1       →  Finalize-Sysprep.ps1
+AutoPilot-Final.ps1    →  Main-Orchestrator.ps1
+
+All references in:
+  - Main-Orchestrator.ps1 ✓ UPDATED
+  - SetupComplete.cmd ✓ UPDATED
+  - sources/$OEM$ structure ✓ UPDATED
+
+================================================================================
+SUMMARY
+================================================================================
+
+Script naming now follows a logical, descriptive format:
+- Function is obvious from the filename
+- Execution order is clear
+- Maintenance is simplified
+- Professional appearance
+
+All internal references have been updated automatically.
+
+Status: ✅ READY TO DEPLOY
