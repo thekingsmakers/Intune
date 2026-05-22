@@ -4,7 +4,7 @@
 
 **Microsoft Intune & MDM Administrator | PowerShell Automation Expert**
 
-Welcome to my GitHub profile! I'm a dedicated **MDM/Intune Admin** with a passion for automating enterprise IT infrastructure and building scalable solutions for modern device management.
+Welcome to my GitHub profile! I'm dedicated to automating IT infrastructure for scalable, efficient modern device management.
 
 [![Twitter Follow](https://img.shields.io/twitter/follow/thekingsmakers?style=social)](https://twitter.com/thekingsmakers) [![GitHub followers](https://img.shields.io/github/followers/thekingsmakers?style=social)](https://github.com/thekingsmakers)
 
@@ -19,62 +19,69 @@ Welcome to my GitHub profile! I'm a dedicated **MDM/Intune Admin** with a passio
 
 **Technical Specialization:**
 - Microsoft Intune administration & policy management
-- PowerShell scripting & automation (96% of my work)
+- PowerShell scripting & automation
 - Azure integration & cloud services
 - Windows device management & deployment
-- Conditional Access & security policies
 - SCCM co-management scenarios
 
 ---
 
-## 🚀 Featured Project: Intune Admin Scripts
+## 🚀 Solutions in the Repository
 
-![GitHub Stars](https://img.shields.io/github/stars/thekingsmakers/Intune?style=flat-square) ![GitHub Watchers](https://img.shields.io/github/watchers/thekingsmakers/Intune?style=flat-square)
+Here’s an overview of notable solutions included in this repository:
 
-A comprehensive repository of **production-grade Microsoft Intune administration tools** and scripts. Over **23KB** of enterprise-tested automation, with **96% PowerShell**, **1.5% C#**, and **2.5% XML**.
-
-**Repository Stats:**
-- ⭐ **4** Stars
-- 👁️ **4** Watchers  
-- 📅 Created: September 11, 2023
-- 🔄 Last updated: May 6, 2026
-- 📁 **25+ Specialized Modules**
+### 1. [Application Management](https://github.com/thekingsmakers/Intune/tree/main/Application%20Management)
+- Tools for packaging, deployment, and life-cycle management of applications.
 
 ---
 
-## Solutions in the Repository
-
-### 1. BGInfo Intune Deployment Package
-Automated deployment of Sysinternals BGInfo via Intune to standardize desktop wallpapers with system information.
-
-**Key Files:**
-- `Bginfo64.exe`: Sysinternals executable.
-- `bginforefresh.ps1`: Core script for updating desktop information.
-
-**Key Features:**
-- Automates deployment of BGInfo utility.
-- Refreshes wallpaper information for logged-in users.
-- Scheduled Task integration.
-
-[View Solution Folder](https://github.com/thekingsmakers/Intune/blob/main/Bginforefresh)  
+### 2. [AutoPilot](https://github.com/thekingsmakers/Intune/tree/main/AutoPilot)
+- Automates Windows device provisioning, enabling zero-touch deployments integrated with Intune.
 
 ---
 
-### 2. USB Boot Autopilot
-Enhance device provisioning with USB boot automation for Autopilot setups.
-
-**Key Benefits:**
-- Offline hardware hash provisioning for Autopilot.
-- Error handling during enrollment.
+### 3. [Azure Tools](https://github.com/thekingsmakers/Intune/tree/main/Azure)
+- Scripts and utilities for managing Azure infrastructure and services.
 
 ---
 
-### 3. Windows Image Deployment Tool
-An automated tool for post-OS deployment, deals with configuration, domain joining, and software installations.
+### 4. [BGInfo Refresh](https://github.com/thekingsmakers/Intune/tree/main/Bginforefresh)
+- Automates the application of system info as desktop wallpapers via Sysinternals BGInfo and Intune.
 
-**Key Features:**
-- Supports multiple deployment processes, like hostname setup and WiFi provisioning.
-- Enables domain join with admin credentials.
-- Includes .NET development environment.
+---
 
-[View Solution Folder](https://github.com/thekingsmakers/Intune/blob/main/ImageDeploy)
+### 5. [Conditional Access Policies](https://github.com/thekingsmakers/Intune/tree/main/Conditional%20Access%20Policies)
+- Policies and templates for managing secure resource access in the enterprise.
+
+---
+
+### 6. [Windows Image Deployment Tool](https://github.com/thekingsmakers/Intune/tree/main/ImageDeploy)
+- Automates Windows OS configuration (e.g., hostname, network settings, domain joins) after fresh installs.
+
+---
+
+### 7. [Microsoft Store Update Backend](https://github.com/thekingsmakers/Intune/tree/main/Microsoft%20Store%20Update%20backend)
+- Deployments and updates for apps distributed via the Microsoft Store.
+
+---
+
+### 8. [Scripting Utilities](https://github.com/thekingsmakers/Intune/tree/main/Scripting)
+- A collection of scripts for automating Intune tasks for enhanced scalability.
+
+---
+
+### 9. [USB Boot Autopilot](https://github.com/thekingsmakers/Intune/tree/main/USBoot-Autopilot)
+- Simplify deployments using USB boot automation for Autopilot installations.
+
+---
+
+### 10. [Windows 10 ESU Activation](https://github.com/thekingsmakers/Intune/tree/main/Windows%2010%20ESU%20Activation-Intune%20Remediation)
+- Provides extended security activation scripts for Windows 10.
+
+---
+
+## 📂 Full Repository Access
+
+With over 30 folders and numerous solutions, explore my GitHub repo for even more tools aimed to make device management seamless. Visit the repository [here](https://github.com/thekingsmakers/Intune).
+
+---
