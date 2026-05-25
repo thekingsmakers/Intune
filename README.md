@@ -493,3 +493,9 @@ Quick reference PowerShell snippets for common Intune administration tasks.
 ---
 
 ## 💻 Tech Stack
+- Powershell
+- Batch scripts
+- Python
+- Javascript 
+- HTML
+- Css
