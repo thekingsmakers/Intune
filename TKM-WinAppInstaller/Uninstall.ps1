@@ -135,7 +135,10 @@ function Uninstall-Package {
             try {
                 Write-Log -Level Info "Attempting uninstall with $method..."
 
-                $result = Uninstall-PackageWithMethod -Name $pkg.Id -Method $method -Force:$Force -Silent:$Silent -AdditionalArgs $AdditionalArgs
+                # Use package Name for winget (resolves display names reliably),
+                # use Id for other managers that require exact identifiers
+                $uninstallTarget = if ($method -eq 'winget') { $pkg.Name } else { $pkg.Id }
+                $result = Uninstall-PackageWithMethod -Name $uninstallTarget -Method $method -Force:$Force -Silent:$Silent -AdditionalArgs $AdditionalArgs
 
                 if ($result.Success) {
                     Write-Host "`n[$(Get-Date -Format 'HH:mm:ss')] SUCCESS: Package '$($pkg.Name)' uninstalled using $method" -ForegroundColor Green

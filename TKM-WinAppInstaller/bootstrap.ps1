@@ -41,7 +41,7 @@ $Manager = 'auto'
 $Silent = $false
 $SkipElevation = $false
 $Force = $false
-$DdryRun = $false
+$DryRun = $false
 $Parallel = $false
 $MaxConcurrency = 3
 $LogFile = $null
@@ -125,6 +125,7 @@ $moduleUrls = @{
     "Install" = "https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/Install.ps1"
     "Uninstall" = "https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/Uninstall.ps1"
     "Upgrade" = "https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/Upgrade.ps1"
+    "AdvancedUninstall" = "https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/AdvancedUninstall.ps1"
     "AliasesJson" = "https://raw.githubusercontent.com/thekingsmakers/Intune/refs/heads/main/TKM-WinAppInstaller/package-aliases.json"
 }
 
@@ -253,8 +254,8 @@ try {
         }
     } elseif ($Uninstall.Count -gt 0) {
         Write-Host "Loading modules for Uninstall operation..." -ForegroundColor Cyan
-        # Uninstall needs: PackageManagers, Detection, Winget, Chocolatey, Uninstall
-        $requiredModules = @("PackageManagers", "Detection", "Winget", "Chocolatey", "Uninstall")
+        # Uninstall needs: PackageManagers, Detection, Winget, Chocolatey, Uninstall, AdvancedUninstall
+        $requiredModules = @("PackageManagers", "Detection", "Winget", "Chocolatey", "Uninstall", "AdvancedUninstall")
         foreach ($module in $requiredModules) {
             if (-not (Download-AndLoadModule $module)) {
                 Write-Host "Warning: Failed to load $module module, uninstall may not work properly" -ForegroundColor Yellow

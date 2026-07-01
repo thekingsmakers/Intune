@@ -1,52 +1,3 @@
-function Get-AvailablePackageManagers {
-    <#
-    .SYNOPSIS
-        Gets a list of available package managers on the system.
-    .OUTPUTS
-        Array of available package manager names.
-    #>
-    $managers = @()
-    if (Test-PackageManager -Manager 'winget') {
-        $managers += 'winget'
-    }
-    if (Test-PackageManager -Manager 'choco') {
-        $managers += 'choco'
-    }
-    return $managers
-}
-
-function Test-PackageManager {
-    <#
-    .SYNOPSIS
-        Tests if a package manager is available.
-    .PARAMETER Manager
-        Package manager to test ('winget', 'choco').
-    .OUTPUTS
-        Boolean indicating availability.
-    #>
-    param (
-        [Parameter(Mandatory)]
-        [ValidateSet('winget', 'choco')]
-        [string]$Manager
-    )
-
-    try {
-        switch ($Manager) {
-            'winget' {
-                & winget --version 2>$null | Out-Null
-                return $LASTEXITCODE -eq 0
-            }
-            'choco' {
-                & choco --version 2>$null | Out-Null
-                return $LASTEXITCODE -eq 0
-            }
-        }
-    }
-    catch {
-        return $false
-    }
-}
-
 function Search-Package {
     <#
     .SYNOPSIS
@@ -196,10 +147,9 @@ function Get-InstalledPackages {
                                                 $name = $parts[0].Trim()
                                                 $id = if ($parts.Count -ge 2) { $parts[1].Trim() } else { "" }
 
-                                                # Clean up the ID - remove .EXE extensions that winget sometimes adds
-                                                if ($id -match '\.exe$') {
-                                                    $id = $id -replace '\.exe$', ''
-                                                }
+                                                # Clean up the ID - remove truncation artifacts and .exe extensions
+                                                if ($id -match '^(.*?)\.\.\.') { $id = $matches[1].Trim() }
+                                                if ($id -match '\.exe$') { $id = $id -replace '\.exe$', '' }
 
                                                 # Detect format by checking if last element is a known source
                                                 $lastElement = $parts[$parts.Count - 1].Trim()

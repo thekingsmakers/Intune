@@ -446,7 +446,7 @@ function Install-PackagesParallel {
             try {
                 . $using:PSScriptRoot\PackageManagers.ps1
                 . $using:PSScriptRoot\Utils.ps1
-                . $using:PSScriptRoot\InstallerFunctions.ps1
+                . $using:PSScriptRoot\Install.ps1
                 Initialize-Logging -LogLevel 'Info'
 
                 Install-Package -Name $name -Manager $manager -Force:$force -Silent:$silent -AdditionalArgs $installerArgs -Checksum $checksum

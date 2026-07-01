@@ -41,6 +41,7 @@ $requiredFiles = @(
     "Detection.ps1",
     "Winget.ps1",
     "Chocolatey.ps1",
+    "AdvancedUninstall.ps1",
     "Install.ps1",
     "Uninstall.ps1",
     "Upgrade.ps1",
@@ -138,6 +139,7 @@ $launcherScript += @'
     . ".\Detection.ps1"
     . ".\Winget.ps1"
     . ".\Chocolatey.ps1"
+    . ".\AdvancedUninstall.ps1"
     . ".\Install.ps1"
     . ".\Uninstall.ps1"
     . ".\Upgrade.ps1"
@@ -159,7 +161,7 @@ $Manager = 'auto'
 $Silent = $false
 $SkipElevation = $false
 $Force = $false
-$DdryRun = $false
+$DryRun = $false
 $Parallel = $false
 $MaxConcurrency = 3
 $LogFile = $null

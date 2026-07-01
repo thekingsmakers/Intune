@@ -47,7 +47,7 @@ function Get-AvailablePackageManagers {
     .SYNOPSIS
         Detects available package managers in order of preference.
     .OUTPUTS
-        [string[]] Array of available managers ('winget', 'choco').
+        [string[]] Array of available managers ('winget', 'choco', 'psadt').
     #>
     $managers = @()
     if (Test-PackageManager -Manager 'winget') {
@@ -55,6 +55,9 @@ function Get-AvailablePackageManagers {
     }
     if (Test-PackageManager -Manager 'choco') {
         $managers += 'choco'
+    }
+    if ($script:PSADTAvailable) {
+        $managers += 'psadt'
     }
     return $managers
 }
@@ -91,14 +94,17 @@ function Invoke-WingetCommand {
     }
 
     try {
-        Write-Host "Executing: winget $($commandArgs -join ' ')" -ForegroundColor Cyan
+        # Quote arguments containing spaces for proper command-line passing
+        $displayArgs = ($commandArgs | ForEach-Object { if ($_ -match '\s') { "`"$_`"" } else { $_ } }) -join ' '
+        Write-Host "Executing: winget $displayArgs" -ForegroundColor Cyan
         
         # Create temp files with proper paths
         $tempOutput = [System.IO.Path]::GetTempFileName()
         $tempError = [System.IO.Path]::GetTempFileName()
         
-        # Use proper encoding to avoid weird characters
-        $process = Start-Process -FilePath 'winget.exe' -ArgumentList $commandArgs -NoNewWindow -Wait -PassThru -RedirectStandardOutput $tempOutput -RedirectStandardError $tempError
+        # Use a properly-quoted argument string to handle spaces in values (e.g. "3D Viewer")
+        $argString = ($commandArgs | ForEach-Object { if ($_ -match '\s') { "`"$_`"" } else { $_ } }) -join ' '
+        $process = Start-Process -FilePath 'winget.exe' -ArgumentList $argString -NoNewWindow -Wait -PassThru -RedirectStandardOutput $tempOutput -RedirectStandardError $tempError
         
         # Wait for process with timeout
         $startTime = Get-Date

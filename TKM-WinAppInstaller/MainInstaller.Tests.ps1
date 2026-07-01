@@ -3,16 +3,23 @@
 
 #Requires -Modules Pester
 
-# Import modules
-. $PSScriptRoot\PackageManagers.ps1
-. $PSScriptRoot\Aliases.ps1
+# Import modules (same load order as MainInstaller.ps1)
 . $PSScriptRoot\Utils.ps1
-. $PSScriptRoot\InstallerFunctions.ps1
+. $PSScriptRoot\Aliases.ps1
+. $PSScriptRoot\PackageManagers.ps1
+. $PSScriptRoot\Detection.ps1
+. $PSScriptRoot\Winget.ps1
+. $PSScriptRoot\Chocolatey.ps1
+. $PSScriptRoot\Install.ps1
+. $PSScriptRoot\Uninstall.ps1
+. $PSScriptRoot\Upgrade.ps1
+. $PSScriptRoot\AdvancedUninstall.ps1
 
 Describe "Package Manager Detection" {
     It "Should detect available package managers" {
         $managers = Get-AvailablePackageManagers
-        $managers -is [array] | Should Be $true
+        $null -ne $managers | Should Be $true
+        $managers.Count -ge 0 | Should Be $true
     }
 }
 

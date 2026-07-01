@@ -191,6 +191,10 @@ param (
 . $PSScriptRoot\Install.ps1
 . $PSScriptRoot\Uninstall.ps1
 . $PSScriptRoot\Upgrade.ps1
+. $PSScriptRoot\AdvancedUninstall.ps1
+
+# Try to load PSAppDeployToolkit (PSDAT) if available
+$null = Initialize-PSADT
 
 # Initialize
 if (-not $LogFile) {
@@ -304,15 +308,22 @@ try {
         'Uninstall' {
             $packages = Resolve-Packages -Packages $Uninstall
 
-            # For uninstall, always use 'auto' to enable fallbacks unless a specific manager is requested
-            if ($Manager -eq 'auto') {
-                $selectedManager = 'auto'
-            } else {
-                $selectedManager = $Manager
-            }
-
             foreach ($pkg in $packages) {
-                Uninstall-Package -Name $pkg.Name -Manager $selectedManager -Force:$Force -DryRun:$DryRun -Silent:$Silent -AdditionalArgs $AdditionalArgs
+                Write-Host "`n$('=' * 60)" -ForegroundColor Cyan
+                Write-Host "Processing: $($pkg.Name)" -ForegroundColor Cyan -BackgroundColor Black
+                Write-Host "$('=' * 60)" -ForegroundColor Cyan
+
+                if ($Manager -eq 'advanced' -or $Force) {
+                    $advancedResult = Invoke-AdvancedUninstall -Name $pkg.Name -Force:$Force -Silent:$Silent -DryRun:$DryRun
+                    if (-not $advancedResult.Success -and -not $DryRun) {
+                        Write-Host "Advanced uninstall did not fully succeed. Trying standard method..." -ForegroundColor Yellow
+                        $selectedManager = if ($Manager -eq 'auto' -or $Manager -eq 'advanced') { 'auto' } else { $Manager }
+                        Uninstall-Package -Name $pkg.Name -Manager $selectedManager -Force:$Force -DryRun:$DryRun -Silent:$Silent -AdditionalArgs $AdditionalArgs
+                    }
+                } else {
+                    $selectedManager = if ($Manager -eq 'auto') { 'auto' } else { $Manager }
+                    Uninstall-Package -Name $pkg.Name -Manager $selectedManager -Force:$Force -DryRun:$DryRun -Silent:$Silent -AdditionalArgs $AdditionalArgs
+                }
             }
         }
         'Search' {

@@ -142,7 +142,7 @@ function Write-Log {
         'Trace' = 5
     }
 
-    if ($levels[$Level] -le $levels[$global:LogLevel]) {
+    if (-not $global:LogLevel -or $levels[$Level] -le $levels[$global:LogLevel]) {
         $timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
         $logMessage = "[$timestamp] [$Level] $Message"
 

@@ -44,6 +44,7 @@ $requiredFiles = @(
     "Detection.ps1",
     "Winget.ps1",
     "Chocolatey.ps1",
+    "AdvancedUninstall.ps1",
     "Install.ps1",
     "Uninstall.ps1",
     "Upgrade.ps1",
@@ -127,6 +128,7 @@ try {
     . "$ScriptDir\Detection.ps1"
     . "$ScriptDir\Winget.ps1"
     . "$ScriptDir\Chocolatey.ps1"
+    . "$ScriptDir\AdvancedUninstall.ps1"
     . "$ScriptDir\Install.ps1"
     . "$ScriptDir\Uninstall.ps1"
     . "$ScriptDir\Upgrade.ps1"

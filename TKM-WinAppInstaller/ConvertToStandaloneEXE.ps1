@@ -41,6 +41,7 @@ $requiredFiles = @(
     "Detection.ps1",
     "Winget.ps1",
     "Chocolatey.ps1",
+    "AdvancedUninstall.ps1",
     "Install.ps1",
     "Uninstall.ps1",
     "Upgrade.ps1",
@@ -180,6 +181,7 @@ $loadOrder = @(
     "Detection.ps1",
     "Winget.ps1",
     "Chocolatey.ps1",
+    "AdvancedUninstall.ps1",
     "Install.ps1",
     "Uninstall.ps1",
     "Upgrade.ps1"

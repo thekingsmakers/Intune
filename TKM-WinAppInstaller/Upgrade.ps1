@@ -78,6 +78,7 @@ function Update-Package {
             $upgradeMethod = switch ($pkg.Source) {
                 'winget' { 'winget' }
                 'choco' { 'choco' }
+                'psadt' { 'psadt' }
                 default {
                     # If Manager is specified and not 'auto', use it; otherwise try all available
                     if ($Manager -and $Manager -ne 'auto') { $Manager } else { 'winget' }  # Default to winget
@@ -184,6 +185,7 @@ function Update-Package {
                         $fallbackMethods += $mgr
                     }
                 }
+                if ($script:PSADTAvailable -and $upgradeMethod -ne 'psadt') { $fallbackMethods += 'psadt' }
                 # Add PowerShell as a last resort fallback
                 $fallbackMethods += 'powershell'
                 $fallbackSuccess = $false
@@ -262,9 +264,28 @@ function Update-PackageWithMethod {
                 return Update-PackageWithChoco -Name $Name -Force:$Force -Silent:$Silent -AdditionalArgs $AdditionalArgs
             }
             'powershell' {
-                # PowerShell upgrade is not typically supported for remote packages
-                # This would only work for local MSI/EXE files
                 return @{ Success = $false; Error = "PowerShell upgrade not supported for remote packages" }
+            }
+            'psadt' {
+                if (-not $script:PSADTAvailable) { return @{ Success = $false; Error = 'PSADT not loaded' } }
+                try {
+                    if (Test-Path $Name) {
+                        $ext = [System.IO.Path]::GetExtension($Name).ToLower()
+                        if ($ext -eq '.msi') {
+                            Start-ADTMsiProcess -Action Install -FilePath $Name
+                        } elseif ($ext -eq '.msp') {
+                            Start-ADTMspProcess -FilePath $Name
+                        } else {
+                            $argList = if ($Silent) { @('/S', '/silent', '/quiet', '/verysilent', '/qn') } else { @() }
+                            Start-ADTProcess -FilePath $Name -ArgumentList $argList -WindowStyle Hidden -CreateNoWindow
+                        }
+                        return @{ Success = $true; Method = 'psadt' }
+                    } else {
+                        return @{ Success = $false; Error = "PSADT upgrade requires a local file path; '$Name' is not a file" }
+                    }
+                } catch {
+                    return @{ Success = $false; Error = "PSADT upgrade failed: $($_.Exception.Message)" }
+                }
             }
             default {
                 return @{ Success = $false; Error = "Unknown upgrade method: $Method" }
@@ -331,8 +352,10 @@ function Update-PackagesParallel {
                 . $using:PSScriptRoot\Winget.ps1
                 . $using:PSScriptRoot\Chocolatey.ps1
                 . $using:PSScriptRoot\Upgrade.ps1
+                . $using:PSScriptRoot\AdvancedUninstall.ps1
                 . $using:PSScriptRoot\Utils.ps1
                 Initialize-Logging -LogLevel 'Info'
+                $null = Initialize-PSADT
 
                 Update-Package -Name $name -Manager $manager -Force:$force -Silent:$silent -AdditionalArgs $installerArgs
                 return @{ Success = $true; Package = $name }

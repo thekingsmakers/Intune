@@ -1,29 +1,21 @@
+# Install.ps1
+# Installation functions extracted from InstallerFunctions.ps1
+
+. $PSScriptRoot\PackageManagers.ps1
+. $PSScriptRoot\Utils.ps1
+
 function Install-Package {
-    <#
-    .SYNOPSIS
-        Installs a package using multiple methods with fallbacks.
-    .PARAMETER Name
-        Package name or ID to install.
-    .PARAMETER Manager
-        Preferred package manager ('winget', 'choco', 'direct', 'powershell', 'auto').
-    .PARAMETER Force
-        Force installation.
-    .PARAMETER DryRun
-        Only show what would be done.
-    .PARAMETER Silent
-        Silent installation.
-    .PARAMETER AdditionalArgs
-        Additional arguments.
-    #>
-    param (
-        [Parameter(Mandatory)]
-        [string]$Name,
+    param(
+        [Parameter(Mandatory)][string]$Name,
         [string]$Manager,
         [switch]$Force,
         [switch]$DryRun,
         [switch]$Silent,
-        [string[]]$AdditionalArgs
+        [string[]]$AdditionalArgs,
+        [string]$Checksum
     )
+
+    $isUrl = $Name -match '^https?://'
 
     Write-Log -Level Info "Installing $Name using multiple methods with fallbacks"
 
@@ -35,43 +27,27 @@ function Install-Package {
     $installMethods = @()
     $availableManagers = Get-AvailablePackageManagers
 
-    # Determine install methods to try
     switch ($Manager) {
         'winget' {
-            if ('winget' -in $availableManagers) {
-                $installMethods += 'winget'
-            }
+            if ('winget' -in $availableManagers) { $installMethods += 'winget' }
         }
         'choco' {
-            if ('choco' -in $availableManagers) {
-                $installMethods += 'choco'
-            }
+            if ('choco' -in $availableManagers) { $installMethods += 'choco' }
         }
-        'direct' {
-            $installMethods += 'direct'
-        }
-        'powershell' {
-            $installMethods += 'powershell'
-        }
+        'psadt' { $installMethods += 'psadt' }
+        'direct' { $installMethods += 'direct' }
         'auto' {
-            # Try managers in order of preference
-            foreach ($mgr in $availableManagers) {
-                $installMethods += $mgr
-            }
-            $installMethods += 'direct'
-            $installMethods += 'powershell'
+            foreach ($mgr in $availableManagers) { $installMethods += $mgr }
+            if ($script:PSADTAvailable) { $installMethods += 'psadt' }
+            if ($isUrl -or -not $availableManagers) { $installMethods += 'direct' }
         }
         default {
-            # Unknown manager, try all available methods
-            foreach ($mgr in $availableManagers) {
-                $installMethods += $mgr
-            }
+            foreach ($mgr in $availableManagers) { $installMethods += $mgr }
+            if ($script:PSADTAvailable) { $installMethods += 'psadt' }
             $installMethods += 'direct'
-            $installMethods += 'powershell'
         }
     }
 
-    # Remove duplicates while preserving order
     $installMethods = $installMethods | Select-Object -Unique
 
     Write-Host "`n$(("=" * 60))" -ForegroundColor Cyan
@@ -83,123 +59,279 @@ function Install-Package {
     Write-Host "Force mode: $($Force.ToString().ToUpper())" -ForegroundColor White
     Write-Host "$("=" * 60)" -ForegroundColor Cyan
 
-    Write-Log -Level Info "Will try install methods in order: $($installMethods -join ', ')"
+    Write-Log -Level Info "Will try installation methods in order: $($installMethods -join ', ')"
 
     $lastError = $null
 
     foreach ($method in $installMethods) {
-        Write-Host "`n[$(Get-Date -Format 'HH:mm:ss')] Trying install method: $method" -ForegroundColor Magenta
+        Write-Host "`n[$(Get-Date -Format 'HH:mm:ss')] Trying installation method: $method" -ForegroundColor Magenta
         Write-Host ("=" * 50) -ForegroundColor Magenta
 
         try {
-            Write-Log -Level Info "Attempting install with $method..."
-
-            $result = Install-PackageWithMethod -Name $Name -Method $method -Force:$Force -Silent:$Silent -AdditionalArgs $AdditionalArgs
+            Write-Log -Level Info "Attempting installation with $method..."
+            $result = Install-PackageWithMethod -Name $Name -Method $method -Force:$Force -Silent:$Silent -AdditionalArgs $AdditionalArgs -Checksum $Checksum
 
             if ($result.Success) {
-                Write-Host "`n[$(Get-Date -Format 'HH:mm:ss')] SUCCESS: Package installed using $method" -ForegroundColor Green
-                Write-Log -Level Info "Install succeeded using $method"
+                Write-Host "`n[$(Get-Date -Format 'HH:mm:ss')] SUCCESS: Installation completed using $method" -ForegroundColor Green
+                Write-Log -Level Info "Installation succeeded using $method"
                 return
             } else {
                 Write-Host "`n[$(Get-Date -Format 'HH:mm:ss')] FAILED: $method failed - $($result.Error)" -ForegroundColor Red
-                Write-Log -Level Warning "Install failed with $method`: $($result.Error)"
+                Write-Log -Level Warning "Installation failed with $method`: $($result.Error)"
                 $lastError = $result.Error
             }
-        }
-        catch {
+        } catch {
             Write-Host "`n[$(Get-Date -Format 'HH:mm:ss')] EXCEPTION: $method threw an exception - $($_.Exception.Message)" -ForegroundColor Red
-            Write-Log -Level Warning "Exception during $method install: $($_.Exception.Message)"
+            Write-Log -Level Warning "Exception during $method installation: $($_.Exception.Message)"
             $lastError = $_.Exception.Message
         }
 
-        # Small delay between attempts
         if ($installMethods.IndexOf($method) -lt ($installMethods.Count - 1)) {
             Write-Host "Waiting 2 seconds before trying next method..." -ForegroundColor Yellow
             Start-Sleep -Seconds 2
         }
     }
 
-    # If we get here, all methods failed
-    Write-Log -Level Error "All install methods failed. Last error: $lastError"
-    throw "Install failed for '$Name'. Tried methods: $($installMethods -join ', '). Last error: $lastError"
+    Write-Log -Level Error "All installation methods failed. Last error: $lastError"
+    throw "Installation failed for '$Name'. Tried methods: $($installMethods -join ', '). Last error: $lastError"
 }
 
 function Install-PackageWithMethod {
-    <#
-    .SYNOPSIS
-        Installs a package using a specific method.
-    .PARAMETER Name
-        Package name or ID.
-    .PARAMETER Method
-        Install method ('winget', 'choco', 'direct', 'powershell').
-    .PARAMETER Force
-        Force installation.
-    .PARAMETER Silent
-        Silent installation.
-    .PARAMETER AdditionalArgs
-        Additional arguments.
-    #>
-    param (
+    param(
         [string]$Name,
         [string]$Method,
         [switch]$Force,
         [switch]$Silent,
-        [string[]]$AdditionalArgs
+        [string[]]$AdditionalArgs,
+        [string]$Checksum
     )
 
     try {
         switch ($Method) {
             'winget' {
-                return Install-PackageWithWinget -Name $Name -Force:$Force -Silent:$Silent -AdditionalArgs $AdditionalArgs
+                $installerArgs = @('install', $Name)
+                if ($Force) { $installerArgs += '--force' }
+                if ($Silent) { $installerArgs += '--silent' }
+                $installerArgs += $AdditionalArgs
+
+                $maxRetries = 2
+                $retryCount = 0
+                $lastError = $null
+
+                do {
+                    $result = Invoke-WingetCommand -Arguments $installerArgs
+                    if ($result.ExitCode -eq 0) {
+                        return @{ Success = $true; Method = 'winget' }
+                    } else {
+                        $lastError = "Winget failed: $($result.Output)"
+                        $retryCount++
+                        if ($retryCount -le $maxRetries) {
+                            Write-Host "Winget failed, retrying in 3 seconds... ($retryCount/$maxRetries)" -ForegroundColor Yellow
+                            Start-Sleep -Seconds 3
+                        }
+                    }
+                } while ($retryCount -le $maxRetries)
+
+                return @{ Success = $false; Error = $lastError }
             }
             'choco' {
-                return Update-PackageWithChoco -Name $Name -Force:$Force -Silent:$Silent -AdditionalArgs $AdditionalArgs
+                $installerArgs = @('install', $Name, '-y')
+                if ($Force) { $installerArgs += '--force' }
+                if ($Silent) { $installerArgs += '--silent' }
+                $installerArgs += $AdditionalArgs
+
+                $maxRetries = 2
+                $retryCount = 0
+                $lastError = $null
+
+                do {
+                    $result = Invoke-ChocoCommand -Arguments $installerArgs
+                    if ($result.ExitCode -eq 0) {
+                        return @{ Success = $true; Method = 'choco' }
+                    } else {
+                        $lastError = "Choco failed: $($result.Output)"
+                        $retryCount++
+                        if ($retryCount -le $maxRetries) {
+                            Write-Host "Choco failed, retrying in 3 seconds... ($retryCount/$maxRetries)" -ForegroundColor Yellow
+                            Start-Sleep -Seconds 3
+                        }
+                    }
+                } while ($retryCount -le $maxRetries)
+
+                return @{ Success = $false; Error = $lastError }
             }
             'direct' {
-                # Direct download installation logic would go here
-                return @{ Success = $false; Error = "Direct download installation not implemented" }
+                Install-FromUrl -Url $Name -Silent:$Silent -AdditionalArgs $AdditionalArgs -Checksum $Checksum
+                return @{ Success = $true; Method = 'direct' }
             }
             'powershell' {
-                # PowerShell-native installation logic would go here
-                return @{ Success = $false; Error = "PowerShell-native installation not implemented" }
+                $result = Install-WithPowerShell -Name $Name -Force:$Force -Silent:$Silent -AdditionalArgs $AdditionalArgs
+                return $result
+            }
+            'psadt' {
+                if (-not $script:PSADTAvailable) { return @{ Success = $false; Error = 'PSADT not loaded' } }
+                try {
+                    if (Test-Path $Name) {
+                        $ext = [System.IO.Path]::GetExtension($Name).ToLower()
+                        if ($ext -eq '.msi') {
+                            Start-ADTMsiProcess -Action Install -FilePath $Name
+                        } elseif ($ext -eq '.msp') {
+                            Start-ADTMspProcess -FilePath $Name
+                        } else {
+                            $argList = if ($Silent) { @('/S', '/silent', '/quiet', '/verysilent', '/qn') } else { @() }
+                            Start-ADTProcess -FilePath $Name -ArgumentList $argList -WindowStyle Hidden -CreateNoWindow
+                        }
+                        return @{ Success = $true; Method = 'psadt' }
+                    } else {
+                        return @{ Success = $false; Error = "PSADT install requires a local file path; '$Name' is not a file" }
+                    }
+                } catch {
+                    return @{ Success = $false; Error = "PSADT install failed: $($_.Exception.Message)" }
+                }
             }
             default {
-                return @{ Success = $false; Error = "Unknown install method: $Method" }
+                return @{ Success = $false; Error = "Unknown installation method: $Method" }
             }
         }
-    }
-    catch {
-        return @{ Success = $false; Error = "Exception in $Method install: $($_.Exception.Message)" }
+    } catch {
+        return @{ Success = $false; Error = "Exception in $Method`: $($_.Exception.Message)" }
     }
 }
 
+function Install-WithPowerShell {
+    param(
+        [string]$Name,
+        [switch]$Force,
+        [switch]$Silent,
+        [string[]]$AdditionalArgs
+    )
+
+    if (Test-Path $Name) {
+        $ext = [System.IO.Path]::GetExtension($Name).ToLower()
+
+        switch ($ext) {
+            '.msi' {
+                $installerArgs = @('/i', $Name, '/quiet')
+                if (-not $Silent) { $installerArgs = @('/i', $Name) }
+                $installerArgs += $AdditionalArgs
+
+                $process = Start-Process -FilePath 'msiexec.exe' -ArgumentList $installerArgs -Wait -PassThru
+                if ($process.ExitCode -eq 0) {
+                    return @{ Success = $true; Method = 'powershell-msi' }
+                } else {
+                    return @{ Success = $false; Error = "MSI installation failed with exit code $($process.ExitCode)" }
+                }
+            }
+            '.exe' {
+                $installerArgs = $AdditionalArgs
+                if ($Silent) { $installerArgs += '/S' }
+
+                $process = Start-Process -FilePath $Name -ArgumentList $installerArgs -Wait -PassThru
+                if ($process.ExitCode -eq 0) {
+                    return @{ Success = $true; Method = 'powershell-exe' }
+                } else {
+                    return @{ Success = $false; Error = "EXE installation failed with exit code $($process.ExitCode)" }
+                }
+            }
+            '.zip' {
+                $extractPath = Join-Path ([System.IO.Path]::GetTempPath()) ([System.IO.Path]::GetFileNameWithoutExtension($Name))
+                if (Test-Path $extractPath) { Remove-Item $extractPath -Recurse -Force }
+
+                Expand-Archive -Path $Name -DestinationPath $extractPath -Force
+
+                $setupFiles = Get-ChildItem $extractPath -Filter "setup.exe" -Recurse | Select-Object -First 1
+                if (-not $setupFiles) {
+                    $setupFiles = Get-ChildItem $extractPath -Filter "install.exe" -Recurse | Select-Object -First 1
+                }
+
+                if ($setupFiles) {
+                    $installerArgs = $AdditionalArgs
+                    if ($Silent) { $installerArgs += '/S' }
+
+                    $process = Start-Process -FilePath $setupFiles.FullName -ArgumentList $installerArgs -Wait -PassThru
+                    if ($process.ExitCode -eq 0) {
+                        return @{ Success = $true; Method = 'powershell-zip' }
+                    } else {
+                        return @{ Success = $false; Error = "ZIP extracted installer failed with exit code $($process.ExitCode)" }
+                    }
+                } else {
+                    return @{ Success = $false; Error = "No setup.exe or install.exe found in extracted ZIP" }
+                }
+            }
+            default {
+                return @{ Success = $false; Error = "Unsupported file type for PowerShell installation: $ext" }
+            }
+        }
+    } else {
+        return @{ Success = $false; Error = "File not found and not a URL: $Name" }
+    }
+}
+
+function Install-FromUrl {
+    param(
+        [string]$Url,
+        [switch]$Silent,
+        [string[]]$AdditionalArgs,
+        [string]$Checksum
+    )
+
+    $cacheDir = Get-DefaultCacheDirectory
+    $fileName = [System.IO.Path]::GetFileName($Url)
+    $localPath = Join-Path $cacheDir $fileName
+
+    Write-Log -Level Info "Downloading $Url to $localPath"
+
+    try {
+        $webClient = New-Object System.Net.WebClient
+        $webClient.DownloadFile($Url, $localPath)
+    } catch {
+        throw "Download failed: $($_.Exception.Message)"
+    }
+
+    if ($Checksum) {
+        $actualHash = Get-FileHash -Path $localPath -Algorithm SHA256
+        if ($actualHash.Hash -ne $Checksum.ToUpper()) {
+            Remove-Item $localPath -Force
+            throw "Checksum verification failed. Expected: $Checksum, Got: $($actualHash.Hash)"
+        }
+        Write-Log -Level Info "Checksum verified successfully"
+    }
+
+    $ext = [System.IO.Path]::GetExtension($fileName).ToLower()
+    switch ($ext) {
+        '.msi' {
+            $installerArgs = @('/i', $localPath, '/quiet')
+            if (-not $Silent) { $installerArgs = @('/i', $localPath) }
+            $installerArgs += $AdditionalArgs
+            $process = Start-Process -FilePath 'msiexec.exe' -ArgumentList $installerArgs -Wait -PassThru
+        }
+        '.exe' {
+            $installerArgs = $AdditionalArgs
+            if ($Silent) { $installerArgs += '/S' }
+            $process = Start-Process -FilePath $localPath -ArgumentList $installerArgs -Wait -PassThru
+        }
+        default {
+            throw "Unsupported file type: $ext"
+        }
+    }
+
+    if ($process.ExitCode -ne 0) {
+        throw "Installation process failed with exit code $($process.ExitCode)"
+    }
+
+    Write-Log -Level Info "Direct installation completed successfully"
+}
+
 function Install-PackagesParallel {
-    <#
-    .SYNOPSIS
-        Installs multiple packages concurrently.
-    .PARAMETER Packages
-        Array of package names or IDs.
-    .PARAMETER Manager
-        Preferred package manager.
-    .PARAMETER MaxConcurrency
-        Maximum concurrent installations.
-    .PARAMETER Force
-        Force installation.
-    .PARAMETER DryRun
-        Only show what would be done.
-    .PARAMETER Silent
-        Silent installation.
-    .PARAMETER AdditionalArgs
-        Additional arguments.
-    #>
-    param (
+    param(
         [string[]]$Packages,
         [string]$Manager,
         [int]$MaxConcurrency = 3,
         [switch]$Force,
         [switch]$DryRun,
         [switch]$Silent,
-        [string[]]$AdditionalArgs
+        [string[]]$AdditionalArgs,
+        [string]$Checksum
     )
 
     if ($DryRun) {
@@ -214,40 +346,35 @@ function Install-PackagesParallel {
     $jobs = @()
 
     foreach ($pkg in $Packages) {
-        # Wait for available slot
         while ($jobs.Count -ge $MaxConcurrency) {
             $jobs = $jobs | Where-Object { $_.State -eq 'Running' }
             Start-Sleep -Milliseconds 500
         }
 
         $job = Start-Job -ScriptBlock {
-            param($name, $manager, $force, $silent, $installerArgs)
+            param($name, $manager, $force, $silent, $installerArgs, $checksum)
             try {
                 . $using:PSScriptRoot\PackageManagers.ps1
-                . $using:PSScriptRoot\Detection.ps1
-                . $using:PSScriptRoot\Winget.ps1
-                . $using:PSScriptRoot\Chocolatey.ps1
-                . $using:PSScriptRoot\Install.ps1
                 . $using:PSScriptRoot\Utils.ps1
+                . $using:PSScriptRoot\AdvancedUninstall.ps1
+                . $using:PSScriptRoot\Install.ps1
                 Initialize-Logging -LogLevel 'Info'
+                $null = Initialize-PSADT
 
-                Install-Package -Name $name -Manager $manager -Force:$force -Silent:$silent -AdditionalArgs $installerArgs
+                Install-Package -Name $name -Manager $manager -Force:$force -Silent:$silent -AdditionalArgs $installerArgs -Checksum $checksum
                 return @{ Success = $true; Package = $name }
-            }
-            catch {
+            } catch {
                 return @{ Success = $false; Package = $name; Error = $_.Exception.Message }
             }
-        } -ArgumentList $pkg, $Manager, $Force, $Silent, $AdditionalArgs
+        } -ArgumentList $pkg, $Manager, $Force, $Silent, $AdditionalArgs, $Checksum
 
         $jobs += $job
     }
 
-    # Wait for all jobs to complete
     while ($jobs | Where-Object { $_.State -eq 'Running' }) {
         Start-Sleep -Milliseconds 500
     }
 
-    # Collect results
     $results = $jobs | ForEach-Object { Receive-Job -Job $_; Remove-Job -Job $_ }
 
     foreach ($result in $results) {
@@ -258,5 +385,5 @@ function Install-PackagesParallel {
         }
     }
 
-    Write-Log -Level Info "Parallel install completed"
+    Write-Log -Level Info "Parallel installation completed"
 }
